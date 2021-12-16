@@ -1,14 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Container from '../Container';
+import List from '../List';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import ClearIcon from '@mui/icons-material/Clear';
 import { styled } from '@mui/material/styles';
 import './App.css';
-
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 const CssTextField = styled(TextField)({
   '& label.Mui-focused': {
@@ -46,20 +42,43 @@ const CssButton = styled(Button)({
 });
 
 const App = () => {
+  const [task, setTask] = useState('')
+  const [list, setList] = useState(['Find a habitable planet', 'Move to the found planet', 'Destroy the Earth!'])
+  function handleChange(event) {    
+    setTask(event.target.value)
+  }
+  function handleSubmit() {
+    if (task.trim()) {
+      setList(list.concat(task))
+      setTask('')
+    }    
+  }
   return (
     <Container>
       <div className="App">
         <div className="Container">
           <h1>TO-DO LIST AND TASK MANAGEMENT</h1>
-          <CssTextField sx={{ width: '60%', height:'50px', margin:'10px' }} label="Task name" variant="outlined" color="secondary"/>
-          <CssTextField sx={{ width: '10%', height:'50px', margin:'10px' }} select/>
-          <CssButton sx={{ width: '10%', height:'55px', margin:'10px' }} variant="outlined">Add</CssButton>
-          <br></br>
-          <Checkbox {...label} defaultChecked />
-          <TextField defaultValue="Task1" variant="standard"/>
-          <IconButton>
-            <ClearIcon/>
-          </IconButton>
+          <div className="Header">
+            <CssTextField 
+              sx={{ width: '60%', height:'50px', margin:'10px' }} 
+              label="Task name"
+              value={task}
+              onChange={handleChange}              
+              onKeyPress={(e) => {if (e.key === 'Enter') handleSubmit()}}
+            /> 
+            <CssTextField 
+              sx={{ width: '10%', height:'50px', margin:'10px' }} 
+              //select
+            />
+            <CssButton 
+              sx={{ width: '10%', height:'55px', margin:'10px' }} 
+              variant="outlined"
+              onClick={handleSubmit}
+            >
+            Add
+            </CssButton>
+          </div>
+          <List list={list}/>          
         </div>      
       </div>
     </Container>    
