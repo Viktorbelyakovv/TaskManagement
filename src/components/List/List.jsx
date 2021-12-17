@@ -3,12 +3,19 @@ import PropTypes from 'prop-types';
 import Item from '../Item';
 import './List.css';
 
-const List = (props) => {
-  const list = props.list
+const List = ({list, handleCheckbox, changeTitle, deleteItem}) => {
   return (
     <div>
-      {list.map((task) => { 
-        return <Item task={task} key={task}/>  //фиксануть
+      {list.map((item) => { 
+        return (
+          <Item 
+            item={item} 
+            key={item.id}  
+            handleCheckbox={handleCheckbox} 
+            changeTitle = {changeTitle}
+            deleteItem={deleteItem}
+          />
+        )
       })}
     </div>    
   );
@@ -16,6 +23,9 @@ const List = (props) => {
 
 List.propTypes = {
   list: PropTypes.array,
+  handleCheckbox: PropTypes.func,
+  changeTitle: PropTypes.func,
+  deleteItem: PropTypes.func,
 }
 
 export default List;

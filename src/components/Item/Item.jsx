@@ -1,53 +1,65 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import TextField from '@mui/material/TextField';
+import Input  from '@mui/material/Input';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import ClearIcon from '@mui/icons-material/Clear';
 import { styled } from '@mui/material/styles';
 import './Item.css';
 
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
-const CssTextField = styled(TextField)({
-  '& label.Mui-focused': {
-    color: 'rgb(130, 50, 50)',
-  },
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      borderColor: 'black',
-      borderWidth: 2,
-    },
-    '&:hover fieldset': {
-      borderColor: 'rgb(250, 235, 96)',
-      borderWidth: 2,
-    },
-    '&.Mui-focused fieldset': {
-      borderColor: 'rgb(241, 93, 93)',
-      borderWidth: 2,
-    },
-  },
+const CssCheckbox = styled(Checkbox)({
+  color: 'black',
+  '&.Mui-checked': {
+    color: 'black',
+  }  
 });
 
-const Item = (props) => {
-  const task = props.task
+const CssInput = styled(Input)({
+  height:'50px', 
+  width: '75%',  
+  margin:'10px', 
+  '&.Mui-focused': {
+    fontStyle: 'italic', 
+  }  
+});
+
+const CssIconButton = styled(IconButton)({
+  color: 'red',
+});
+
+const Item = ({item, handleCheckbox, changeTitle, deleteItem}) => {
+  const [title, setTitle] = useState(item.title)
+  const handleChange = (e) => {
+    e.preventDefault()
+    setTitle(e.target.value)
+  }
   return (
     <div>
-      <Checkbox {...label} defaultChecked />
-      <CssTextField 
-        sx={{ width: '75%', height:'50px', margin:'10px' }} 
-        value={task} 
-        variant="standard"
+      <CssCheckbox
+        checked={item.completed}
+        onChange={() => handleCheckbox(item.id)}
       />
-      <IconButton color="error">
+      <CssInput 
+        value={title} 
+        onChange={handleChange}
+        onBlur={() => changeTitle(item.id, title)}
+        disabled={item.completed?true:false}
+        disableUnderline={false}
+      />
+      <CssIconButton         
+        onClick={() => deleteItem(item.id)}
+      >
         <ClearIcon/>
-      </IconButton>
+      </CssIconButton>
     </div> 
   );
 }
 
 Item.propTypes = {
-  task: PropTypes.string,
+  item: PropTypes.object,
+  handleCheckbox: PropTypes.func,
+  changeTitle: PropTypes.func,
+  deleteItem: PropTypes.func,
 }
 
 export default Item;
