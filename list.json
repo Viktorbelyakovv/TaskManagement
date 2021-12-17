@@ -1,0 +1,24 @@
+{
+  "tasks": [
+    {
+      "completed": false,
+      "title": "Buy milk",
+      "id": 1
+    },
+    {
+      "completed": false,
+      "title": "Decide what to do on weekends",
+      "id": 2
+    },
+    {
+      "completed": true,
+      "title": "Sell old books",
+      "id": 3
+    },
+    {
+      "completed": true,
+      "title": "Call to a friend",
+      "id": 4
+    }
+  ]
+}
