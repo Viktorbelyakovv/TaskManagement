@@ -7,11 +7,6 @@ import './Header.css';
 const Header = ({list, setList}) => {
   const [task, setTask] = useState("");
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    setTask(e.target.value);
-  };
-
   const addTask = () => {
 
     if (task.trim()) {
@@ -33,8 +28,8 @@ const Header = ({list, setList}) => {
       <StyledTextField
         label="Task name"
         value={task}
-        onChange={handleChange}
-        onKeyPress={(e) => {e.key === "Enter" && addTask()}}
+        onChange={e => setTask(e.target.value)}
+        onKeyPress={e => e.key === "Enter" && addTask()}
       />
       <StyledSelect/>
       <StyledButton variant="outlined" onClick={addTask}>

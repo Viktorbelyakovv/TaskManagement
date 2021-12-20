@@ -7,11 +7,6 @@ import './Item.css';
 const Item = ({item, handleCheckbox, changeTitle, deleteItem}) => {
   const [title, setTitle] = useState(item.title)
 
-  const handleChange = e => {
-    e.preventDefault()
-    setTitle(e.target.value)
-  }
-
   return (
     <div className="Item">
       <StyledCheckbox
@@ -20,7 +15,7 @@ const Item = ({item, handleCheckbox, changeTitle, deleteItem}) => {
       />
       <StyledInput 
         value={title} 
-        onChange={handleChange}
+        onChange={e => setTitle(e.target.value)}
         onBlur={() => changeTitle(item.id, title)}
         disabled={item.completed}
         disableUnderline={false}

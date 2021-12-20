@@ -4,28 +4,33 @@
       "completed": false,
       "title": "Buy milk",
       "id": 1,
-      "Buy milk": ""
+      "Buy milk": "",
+      "Buy milk and bread": ""
     },
     {
       "completed": false,
       "title": "Decide what to do on weekend",
       "id": 2,
-      "Decide what to do on weekends": ""
+      "Decide what to do on weekends": "",
+      "Decide what to do on weekend": ""
     },
     {
       "completed": true,
       "title": "Sell old books",
-      "id": 3
+      "id": 3,
+      "true": ""
     },
     {
       "completed": true,
       "title": "Call to a friend",
-      "id": 4
+      "id": 4,
+      "Call to friends": ""
     },
     {
       "completed": true,
       "title": "Buy ticket",
-      "id": 5
+      "id": 5,
+      "true": ""
     }
   ]
 }
