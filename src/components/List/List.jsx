@@ -5,7 +5,7 @@ import './List.css';
 
 const List = ({list, handleCheckbox, changeTitle, deleteItem}) => 
   <div className="List">
-    {list.map((item) =>  
+    {list.map(item =>  
       <Item 
         item={item} 
         key={item.id}  

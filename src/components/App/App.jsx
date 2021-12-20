@@ -6,55 +6,78 @@ import {UploadList, DeleteTask, ChangeTitle, ChangeCompleted} from "../../utils/
 import "./App.css";
 
 const App = () => {  
-  const [list, setList] = useState([]);  
+  const [list, setList] = useState([])
+  
+  const deleteItem = id => {
+    DeleteTask(id).then(response => {
 
-  const refresh = () => {
-    setTimeout(() => {
-      UploadList().then((list) => {
-        setList(list);
-      });
-    }, 300)
-  }
-
-  const deleteItem = (id) => {
-    DeleteTask(id);
-    refresh()
+      if (response.status === 200) {
+        setList(list.filter(item => item.id !== id))
+      } else {
+        alert("Error status = " + response.status)
+      }        
+    })
   };
 
   const changeTitle = (id, title) => {
-    ChangeTitle(id, title);
-    refresh()
+    ChangeTitle(id, title).then(response => {
+
+      if (response.status === 200) {
+        setList(list.map(item => {
+
+          if (item.id === id) {
+            item.title = title
+          }
+
+          return item
+        }))    
+      }
+      else {
+        alert("Error status = " + response.status)
+      }        
+    })
   };
 
-  const changeCompleted = (id) => {
-    const item = list.find((item) => item.id === id);
-    if (item !== undefined) {
-      ChangeCompleted(id, !item.completed);
-      refresh()
+  const changeCompleted = id => {
+    const item = list.find(item => item.id === id)
+
+    if (item) {
+      ChangeCompleted(id, !item.completed).then(response => {
+
+        if (response.status === 200) {
+          setList(list.map(item => {
+
+            if (item.id === id) {
+              item.completed = !item.completed
+            }
+
+            return item
+          }))      
+        } else {
+          alert("Error status = " + response.status)
+        }        
+      })
     }    
   };
 
   useEffect(() => {
-    UploadList().then((list) => {
-      setList(list);
-    });
+    UploadList().then(list => setList(list));
   }, []);
   
   return (
     <div className="App">
-      <Container>
-        <h1>TO-DO LIST AND TASK MANAGEMENT</h1>
-        <Header refresh={refresh}/>
-        {list ? (
+      <Container>        
+        <Header list={list} setList={setList}/>
+        {list ? 
           <List
             list={list}
             handleCheckbox={changeCompleted}
             changeTitle={changeTitle}
             deleteItem={deleteItem}
           />
-        ) : (
+         : 
           <h2>No tasks</h2>
-        )}
+        }
       </Container>
     </div>
   );
