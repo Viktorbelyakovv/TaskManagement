@@ -1,7 +1,8 @@
 import axios from 'axios';
+
 const api = process.env.REACT_APP_API_LINK;
 
-export function UploadList() {
+export const UploadList = () => {
   return axios.get(`${api}/tasks`)
   .then(list => {
    return list.data
@@ -11,10 +12,10 @@ export function UploadList() {
   })    
 }
 
-export function AddTask(title) {
+export const AddTask = (title) => {
   axios.post(`${api}/tasks`, {
     completed: false,
-    title: title
+    title
   })
   .then((response) => {
     console.log(response);
@@ -24,7 +25,7 @@ export function AddTask(title) {
   })      
 }
 
-export function DeleteTask(id) {
+export const DeleteTask = (id) => {
   axios.delete(`${api}/tasks/${id}`)
   .then((response) => {
     console.log(response);
@@ -34,9 +35,9 @@ export function DeleteTask(id) {
   })       
 }
 
-export function ChangeTitle(id, title) {
+export const ChangeTitle = (id, title) => {
   axios.patch(`${api}/tasks/${id}`, {
-    title: title
+    title
   })
   .then(response => {
     console.log(response);
@@ -46,9 +47,9 @@ export function ChangeTitle(id, title) {
   })      
 }
 
-export function ChangeCompleted(id, completed) {
+export const ChangeCompleted = (id, completed) => {
   axios.patch(`${api}/tasks/${id}`, {
-    completed: completed
+    completed
   })
   .then(response => {
     console.log(response);

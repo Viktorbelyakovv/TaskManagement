@@ -7,50 +7,54 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { styled } from '@mui/material/styles';
 import './Item.css';
 
-const CssCheckbox = styled(Checkbox)({
+const StyledCheckbox = styled(Checkbox)({
   color: 'black',
+
   '&.Mui-checked': {
     color: 'black',
   }  
 });
 
-const CssInput = styled(Input)({
+const StyledInput = styled(Input)({
   height:'50px', 
   width: '75%',  
   margin:'10px', 
+  
   '&.Mui-focused': {
     fontStyle: 'italic', 
   }  
 });
 
-const CssIconButton = styled(IconButton)({
+const StyledIconButton = styled(IconButton)({
   color: 'red',
 });
 
 const Item = ({item, handleCheckbox, changeTitle, deleteItem}) => {
   const [title, setTitle] = useState(item.title)
+
   const handleChange = (e) => {
     e.preventDefault()
     setTitle(e.target.value)
   }
+
   return (
-    <div>
-      <CssCheckbox
+    <div className="Item">
+      <StyledCheckbox
         checked={item.completed}
         onChange={() => handleCheckbox(item.id)}
       />
-      <CssInput 
+      <StyledInput 
         value={title} 
         onChange={handleChange}
         onBlur={() => changeTitle(item.id, title)}
-        disabled={item.completed?true:false}
+        disabled={item.completed}
         disableUnderline={false}
       />
-      <CssIconButton         
+      <StyledIconButton         
         onClick={() => deleteItem(item.id)}
       >
         <ClearIcon/>
-      </CssIconButton>
+      </StyledIconButton>
     </div> 
   );
 }
