@@ -3,12 +3,14 @@
     {
       "completed": false,
       "title": "Buy milk",
-      "id": 1
+      "id": 1,
+      "Buy milk": ""
     },
     {
       "completed": false,
-      "title": "Decide what to do on weekends",
-      "id": 2
+      "title": "Decide what to do on weekend",
+      "id": 2,
+      "Decide what to do on weekends": ""
     },
     {
       "completed": true,
@@ -19,6 +21,11 @@
       "completed": true,
       "title": "Call to a friend",
       "id": 4
+    },
+    {
+      "completed": true,
+      "title": "Buy ticket",
+      "id": 5
     }
   ]
 }
