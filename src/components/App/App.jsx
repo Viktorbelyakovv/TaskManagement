@@ -1,15 +1,16 @@
-import React from 'react';
-import Container from '../Container';
-import Header from '../Header';
-import List from '../List';
-import './App.css';
+import React from "react";
+import Container from "../Container";
+import Header from "../Header";
+import List from "../List";
+import "./App.css";
 
-const App = () =>   
+const App = () => (
   <div className="App">
-    <Container>        
+    <Container>
       <Header />
       <List />
     </Container>
   </div>
+);
 
 export default App;
