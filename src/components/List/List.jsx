@@ -9,15 +9,20 @@ import './List.css';
 const List = () => {
   const list = useSelector(selectList);
   const dispatch = useDispatch();   
+  const listCopy = [...list]
 
   useEffect(() => {
     UploadList().then(list => dispatch(uploadListAction(list)))
   }, [dispatch]);
 
+  if (listCopy && listCopy.length) {
+    listCopy.sort(a => a.favorite ? -1 : 1);
+  }  
+
   return (
     <div className="List">
-      {list && list.length 
-        ? list.map(item =>  
+      {listCopy && listCopy.length 
+        ? listCopy.map(item =>  
           <Item 
             item={item} 
             key={item.id} 
