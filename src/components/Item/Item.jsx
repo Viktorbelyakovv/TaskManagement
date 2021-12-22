@@ -61,15 +61,7 @@ const Item = ({item}) => {
       })
     } 
 
-  };  
-
-  const onMouseOver = () => {
-    if (!item.favorite) setStarSign('star_half')
-  }
-
-  const onMouseOut = () => {
-    if (!item.favorite) setStarSign('star_border')
-  }
+  };
 
   const changeFavorite = id => {
     const item = list.find(item => item.id === id)
@@ -107,8 +99,8 @@ const Item = ({item}) => {
         disabled={item.completed}
       />
       <span className="material-icons"         
-        onMouseOver={onMouseOver}
-        onMouseOut={onMouseOut}
+        onMouseOver={() => {if (!item.favorite) setStarSign('star_half')}}
+        onMouseOut={() => {if (!item.favorite) setStarSign('star_border')}}
         onClick={() => changeFavorite(item.id)}
       >
         {starSign}        

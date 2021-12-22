@@ -9,7 +9,7 @@
     {
       "title": "2",
       "completed": false,
-      "favorite": false,
+      "favorite": true,
       "id": 2
     },
     {
@@ -21,13 +21,13 @@
     {
       "title": "4",
       "completed": false,
-      "favorite": false,
+      "favorite": true,
       "id": 4
     },
     {
       "title": "5",
       "completed": false,
-      "favorite": false,
+      "favorite": true,
       "id": 5
     }
   ]
