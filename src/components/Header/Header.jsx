@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
-import {AddTask} from "../../utils/api.js";
+import {AddTask} from '../../utils/api.js';
+import {useDispatch } from 'react-redux';
+import {addTaskAction} from '../../store/tasks/reducer';
 import {StyledTextField, StyledSelect, StyledButton} from './Header.styles.js'
 import './Header.css';
 
-const Header = ({list, setList}) => {
+const Header = () => {
   const [task, setTask] = useState("");
+  const dispatch = useDispatch();
 
   const addTask = () => {
 
@@ -14,12 +16,14 @@ const Header = ({list, setList}) => {
       AddTask(task).then(response => {
 
         if (response.status === 201) {
-          setList(list.concat(response.data))
+          dispatch(addTaskAction(response.data))
         } else {
           alert("Error status = " + response.status)
-        }        
+        }
+
       })       
     }    
+
   };
 
   return (
@@ -37,11 +41,6 @@ const Header = ({list, setList}) => {
       </StyledButton>
     </div>
   )
-}  
-
-Header.propTypes = {
-  list: PropTypes.array,
-  setList: PropTypes.func,
 }
 
 export default Header;

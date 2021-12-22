@@ -7,7 +7,9 @@ module.exports = {
     },
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        //"airbnb",
+        "airbnb/hooks"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -20,5 +22,6 @@ module.exports = {
         "react"
     ],
     "rules": {
+        "linebreak-style": 0,
     }
 };
