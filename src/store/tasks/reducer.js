@@ -42,6 +42,15 @@ export const slice = createSlice({
       }
 
     },
+
+    changeFavoriteAction: (state, id) => { 
+      const localID = state.tasks.findIndex(item => item.id === id.payload)
+
+      if (state.tasks[localID]) {
+        state.tasks[localID].favorite = !state.tasks[localID].favorite
+      }
+
+    },
   },
 });
 
@@ -50,6 +59,7 @@ export const {
   addTaskAction, 
   deleteTaskAction, 
   changeTitleAction, 
-  changeCompletedAction} = slice.actions;
+  changeCompletedAction,
+  changeFavoriteAction} = slice.actions;
 
 export default slice.reducer;

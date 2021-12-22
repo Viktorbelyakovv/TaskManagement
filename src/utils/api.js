@@ -11,9 +11,10 @@ export const UploadList = () => {
 };
 
 export const AddTask = title => {
-  return api.post(`/tasks`, {
-      completed: false,
+  return api.post(`/tasks`, {      
       title,
+      completed: false,
+      favorite: false,
     })
     .then(response => response)
     .catch(error => alert(error));
@@ -33,6 +34,12 @@ export const ChangeTitle = (id, title) => {
 
 export const ChangeCompleted = (id, completed) => {
   return api.patch(`/tasks/${id}`, {completed})
+    .then(response => response)
+    .catch(error => alert(error));
+};
+
+export const ChangeFavorite = (id, favorite) => {
+  return api.patch(`/tasks/${id}`, {favorite})
     .then(response => response)
     .catch(error => alert(error));
 };
