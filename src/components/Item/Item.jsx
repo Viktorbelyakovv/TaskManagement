@@ -1,10 +1,18 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import ClearIcon from '@mui/icons-material/Clear';
-import { DeleteTask, ChangeTitle, ChangeCompleted, ChangeFavorite } from '../../utils/api';
+import { 
+  DeleteTask, 
+  ChangeTitle, 
+  ChangeCompleted, 
+  ChangeFavorite } from '../../utils/api';
 import { useSelector, useDispatch } from 'react-redux';
 import {selectList} from '../../store/tasks/selectors';
-import { deleteTaskAction, changeTitleAction, changeCompletedAction, changeFavoriteAction } from '../../store/tasks/reducer';
+import { 
+  deleteTaskAction, 
+  changeTitleAction, 
+  changeCompletedAction, 
+  changeFavoriteAction } from '../../store/tasks/reducer';
 import { StyledCheckbox, StyledInput, StyledIconButton } from './Item.styles.js'
 import './Item.css';
 
