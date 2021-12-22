@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { AddTask } from "../../utils/api.js";
 import { useDispatch } from "react-redux";
 import { addTaskAction } from "../../store/tasks/reducer";
+import { AddTask } from "../../utils/api.js";
 import {
   StyledTextField,
   StyledSelect,

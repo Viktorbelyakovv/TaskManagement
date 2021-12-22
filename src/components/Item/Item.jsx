@@ -2,86 +2,31 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ClearIcon from "@mui/icons-material/Clear";
 import {
-  DeleteTask,
-  ChangeTitle,
-  ChangeCompleted,
-  ChangeFavorite,
-} from "../../utils/api";
-import { useSelector, useDispatch } from "react-redux";
-import { selectList } from "../../store/tasks/selectors";
-import {
-  deleteTaskAction,
-  changeTitleAction,
-  changeCompletedAction,
-  changeFavoriteAction,
-} from "../../store/tasks/reducer";
-import {
   StyledCheckbox,
   StyledInput,
   StyledIconButton,
 } from "./Item.styles.js";
 import "./Item.css";
 
-const Item = ({ item }) => {
+const Item = ({
+  item,
+  deleteItem,
+  changeTitle,
+  changeCompleted,
+  changeFavorite,
+}) => {
   const [title, setTitle] = useState(item.title);
-  const list = useSelector(selectList);
-  const dispatch = useDispatch();
   const [starSign, setStarSign] = useState(
     item.favorite ? "star" : "star_border"
   );
 
-  const deleteItem = (id) => {
-    DeleteTask(id).then(({ status }) => {
-      if (status === 200) {
-        dispatch(deleteTaskAction(id));
-      } else {
-        alert("Error status = " + status);
-      }
-    });
-  };
-
-  const changeTitle = (id, title) => {
-    ChangeTitle(id, title).then(({ status }) => {
-      if (status === 200) {
-        dispatch(changeTitleAction({ id, title }));
-      } else {
-        alert("Error status = " + status);
-      }
-    });
-  };
-
-  const changeCompleted = (id) => {
-    const item = list.find((item) => item.id === id);
-
-    if (item) {
-      ChangeCompleted(id, !item.completed).then(({ status }) => {
-        if (status === 200) {
-          dispatch(changeCompletedAction(id));
-        } else {
-          alert("Error status = " + status);
-        }
-      });
+  const ChangeStar = () => {
+    if (item.favorite) {
+      setStarSign("star_border");
+    } else {
+      setStarSign("star");
     }
-  };
-
-  const changeFavorite = (id) => {
-    const item = list.find((item) => item.id === id);
-
-    if (item) {
-      ChangeFavorite(id, !item.favorite).then(({ status }) => {
-        if (status === 200) {
-          dispatch(changeFavoriteAction(id));
-
-          if (item.favorite) {
-            setStarSign("star_border");
-          } else {
-            setStarSign("star");
-          }
-        } else {
-          alert("Error status = " + status);
-        }
-      });
-    }
+    changeFavorite(item.id);
   };
 
   return (
@@ -104,7 +49,7 @@ const Item = ({ item }) => {
         onMouseOut={() => {
           !item.favorite && setStarSign("star_border");
         }}
-        onClick={() => changeFavorite(item.id)}
+        onClick={() => ChangeStar()}
       >
         {starSign}
       </span>
@@ -117,6 +62,10 @@ const Item = ({ item }) => {
 
 Item.propTypes = {
   item: PropTypes.object,
+  deleteItem: PropTypes.func,
+  changeTitle: PropTypes.func,
+  changeCompleted: PropTypes.func,
+  changeFavorite: PropTypes.func,
 };
 
 export default Item;

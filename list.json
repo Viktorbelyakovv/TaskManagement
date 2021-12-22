@@ -3,7 +3,7 @@
     {
       "title": "3",
       "completed": false,
-      "favorite": false,
+      "favorite": true,
       "id": 8
     },
     {
@@ -21,13 +21,13 @@
     {
       "title": "туск",
       "completed": false,
-      "favorite": false,
+      "favorite": true,
       "id": 12
     },
     {
       "title": "тиск",
       "completed": false,
-      "favorite": true,
+      "favorite": false,
       "id": 13
     }
   ]
