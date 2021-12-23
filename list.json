@@ -1,31 +1,24 @@
 {
   "tasks": [
     {
-      "completed": false,
-      "title": "Buy milk",
-      "id": 1,
-      "Buy milk": ""
-    },
-    {
-      "completed": false,
-      "title": "Decide what to do on weekend",
-      "id": 2,
-      "Decide what to do on weekends": ""
-    },
-    {
       "completed": true,
-      "title": "Sell old books",
+      "title": "Go to school",
+      "id": 1
+    },
+    {
+      "completed": false,
+      "title": "Buy tickes",
+      "id": 2
+    },
+    {
+      "completed": false,
+      "title": "Feed the cat",
       "id": 3
     },
     {
       "completed": true,
-      "title": "Call to a friend",
+      "title": "Call to a doctor",
       "id": 4
-    },
-    {
-      "completed": true,
-      "title": "Buy ticket",
-      "id": 5
     }
   ]
 }
