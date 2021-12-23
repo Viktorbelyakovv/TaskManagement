@@ -27,8 +27,14 @@
     {
       "title": "тиск",
       "completed": false,
-      "favorite": false,
+      "favorite": true,
       "id": 13
+    },
+    {
+      "title": "Who are you",
+      "completed": false,
+      "favorite": false,
+      "id": 14
     }
   ]
 }
