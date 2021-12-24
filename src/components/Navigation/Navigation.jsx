@@ -31,6 +31,12 @@ const Navigation = () => {
           label="Completed Tasks"
           value="/CompletedTasksPage"
         ></StyledTab>
+        <StyledTab
+          component={NavLink}
+          to="/SettingsPage"
+          label="Settings"
+          value="/SettingsPage"
+        ></StyledTab>
       </StyledTabs>
     </StyledAppBar>
   );

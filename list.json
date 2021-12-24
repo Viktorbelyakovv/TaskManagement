@@ -15,19 +15,19 @@
     {
       "title": "Buy tickets",
       "completed": false,
-      "favorite": false,
+      "favorite": true,
       "id": 3
     },
     {
       "title": "Sell earphones",
-      "completed": true,
+      "completed": false,
       "favorite": false,
       "id": 4
     },
     {
       "title": "Go to a cafe",
       "completed": false,
-      "favorite": true,
+      "favorite": false,
       "id": 5
     },
     {
@@ -44,7 +44,7 @@
     },
     {
       "title": "Buy tickets",
-      "completed": false,
+      "completed": true,
       "favorite": false,
       "id": 8
     }
