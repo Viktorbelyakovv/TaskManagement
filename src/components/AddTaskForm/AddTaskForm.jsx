@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addTaskAction } from "../../store/tasks/reducer";
-import { AddTask } from "../../utils/api.js";
+import { addTaskServer } from "../../utils/api.js";
 import StyledTextField from "./components/StyledTextField";
 import StyledSelect from "./components/StyledSelect";
 import StyledButton from "./components/StyledButton";
@@ -11,10 +11,10 @@ const AddTaskForm = () => {
   const [task, setTask] = useState("");
   const dispatch = useDispatch();
 
-  const addTask = () => {
+  const onAddTask = () => {
     if (task.trim()) {
       setTask("");
-      AddTask(task).then(({ status, data }) => {
+      addTaskServer(task).then(({ status, data }) => {
         if (status === 201) {
           dispatch(addTaskAction(data));
         } else {
@@ -30,10 +30,10 @@ const AddTaskForm = () => {
         label="Task name"
         value={task}
         onChange={(e) => setTask(e.target.value)}
-        onKeyPress={(e) => e.key === "Enter" && addTask()}
+        onKeyPress={(e) => e.key === "Enter" && onAddTask()}
       />
       <StyledSelect />
-      <StyledButton variant="outlined" onClick={addTask}>
+      <StyledButton variant="outlined" onClick={onAddTask}>
         Add
       </StyledButton>
     </div>

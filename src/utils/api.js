@@ -4,14 +4,14 @@ const baseURL = process.env.REACT_APP_API_LINK;
 
 const api = axios.create({ baseURL });
 
-export const UploadList = () => {
+export const uploadListServer = () => {
   return api
     .get(`/tasks`)
     .then((list) => list.data)
     .catch((error) => alert(error));
 };
 
-export const AddTask = (title) => {
+export const addTaskServer = (title) => {
   return api
     .post(`/tasks`, {
       title,
@@ -22,28 +22,28 @@ export const AddTask = (title) => {
     .catch((error) => alert(error));
 };
 
-export const DeleteTask = (id) => {
+export const deleteTaskServer = (id) => {
   return api
     .delete(`/tasks/${id}`)
     .then((response) => response)
     .catch((error) => alert(error));
 };
 
-export const ChangeTitle = (id, title) => {
+export const changeTitleServer = (id, title) => {
   return api
     .patch(`/tasks/${id}`, { title })
     .then((response) => response)
     .catch((error) => alert(error));
 };
 
-export const ChangeCompleted = (id, completed) => {
+export const changeCompletedServer = (id, completed) => {
   return api
     .patch(`/tasks/${id}`, { completed })
     .then((response) => response)
     .catch((error) => alert(error));
 };
 
-export const ChangeFavorite = (id, favorite) => {
+export const changeFavoriteServer = (id, favorite) => {
   return api
     .patch(`/tasks/${id}`, { favorite })
     .then((response) => response)

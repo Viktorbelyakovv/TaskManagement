@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { AppBar, Tabs, Tab } from "@mui/material";
+import StyledAppBar from "./components/StyledAppBar";
+import StyledTabs from "./components/StyledTabs";
+import StyledTab from "./components/StyledTab";
 import "./Navigation.css";
 
 const Navigation = () => {
@@ -11,28 +13,26 @@ const Navigation = () => {
   };
 
   return (
-    <AppBar
-      position="fixed"
-      className="AppBar"
-      sx={{ bgcolor: "rgb(70, 70, 70)" }}
-    >
-      <Tabs className="Tab" value={locationPathName} onChange={handleChange}>
-        <Tab
+    <StyledAppBar position="fixed" className="AppBar">
+      <StyledTabs
+        className="Tab"
+        value={locationPathName}
+        onChange={handleChange}
+      >
+        <StyledTab
           component={NavLink}
           to="/"
           label="Main Page"
-          value="/MainPage"
-          sx={{ color: "rgb(250, 235, 96)" }}
-        ></Tab>
-        <Tab
+          value="/"
+        ></StyledTab>
+        <StyledTab
           component={NavLink}
           to="/CompletedTasksPage"
           label="Completed Tasks"
           value="/CompletedTasksPage"
-          sx={{ color: "rgb(250, 235, 96)" }}
-        ></Tab>
-      </Tabs>
-    </AppBar>
+        ></StyledTab>
+      </StyledTabs>
+    </StyledAppBar>
   );
 };
 

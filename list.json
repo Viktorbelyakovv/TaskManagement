@@ -1,70 +1,52 @@
 {
   "tasks": [
     {
-      "title": "Task1",
+      "title": "Go to a bar",
       "completed": true,
       "favorite": false,
       "id": 1
     },
     {
-      "title": "Task2",
+      "title": "Choose a car",
       "completed": true,
       "favorite": false,
       "id": 2
     },
     {
-      "title": "Task3",
+      "title": "Buy tickets",
       "completed": false,
-      "favorite": true,
+      "favorite": false,
       "id": 3
     },
     {
-      "title": "Task4",
+      "title": "Sell earphones",
       "completed": true,
       "favorite": false,
       "id": 4
     },
     {
-      "title": "TAsk5",
-      "completed": true,
-      "favorite": false,
+      "title": "Go to a cafe",
+      "completed": false,
+      "favorite": true,
       "id": 5
     },
     {
-      "title": "TAsk6",
-      "completed": true,
+      "title": "Call to Kelly",
+      "completed": false,
       "favorite": false,
       "id": 6
     },
     {
-      "title": "TAsk7",
+      "title": "Buy milk",
       "completed": false,
-      "favorite": true,
+      "favorite": false,
       "id": 7
     },
     {
-      "title": "TAsk8",
-      "completed": true,
+      "title": "Buy tickets",
+      "completed": false,
       "favorite": false,
       "id": 8
-    },
-    {
-      "title": "Task9",
-      "completed": false,
-      "favorite": true,
-      "id": 9
-    },
-    {
-      "title": "Task10",
-      "completed": false,
-      "favorite": true,
-      "id": 10
-    },
-    {
-      "title": "TAsk11",
-      "completed": false,
-      "favorite": false,
-      "id": 11
     }
   ]
 }
