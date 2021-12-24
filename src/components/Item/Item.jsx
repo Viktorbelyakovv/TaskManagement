@@ -20,15 +20,6 @@ const Item = ({
     item.favorite ? "star" : "star_border"
   );
 
-  const ChangeStar = () => {
-    if (item.favorite) {
-      setStarSign("star_border");
-    } else {
-      setStarSign("star");
-    }
-    changeFavorite(item.id);
-  };
-
   return (
     <div className="Item">
       <StyledCheckbox
@@ -41,18 +32,16 @@ const Item = ({
         onBlur={() => changeTitle(item.id, title)}
         disabled={item.completed}
       />
-      <span
-        className="material-icons"
-        onMouseOver={() => {
-          !item.favorite && setStarSign("star_half");
-        }}
-        onMouseOut={() => {
-          !item.favorite && setStarSign("star_border");
-        }}
-        onClick={() => ChangeStar()}
-      >
-        {starSign}
-      </span>
+      {!item.completed && (
+        <span
+          className="material-icons"
+          onMouseOver={() => !item.favorite && setStarSign("star_half")}
+          onMouseOut={() => !item.favorite && setStarSign("star_border")}
+          onClick={() => changeFavorite(item.id)}
+        >
+          {starSign}
+        </span>
+      )}
       <StyledIconButton onClick={() => deleteItem(item.id)}>
         <ClearIcon />
       </StyledIconButton>

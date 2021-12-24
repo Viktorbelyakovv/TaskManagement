@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { selectList } from "../../store/tasks/selectors";
 import {
@@ -18,7 +19,7 @@ import {
 import Item from "../Item";
 import "./List.css";
 
-const List = () => {
+const List = ({ isCompleted }) => {
   const list = useSelector(selectList);
   const dispatch = useDispatch();
 
@@ -49,6 +50,15 @@ const List = () => {
       ChangeCompleted(id, !item.completed).then(({ status }) => {
         if (status === 200) {
           dispatch(changeCompletedAction(id));
+          if (item.favorite) {
+            ChangeFavorite(id, !item.favorite).then(({ status }) => {
+              if (status === 200) {
+                dispatch(changeFavoriteAction(id));
+              } else {
+                alert("Error status = " + status);
+              }
+            });
+          }
         } else {
           alert("Error status = " + status);
         }
@@ -63,7 +73,6 @@ const List = () => {
       ChangeFavorite(id, !item.favorite).then(({ status }) => {
         if (status === 200) {
           dispatch(changeFavoriteAction(id));
-          return true;
         } else {
           alert("Error status = " + status);
         }
@@ -72,27 +81,50 @@ const List = () => {
   };
 
   useEffect(() => {
-    UploadList().then((list) => dispatch(uploadListAction(list)));
+    UploadList().then((list) => list && dispatch(uploadListAction(list)));
   }, [dispatch]);
 
   return (
     <div className="List">
       {list && list.length ? (
-        list.map((item) => (
-          <Item
-            item={item}
-            deleteItem={deleteItem}
-            changeTitle={changeTitle}
-            changeCompleted={changeCompleted}
-            changeFavorite={changeFavorite}
-            key={item.id}
-          />
-        ))
+        isCompleted ? (
+          list.map(
+            (item) =>
+              item.completed && (
+                <Item
+                  item={item}
+                  deleteItem={deleteItem}
+                  changeTitle={changeTitle}
+                  changeCompleted={changeCompleted}
+                  changeFavorite={changeFavorite}
+                  key={item.id}
+                />
+              )
+          )
+        ) : (
+          list.map(
+            (item) =>
+              !item.completed && (
+                <Item
+                  item={item}
+                  deleteItem={deleteItem}
+                  changeTitle={changeTitle}
+                  changeCompleted={changeCompleted}
+                  changeFavorite={changeFavorite}
+                  key={item.id}
+                />
+              )
+          )
+        )
       ) : (
         <h2>No tasks</h2>
       )}
     </div>
   );
+};
+
+List.propTypes = {
+  isCompleted: PropTypes.bool,
 };
 
 export default List;

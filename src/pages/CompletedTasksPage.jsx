@@ -1,14 +1,12 @@
 import React from "react";
 import Container from "../components/Container";
-import Header from "../components/Header";
 import List from "../components/List";
 
 const CompletedTasksPage = () => {
   return (
     <Container>
-      {"completed"}
-      <Header />
-      <List />
+      <h1>COMPLETED TASKS</h1>
+      <List isCompleted={true} />
     </Container>
   );
 };

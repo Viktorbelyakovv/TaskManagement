@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addTaskAction } from "../../store/tasks/reducer";
 import { AddTask } from "../../utils/api.js";
-import {
-  StyledTextField,
-  StyledSelect,
-  StyledButton,
-} from "./Header.styles.js";
-import "./Header.css";
+import StyledTextField from "./components/StyledTextField";
+import StyledSelect from "./components/StyledSelect";
+import StyledButton from "./components/StyledButton";
+import "./AddTaskForm.css";
 
-const Header = () => {
+const AddTaskForm = () => {
   const [task, setTask] = useState("");
   const dispatch = useDispatch();
 
@@ -27,8 +25,7 @@ const Header = () => {
   };
 
   return (
-    <div className="Header">
-      <h1>TO-DO LIST AND TASK MANAGEMENT</h1>
+    <div className="AddTaskForm">
       <StyledTextField
         label="Task name"
         value={task}
@@ -43,4 +40,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default AddTaskForm;

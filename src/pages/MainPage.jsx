@@ -1,15 +1,14 @@
 import React from "react";
 import Container from "../components/Container";
-import Header from "../components/Header";
+import AddTaskForm from "../components/AddTaskForm";
 import List from "../components/List";
 
-const MainPage = () => {
-  return (
-    <Container>
-      <Header />
-      <List />
-    </Container>
-  );
-};
+const MainPage = () => (
+  <Container>
+    <h1>TO-DO LIST AND TASK MANAGEMENT</h1>
+    <AddTaskForm />
+    <List isCompleted={false} />
+  </Container>
+);
 
 export default MainPage;
