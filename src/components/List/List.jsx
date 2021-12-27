@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
-import { selectList } from "../../store/tasks/selectors";
+import {
+  selectCompletedList,
+  selectNotCompletedList,
+} from "../../store/tasks/selectors";
 import {
   uploadListAction,
   deleteTaskAction,
@@ -20,7 +23,9 @@ import Item from "../Item";
 import "./List.css";
 
 const List = ({ isCompleted }) => {
-  const list = useSelector(selectList);
+  const list = useSelector(
+    isCompleted ? selectCompletedList : selectNotCompletedList
+  );
   const dispatch = useDispatch();
 
   const onDeleteItem = (id) => {
@@ -87,35 +92,16 @@ const List = ({ isCompleted }) => {
   return (
     <div className="List">
       {list.length ? (
-        isCompleted ? (
-          list.map(
-            (item) =>
-              item.completed && (
-                <Item
-                  item={item}
-                  deleteItem={onDeleteItem}
-                  changeTitle={onChangeTitle}
-                  changeCompleted={onChangeCompleted}
-                  changeFavorite={onChangeFavorite}
-                  key={item.id}
-                />
-              )
-          )
-        ) : (
-          list.map(
-            (item) =>
-              !item.completed && (
-                <Item
-                  item={item}
-                  deleteItem={onDeleteItem}
-                  changeTitle={onChangeTitle}
-                  changeCompleted={onChangeCompleted}
-                  changeFavorite={onChangeFavorite}
-                  key={item.id}
-                />
-              )
-          )
-        )
+        list.map((item) => (
+          <Item
+            item={item}
+            deleteItem={onDeleteItem}
+            changeTitle={onChangeTitle}
+            changeCompleted={onChangeCompleted}
+            changeFavorite={onChangeFavorite}
+            key={item.id}
+          />
+        ))
       ) : (
         <h2>No tasks</h2>
       )}
