@@ -13,7 +13,7 @@
       "id": 2
     },
     {
-      "title": "Buy tickets",
+      "title": "Buy ticket",
       "completed": false,
       "favorite": true,
       "id": 3
@@ -33,11 +33,11 @@
     {
       "title": "Call to Kelly",
       "completed": false,
-      "favorite": false,
+      "favorite": true,
       "id": 6
     },
     {
-      "title": "Buy milk",
+      "title": "Buy milks",
       "completed": false,
       "favorite": false,
       "id": 7
