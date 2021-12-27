@@ -9,44 +9,36 @@ export const slice = createSlice({
 
   reducers: {
     uploadListAction: (state, { payload }) => {
-      state.tasks = payload.sort((a) => (a.favorite ? -1 : 1));
+      state.tasks = payload.sort(({ favorite }) => (favorite ? -1 : 1));
     },
 
     addTaskAction: (state, { payload }) => {
-      state.tasks.push(payload);
+      state.tasks = state.tasks.concat(payload);
     },
 
     deleteTaskAction: (state, { payload }) => {
-      const localID = state.tasks.findIndex((item) => item.id === payload);
-
-      if (state.tasks[localID]) {
-        state.tasks.splice(localID, 1);
-      }
+      state.tasks = state.tasks.filter(({ id }) => id !== payload);
     },
 
-    changeTitleAction: (state, { payload }) => {
-      const localID = state.tasks.findIndex((item) => item.id === payload.id);
-
-      if (state.tasks[localID]) {
-        state.tasks[localID].title = payload.title;
-      }
+    changeTitleAction: (state, { payload: { id, title } }) => {
+      const list = [...state.tasks];
+      const item = list.find((item) => item.id === id);
+      item.title = title;
+      state.tasks = list;
     },
 
     changeCompletedAction: (state, { payload }) => {
-      const localID = state.tasks.findIndex((item) => item.id === payload);
-
-      if (state.tasks[localID]) {
-        state.tasks[localID].completed = !state.tasks[localID].completed;
-      }
+      let list = [...state.tasks];
+      const item = list.find(({ id }) => id === payload);
+      item.completed = !item.completed;
+      state.tasks = list;
     },
 
     changeFavoriteAction: (state, { payload }) => {
-      const localID = state.tasks.findIndex((item) => item.id === payload);
-
-      if (state.tasks[localID]) {
-        state.tasks[localID].favorite = !state.tasks[localID].favorite;
-        state.tasks.sort((a) => (a.favorite ? -1 : 1));
-      }
+      let list = [...state.tasks];
+      const item = list.find(({ id }) => id === payload);
+      item.favorite = !item.favorite;
+      state.tasks = list.sort((item) => (item.favorite ? -1 : 1));
     },
   },
 });

@@ -1,59 +1,47 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ClearIcon from "@mui/icons-material/Clear";
-import {
-  StyledCheckbox,
-  StyledInput,
-  StyledIconButton,
-} from "./Item.styles.js";
+import StyledCheckbox from "./components/StyledCheckbox";
+import StyledInput from "./components/StyledInput";
+import StyledIconButton from "./components/StyledIconButton";
 import "./Item.css";
 
 const Item = ({
-  item,
+  item: { id, title, completed, favorite },
   deleteItem,
   changeTitle,
   changeCompleted,
   changeFavorite,
 }) => {
-  const [title, setTitle] = useState(item.title);
-  const [starSign, setStarSign] = useState(
-    item.favorite ? "star" : "star_border"
-  );
+  const [starSign, setStarSign] = useState(favorite ? "star" : "star_border");
 
   const ChangeStar = () => {
-    if (item.favorite) {
-      setStarSign("star_border");
-    } else {
-      setStarSign("star");
-    }
-    changeFavorite(item.id);
+    setStarSign(favorite ? "star_border" : "star");
+    changeFavorite(id);
   };
 
   return (
     <div className="Item">
       <StyledCheckbox
-        checked={item.completed}
-        onChange={() => changeCompleted(item.id)}
+        checked={completed}
+        onChange={() => changeCompleted(id)}
       />
       <StyledInput
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        onBlur={() => changeTitle(item.id, title)}
-        disabled={item.completed}
+        defaultValue={title}
+        onBlur={(e) => changeTitle(id, e.target.value)}
+        disabled={completed}
       />
-      <span
-        className="material-icons"
-        onMouseOver={() => {
-          !item.favorite && setStarSign("star_half");
-        }}
-        onMouseOut={() => {
-          !item.favorite && setStarSign("star_border");
-        }}
-        onClick={() => ChangeStar()}
-      >
-        {starSign}
-      </span>
-      <StyledIconButton onClick={() => deleteItem(item.id)}>
+      {!completed && (
+        <span
+          className="material-icons"
+          onMouseOver={() => !favorite && setStarSign("star_half")}
+          onMouseOut={() => !favorite && setStarSign("star_border")}
+          onClick={() => ChangeStar()}
+        >
+          {starSign}
+        </span>
+      )}
+      <StyledIconButton onClick={() => deleteItem(id)}>
         <ClearIcon />
       </StyledIconButton>
     </div>

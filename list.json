@@ -1,34 +1,52 @@
 {
   "tasks": [
     {
-      "title": "3",
+      "title": "Go to a bar",
+      "completed": true,
+      "favorite": false,
+      "id": 1
+    },
+    {
+      "title": "Choose a car",
+      "completed": true,
+      "favorite": false,
+      "id": 2
+    },
+    {
+      "title": "Buy ticket",
+      "completed": false,
+      "favorite": false,
+      "id": 3
+    },
+    {
+      "title": "Sell earphones",
+      "completed": true,
+      "favorite": false,
+      "id": 4
+    },
+    {
+      "title": "Go to a cafe",
       "completed": false,
       "favorite": true,
+      "id": 5
+    },
+    {
+      "title": "Call to Kelly",
+      "completed": false,
+      "favorite": true,
+      "id": 6
+    },
+    {
+      "title": "Buy milks",
+      "completed": false,
+      "favorite": false,
+      "id": 7
+    },
+    {
+      "title": "Buy tickets",
+      "completed": false,
+      "favorite": false,
       "id": 8
-    },
-    {
-      "title": "4",
-      "completed": false,
-      "favorite": false,
-      "id": 9
-    },
-    {
-      "title": "таск",
-      "completed": false,
-      "favorite": false,
-      "id": 11
-    },
-    {
-      "title": "туск",
-      "completed": false,
-      "favorite": true,
-      "id": 12
-    },
-    {
-      "title": "тиск",
-      "completed": false,
-      "favorite": false,
-      "id": 13
     }
   ]
 }

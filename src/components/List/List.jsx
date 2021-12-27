@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
-import { selectList } from "../../store/tasks/selectors";
+import {
+  selectCompletedList,
+  selectNotCompletedList,
+} from "../../store/tasks/selectors";
 import {
   uploadListAction,
   deleteTaskAction,
@@ -9,21 +13,23 @@ import {
   changeFavoriteAction,
 } from "../../store/tasks/reducer";
 import {
-  UploadList,
-  DeleteTask,
-  ChangeTitle,
-  ChangeCompleted,
-  ChangeFavorite,
+  uploadListServer,
+  deleteTaskServer,
+  changeTitleServer,
+  changeCompletedServer,
+  changeFavoriteServer,
 } from "../../utils/api";
 import Item from "../Item";
 import "./List.css";
 
-const List = () => {
-  const list = useSelector(selectList);
+const List = ({ isCompleted }) => {
+  const list = useSelector(
+    isCompleted ? selectCompletedList : selectNotCompletedList
+  );
   const dispatch = useDispatch();
 
-  const deleteItem = (id) => {
-    DeleteTask(id).then(({ status }) => {
+  const onDeleteItem = (id) => {
+    deleteTaskServer(id).then(({ status }) => {
       if (status === 200) {
         dispatch(deleteTaskAction(id));
       } else {
@@ -32,8 +38,8 @@ const List = () => {
     });
   };
 
-  const changeTitle = (id, title) => {
-    ChangeTitle(id, title).then(({ status }) => {
+  const onChangeTitle = (id, title) => {
+    changeTitleServer(id, title).then(({ status }) => {
       if (status === 200) {
         dispatch(changeTitleAction({ id, title }));
       } else {
@@ -42,13 +48,22 @@ const List = () => {
     });
   };
 
-  const changeCompleted = (id) => {
+  const onChangeCompleted = (id) => {
     const item = list.find((item) => item.id === id);
 
     if (item) {
-      ChangeCompleted(id, !item.completed).then(({ status }) => {
+      changeCompletedServer(id, !item.completed).then(({ status }) => {
         if (status === 200) {
           dispatch(changeCompletedAction(id));
+          if (item.favorite) {
+            changeFavoriteServer(id, !item.favorite).then(({ status }) => {
+              if (status === 200) {
+                dispatch(changeFavoriteAction(id));
+              } else {
+                alert("Error status = " + status);
+              }
+            });
+          }
         } else {
           alert("Error status = " + status);
         }
@@ -56,14 +71,13 @@ const List = () => {
     }
   };
 
-  const changeFavorite = (id) => {
+  const onChangeFavorite = (id) => {
     const item = list.find((item) => item.id === id);
 
     if (item) {
-      ChangeFavorite(id, !item.favorite).then(({ status }) => {
+      changeFavoriteServer(id, !item.favorite).then(({ status }) => {
         if (status === 200) {
           dispatch(changeFavoriteAction(id));
-          return true;
         } else {
           alert("Error status = " + status);
         }
@@ -72,19 +86,19 @@ const List = () => {
   };
 
   useEffect(() => {
-    UploadList().then((list) => dispatch(uploadListAction(list)));
+    uploadListServer().then((list) => list && dispatch(uploadListAction(list)));
   }, [dispatch]);
 
   return (
     <div className="List">
-      {list && list.length ? (
+      {list.length ? (
         list.map((item) => (
           <Item
             item={item}
-            deleteItem={deleteItem}
-            changeTitle={changeTitle}
-            changeCompleted={changeCompleted}
-            changeFavorite={changeFavorite}
+            deleteItem={onDeleteItem}
+            changeTitle={onChangeTitle}
+            changeCompleted={onChangeCompleted}
+            changeFavorite={onChangeFavorite}
             key={item.id}
           />
         ))
@@ -93,6 +107,10 @@ const List = () => {
       )}
     </div>
   );
+};
+
+List.propTypes = {
+  isCompleted: PropTypes.bool,
 };
 
 export default List;

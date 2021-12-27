@@ -1,15 +1,21 @@
 import React from "react";
-import Container from "../Container";
-import Header from "../Header";
-import List from "../List";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navigation from "../Navigation/Navigation";
+import MainPage from "../../pages/MainPage";
+import CompletedTasksPage from "../../pages/CompletedTasksPage";
+import NotFound from "../../pages/NotFound";
 import "./App.css";
 
 const App = () => (
   <div className="App">
-    <Container>
-      <Header />
-      <List />
-    </Container>
+    <BrowserRouter>
+      <Navigation />
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="CompletedTasksPage" element={<CompletedTasksPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   </div>
 );
 
