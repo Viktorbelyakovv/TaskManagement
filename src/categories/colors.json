@@ -1,0 +1,16 @@
+{
+  "colors": [
+    {
+      "title": "yellow",
+      "id": 1
+    },
+    {
+      "title": "red",
+      "id": 2
+    },
+    {
+      "title": "blue",
+      "id": 3
+    }
+  ]
+}

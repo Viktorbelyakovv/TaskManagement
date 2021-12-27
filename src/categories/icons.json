@@ -1,0 +1,24 @@
+{
+  "icons": [
+    {
+      "title": "Family",
+      "id": 1
+    },
+    {
+      "title": "Food",
+      "id": 2
+    },
+    {
+      "title": "Shopping",
+      "id": 3
+    },
+    {
+      "title": "Sport",
+      "id": 4
+    },
+    {
+      "title": "Work",
+      "id": 5
+    }
+  ]
+}

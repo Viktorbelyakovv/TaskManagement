@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addTaskAction } from "../../store/tasks/reducer";
 import { addTaskServer } from "../../utils/api.js";
-import StyledTextField from "./components/StyledTextField";
-import StyledSelect from "./components/StyledSelect";
-import StyledButton from "./components/StyledButton";
+import StyledTextField from "../StyledTextField";
+import StyledSelect from "../StyledSelect";
+import StyledButton from "../StyledButton";
 import "./AddTaskForm.css";
 
 const AddTaskForm = () => {

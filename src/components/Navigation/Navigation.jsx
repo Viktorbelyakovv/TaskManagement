@@ -1,35 +1,30 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import StyledAppBar from "./components/StyledAppBar";
 import StyledTabs from "./components/StyledTabs";
 import StyledTab from "./components/StyledTab";
 
 const Navigation = () => {
-  const [value, setValue] = useState("Main");
+  const location = useLocation();
+  const [locationPathName, setPathName] = useState(location.pathname);
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setPathName(newValue);
   };
 
   return (
     <StyledAppBar position="fixed">
-      <StyledTabs value={value} onChange={handleChange}>
+      <StyledTabs value={locationPathName} onChange={handleChange}>
         <StyledTab
           component={NavLink}
           to="/"
           label="Main Page"
-          value="Main"
+          value="/"
         ></StyledTab>
         <StyledTab
           component={NavLink}
           to="/CompletedTasksPage"
           label="Completed Tasks"
-          value="Completed Tasks"
-        ></StyledTab>
-        <StyledTab
-          component={NavLink}
-          to="/SettingsPage"
-          label="Settings"
-          value="Settings"
+          value="/CompletedTasksPage"
         ></StyledTab>
         <StyledTab
           component={NavLink}
