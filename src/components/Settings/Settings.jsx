@@ -1,4 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+
+import {
+  uploadCategoriesAction,
+  uploadColorsAction,
+  uploadIconsAction,
+  uploadDefaultCategoryAction,
+} from "../../store/categories/reducer";
+import {
+  uploadCategoriesServer,
+  uploadColorsServer,
+  uploadIconsServer,
+  uploadDefaultCategoryServer,
+} from "../../utils/apiCategories";
+
 import DefaultCategory from "./components/DefaultCategory";
 import AddCategoryForm from "./components/AddCategoryForm";
 import ListCategories from "./components/ListCategories";
@@ -12,6 +27,8 @@ import Work from "../../categories/icons/Work";
 import "./Settings.css";
 
 const Settings = () => {
+  const dispatch = useDispatch();
+
   const iconConnecter = (title, color, size) => {
     switch (title) {
       case "Family":
@@ -26,6 +43,24 @@ const Settings = () => {
         return <Work size={size} color={color}></Work>;
     }
   };
+
+  useEffect(() => {
+    uploadColorsServer().then(
+      (data) => data && dispatch(uploadColorsAction(data))
+    );
+
+    uploadIconsServer().then(
+      (data) => data && dispatch(uploadIconsAction(data))
+    );
+
+    uploadDefaultCategoryServer().then(
+      (data) => data && dispatch(uploadDefaultCategoryAction(data))
+    );
+
+    uploadCategoriesServer().then(
+      (data) => data && dispatch(uploadCategoriesAction(data))
+    );
+  }, [dispatch]);
 
   return (
     <>

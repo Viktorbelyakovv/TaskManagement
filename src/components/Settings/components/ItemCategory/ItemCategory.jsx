@@ -11,7 +11,12 @@ import StyledInput from "../../../StyledInput";
 import StyledIconButton from "../../../StyledIconButton";
 import "./ItemCategory.css";
 
-const ItemCategory = ({ title, colorId, iconId, iconConnecter }) => {
+const ItemCategory = ({
+  item: { id, title, colorId, iconId },
+  iconConnecter,
+  changeTitle,
+  deleteItem,
+}) => {
   const colors = useSelector(selectColors);
   const icons = useSelector(selectIcons);
 
@@ -19,19 +24,14 @@ const ItemCategory = ({ title, colorId, iconId, iconConnecter }) => {
     <div className="ItemCategory">
       <StyledInput
         defaultValue={title}
-        onBlur={
-          () => console.log("onblur")
-          /* (e) => changeTitle(id, e.target.value) */
-        }
+        onBlur={(e) => changeTitle(id, e.target.value)}
       />
       {iconConnecter(
         icons.find(({ id }) => id === iconId).title,
         colors.find(({ id }) => id === colorId).title,
         "40px"
       )}
-      <StyledIconButton
-        onClick={() => console.log("delete") /* () => deleteItem(id) */}
-      >
+      <StyledIconButton onClick={() => deleteItem(id)}>
         <ClearIcon />
       </StyledIconButton>
     </div>
@@ -39,10 +39,10 @@ const ItemCategory = ({ title, colorId, iconId, iconConnecter }) => {
 };
 
 ItemCategory.propTypes = {
-  title: PropTypes.string,
-  colorId: PropTypes.number,
-  iconId: PropTypes.number,
+  item: PropTypes.object,
   iconConnecter: PropTypes.func,
+  changeTitle: PropTypes.func,
+  deleteItem: PropTypes.func,
 };
 
 export default ItemCategory;

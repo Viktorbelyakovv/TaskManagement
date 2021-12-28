@@ -23,14 +23,21 @@ const AddCategoryForm = ({ iconConnecter }) => {
   const dispatch = useDispatch();
 
   const onAddCategory = () => {
-    dispatch(
-      addCategoryAction({
-        id: Date.now(),
-        title: category,
-        colorId: color.id,
-        iconId: icon.id,
-      })
-    );
+    if (category.trim()) {
+      setCategory("");
+      if (category.length > 15) {
+        alert("The name of a category should contain less than 15 charaters");
+      } else {
+        dispatch(
+          addCategoryAction({
+            id: Date.now(),
+            title: category,
+            colorId: color.id,
+            iconId: icon.id,
+          })
+        );
+      }
+    }
   };
 
   return (

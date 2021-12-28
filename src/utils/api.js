@@ -7,7 +7,7 @@ const api = axios.create({ baseURL });
 export const uploadListServer = () => {
   return api
     .get(`/tasks`)
-    .then((list) => list.data)
+    .then(({ data }) => data)
     .catch((error) => alert(error));
 };
 

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { changeDefaultCategoryAction } from "../../../../store/categories/reducer";
 import {
   selectCategories,
   selectDefaultCategory,
 } from "../../../../store/categories/selectors";
+import { changeDefaultCategoryAction } from "../../../../store/categories/reducer";
 import MenuItem from "@mui/material/MenuItem";
 
 import StyledSelect from "../../../StyledSelect";
@@ -19,7 +19,7 @@ const DefaultCategory = () => {
 
   const onChangeCategory = (event) => {
     console.log(event.target.value);
-    dispatch(changeDefaultCategoryAction(event.target.value.id));
+    dispatch(changeDefaultCategoryAction(event.target.value));
   };
   return (
     <div>
