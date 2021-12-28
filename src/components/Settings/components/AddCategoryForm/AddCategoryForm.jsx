@@ -1,19 +1,25 @@
 import React, { useState } from "react";
-import StyledTextField from "../../../StyledTextField/StyledTextField";
-import StyledButton from "../../../StyledButton/StyledButton";
+import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 import MenuItem from "@mui/material/MenuItem";
-import StyledSelect from "../../../StyledSelect/StyledSelect";
-import Family from "../../../../categories/icons/Family";
-import Food from "../../../../categories/icons/Food";
-import Shopping from "../../../../categories/icons/Shopping";
-import Sport from "../../../../categories/icons/Sport";
-import Work from "../../../../categories/icons/Work";
 
-const AddCategoryForm = () => {
+import StyledTextField from "../../../StyledTextField";
+import StyledButton from "../../../StyledButton";
+import StyledSelect from "../../../StyledSelect";
+import {
+  selectColors,
+  selectIcons,
+} from "../../../../store/categories/selectors";
+
+const AddCategoryForm = ({ iconConnecter }) => {
+  const colors = useSelector(selectColors);
+  const icons = useSelector(selectIcons);
+  const defaultColor = "red";
+  const defaultIcon = "Family";
   const [category, setCategory] = useState("");
 
-  const [color, setColor] = React.useState("");
-  const [icon, setIcon] = React.useState("");
+  const [color, setColor] = useState(defaultColor);
+  const [icon, setIcon] = useState(defaultIcon);
 
   const handleColorChange = (event) => {
     setColor(event.target.value);
@@ -29,53 +35,38 @@ const AddCategoryForm = () => {
 
   return (
     <div>
-      <div>{"New category"}</div>
+      <div>{"Add new category"}</div>
       <StyledTextField
+        sx={{ width: "40%" }}
         label="Category name"
         value={category}
         onChange={(e) => setCategory(e.target.value)}
         onKeyPress={(e) => e.key === "Enter" && onAddCategory()}
       />
-      <StyledSelect
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={color}
-        label="Age"
-        onChange={handleColorChange}
-      >
-        <MenuItem value={"red"}>Red</MenuItem>
-        <MenuItem value={"blue"}>Blue</MenuItem>
-        <MenuItem value={"green"}>Green</MenuItem>
+      <StyledSelect value={color} label="Color" onChange={handleColorChange}>
+        {colors.map((item) => (
+          <MenuItem value={item.title} key={item.id}>
+            {item.title}
+          </MenuItem>
+        ))}
       </StyledSelect>
 
-      <StyledSelect
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={icon}
-        label="Age"
-        onChange={handleIconChange}
-      >
-        <MenuItem value={10}>
-          <Family size={"40px"}></Family>
-        </MenuItem>
-        <MenuItem value={20}>
-          <Food size={"40px"}></Food>
-        </MenuItem>
-        <MenuItem value={30}>
-          <Shopping size={"40px"}></Shopping>
-        </MenuItem>
-        <MenuItem value={30}>
-          <Sport size={"40px"}></Sport>
-        </MenuItem>
-        <MenuItem value={30}>
-          <Work size={"40px"}></Work>
-        </MenuItem>
+      <StyledSelect value={icon} label="Icon" onChange={handleIconChange}>
+        {icons.map((item) => (
+          <MenuItem value={item.title} key={item.id}>
+            {iconConnecter(item.title)}
+          </MenuItem>
+        ))}
       </StyledSelect>
       <StyledButton variant="outlined" onClick={onAddCategory}>
         Add
       </StyledButton>
     </div>
   );
+};
+
+AddCategoryForm.propTypes = {
+  iconConnecter: PropTypes.func,
 };
 
 export default AddCategoryForm;

@@ -32,8 +32,8 @@
     },
     {
       "title": "Call to Kelly",
-      "completed": false,
-      "favorite": true,
+      "completed": true,
+      "favorite": false,
       "id": 6
     },
     {
