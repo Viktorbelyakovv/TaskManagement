@@ -30,9 +30,13 @@ export const slice = createSlice({
     changeDefaultCategoryAction: (state, { payload }) => {
       state.defaultCategory.id = payload;
     },
+
+    addCategoryAction: (state, { payload }) => {
+      state.categories = state.categories.concat(payload);
+    },
   },
 });
 
-export const { changeDefaultCategoryAction } = slice.actions;
+export const { changeDefaultCategoryAction, addCategoryAction } = slice.actions;
 
 export default slice.reducer;

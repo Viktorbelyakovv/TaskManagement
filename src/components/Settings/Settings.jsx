@@ -12,18 +12,18 @@ import Work from "../../categories/icons/Work";
 import "./Settings.css";
 
 const Settings = () => {
-  const iconConnecter = (title, color) => {
+  const iconConnecter = (title, color, size) => {
     switch (title) {
       case "Family":
-        return <Family size={"40px"} color={color}></Family>;
+        return <Family size={size} color={color}></Family>;
       case "Food":
-        return <Food size={"40px"} color={color}></Food>;
+        return <Food size={size} color={color}></Food>;
       case "Shopping":
-        return <Shopping size={"40px"} color={color}></Shopping>;
+        return <Shopping size={size} color={color}></Shopping>;
       case "Sport":
-        return <Sport size={"40px"} color={color}></Sport>;
+        return <Sport size={size} color={color}></Sport>;
       case "Work":
-        return <Work size={"40px"} color={color}></Work>;
+        return <Work size={size} color={color}></Work>;
     }
   };
 

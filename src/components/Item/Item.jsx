@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ClearIcon from "@mui/icons-material/Clear";
 import StyledCheckbox from "./components/StyledCheckbox";
-import StyledInput from "./components/StyledInput";
-import StyledIconButton from "./components/StyledIconButton";
+import StyledInput from "../StyledInput";
+import StyledIconButton from "../StyledIconButton";
 import "./Item.css";
 
 const Item = ({
