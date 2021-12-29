@@ -36,7 +36,7 @@ export const slice = createSlice({
     },
 
     deleteCategoryAction: (state, { payload }) => {
-      state.categories = state.categories.filter(({ id }) => id !== payload.id);
+      state.categories = state.categories.filter(({ id }) => id !== payload);
     },
 
     changeCategoryTitleAction: (state, { payload: { id, title } }) => {

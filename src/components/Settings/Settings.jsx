@@ -1,5 +1,9 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectCategories,
+  selectDefaultCategory,
+} from "../../store/categories/selectors";
 
 import {
   uploadCategoriesAction,
@@ -29,21 +33,6 @@ import "./Settings.css";
 const Settings = () => {
   const dispatch = useDispatch();
 
-  const iconConnecter = (title, color, size) => {
-    switch (title) {
-      case "Family":
-        return <Family size={size} color={color}></Family>;
-      case "Food":
-        return <Food size={size} color={color}></Food>;
-      case "Shopping":
-        return <Shopping size={size} color={color}></Shopping>;
-      case "Sport":
-        return <Sport size={size} color={color}></Sport>;
-      case "Work":
-        return <Work size={size} color={color}></Work>;
-    }
-  };
-
   useEffect(() => {
     uploadColorsServer().then(
       (data) => data && dispatch(uploadColorsAction(data))
@@ -62,11 +51,31 @@ const Settings = () => {
     );
   }, [dispatch]);
 
+  const iconConnecter = (title, color, size) => {
+    switch (title) {
+      case "Family":
+        return <Family size={size} color={color}></Family>;
+      case "Food":
+        return <Food size={size} color={color}></Food>;
+      case "Shopping":
+        return <Shopping size={size} color={color}></Shopping>;
+      case "Sport":
+        return <Sport size={size} color={color}></Sport>;
+      case "Work":
+        return <Work size={size} color={color}></Work>;
+    }
+  };
+  const isDefaultExist = useSelector(selectDefaultCategory);
+
   return (
     <>
-      <DefaultCategory />
-      <AddCategoryForm iconConnecter={iconConnecter} />
-      <ListCategories iconConnecter={iconConnecter} />
+      {useSelector(selectCategories).length && (
+        <div>
+          {isDefaultExist && <DefaultCategory />}
+          <AddCategoryForm iconConnecter={iconConnecter} />
+          <ListCategories iconConnecter={iconConnecter} />
+        </div>
+      )}
     </>
   );
 };

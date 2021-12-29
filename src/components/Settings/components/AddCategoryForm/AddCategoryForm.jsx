@@ -11,14 +11,15 @@ import {
   selectIcons,
 } from "../../../../store/categories/selectors";
 import { addCategoryAction } from "../../../../store/categories/reducer";
+import { addCategoryServer } from "../../../../utils/apiCategories";
 import "./AddCategoryForm.css";
 
 const AddCategoryForm = ({ iconConnecter }) => {
   const colors = useSelector(selectColors);
   const icons = useSelector(selectIcons);
 
-  const [color, setColor] = useState(colors[0]);
-  const [icon, setIcon] = useState(icons[0]);
+  const [color, setColor] = useState(colors.find((item) => item));
+  const [icon, setIcon] = useState(icons.find((item) => item));
   const [category, setCategory] = useState("");
   const dispatch = useDispatch();
 
@@ -28,13 +29,14 @@ const AddCategoryForm = ({ iconConnecter }) => {
       if (category.length > 15) {
         alert("The name of a category should contain less than 15 charaters");
       } else {
-        dispatch(
-          addCategoryAction({
-            id: Date.now(),
-            title: category,
-            colorId: color.id,
-            iconId: icon.id,
-          })
+        addCategoryServer(category, color.id, icon.id).then(
+          ({ status, data }) => {
+            if (status === 201) {
+              dispatch(addCategoryAction(data));
+            } else {
+              alert("Error status = " + status);
+            }
+          }
         );
       }
     }

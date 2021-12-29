@@ -11,6 +11,11 @@ import {
   changeCategoryTitleAction,
   changeDefaultCategoryAction,
 } from "../../../../store/categories/reducer";
+import {
+  deleteCategoryServer,
+  changeCategoryTitleServer,
+  changeDefaultCategoryServer,
+} from "../../../../utils/apiCategories";
 
 const ListCategories = ({ iconConnecter }) => {
   const dispatch = useDispatch();
@@ -18,17 +23,38 @@ const ListCategories = ({ iconConnecter }) => {
   const defaultCategoryId = useSelector(selectDefaultCategory);
 
   const changeTitle = (id, title) => {
-    dispatch(changeCategoryTitleAction({ id, title }));
+    changeCategoryTitleServer(id, title).then(({ status }) => {
+      if (status === 200) {
+        dispatch(changeCategoryTitleAction({ id, title }));
+      } else {
+        alert("Error status = " + status);
+      }
+    });
   };
 
   const deleteItem = (id) => {
-    dispatch(deleteCategoryAction({ id }));
-    id === defaultCategoryId.id &&
-      dispatch(
-        changeDefaultCategoryAction({
-          id: categories.find((item) => item).id,
-        })
-      );
+    deleteCategoryServer(id).then(({ status }) => {
+      if (status === 200) {
+        dispatch(deleteCategoryAction(id));
+        if (id === defaultCategoryId.id) {
+          changeDefaultCategoryServer({
+            id: categories.find((item) => item).id,
+          }).then(({ status }) => {
+            if (status === 200) {
+              dispatch(
+                changeDefaultCategoryAction({
+                  id: categories.find((item) => item).id,
+                })
+              );
+            } else {
+              alert("Error status = " + status);
+            }
+          });
+        }
+      } else {
+        alert("Error status = " + status);
+      }
+    });
   };
 
   return (

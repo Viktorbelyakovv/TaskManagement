@@ -31,3 +31,35 @@ export const uploadDefaultCategoryServer = () => {
     .then(({ data }) => data)
     .catch((error) => alert(error));
 };
+
+export const changeDefaultCategoryServer = ({ id }) => {
+  return api
+    .put(`/defaultCategory`, { id })
+    .then((response) => response)
+    .catch((error) => alert(error));
+};
+
+export const addCategoryServer = (title, colorId, iconId) => {
+  return api
+    .post(`/categories`, {
+      title,
+      colorId,
+      iconId,
+    })
+    .then((response) => response)
+    .catch((error) => alert(error));
+};
+
+export const deleteCategoryServer = (id) => {
+  return api
+    .delete(`/categories/${id}`)
+    .then((response) => response)
+    .catch((error) => alert(error));
+};
+
+export const changeCategoryTitleServer = (id, title) => {
+  return api
+    .patch(`/categories/${id}`, { title })
+    .then((response) => response)
+    .catch((error) => alert(error));
+};
