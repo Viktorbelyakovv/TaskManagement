@@ -75,42 +75,6 @@
       "id": 7
     }
   ],
-  "colors": [
-    {
-      "id": 1,
-      "title": "red"
-    },
-    {
-      "id": 2,
-      "title": "blue"
-    },
-    {
-      "id": 3,
-      "title": "green"
-    }
-  ],
-  "icons": [
-    {
-      "id": 1,
-      "title": "Family"
-    },
-    {
-      "id": 2,
-      "title": "Food"
-    },
-    {
-      "id": 3,
-      "title": "Shopping"
-    },
-    {
-      "id": 4,
-      "title": "Sport"
-    },
-    {
-      "id": 5,
-      "title": "Work"
-    }
-  ],
   "defaultCategory": {
     "id": 4
   }

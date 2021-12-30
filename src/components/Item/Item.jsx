@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ClearIcon from "@mui/icons-material/Clear";
 import StyledCheckbox from "./components/StyledCheckbox";
-import StyledInput from "../StyledInput";
+import StyledListItem from "../StyledListItem";
 import StyledIconButton from "../StyledIconButton";
 import "./Item.css";
 
@@ -26,7 +26,8 @@ const Item = ({
         checked={completed}
         onChange={() => changeCompleted(id)}
       />
-      <StyledInput
+      <StyledListItem
+        variant="standard"
         defaultValue={title}
         onBlur={(e) => changeTitle(id, e.target.value)}
         disabled={completed}

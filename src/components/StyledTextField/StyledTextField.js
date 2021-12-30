@@ -22,7 +22,7 @@ const StyledTextField = styled(TextField)({
     },
 
     "&.Mui-focused fieldset": {
-      borderColor: "rgb(241, 93, 93)",
+      borderColor: "rgb(250, 235, 96)",
       borderWidth: 2,
     },
   },

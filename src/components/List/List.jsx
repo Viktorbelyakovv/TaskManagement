@@ -33,7 +33,7 @@ const List = ({ isCompleted }) => {
       if (status === 200) {
         dispatch(deleteTaskAction(id));
       } else {
-        alert("Error status = " + status);
+        console.log("Error status = " + status);
       }
     });
   };
@@ -43,7 +43,7 @@ const List = ({ isCompleted }) => {
       if (status === 200) {
         dispatch(changeTitleAction({ id, title }));
       } else {
-        alert("Error status = " + status);
+        console.log("Error status = " + status);
       }
     });
   };
@@ -55,17 +55,18 @@ const List = ({ isCompleted }) => {
       changeCompletedServer(id, !item.completed).then(({ status }) => {
         if (status === 200) {
           dispatch(changeCompletedAction(id));
+
           if (item.favorite) {
             changeFavoriteServer(id, !item.favorite).then(({ status }) => {
               if (status === 200) {
                 dispatch(changeFavoriteAction(id));
               } else {
-                alert("Error status = " + status);
+                console.log("Error status = " + status);
               }
             });
           }
         } else {
-          alert("Error status = " + status);
+          console.log("Error status = " + status);
         }
       });
     }
@@ -79,7 +80,7 @@ const List = ({ isCompleted }) => {
         if (status === 200) {
           dispatch(changeFavoriteAction(id));
         } else {
-          alert("Error status = " + status);
+          console.log("Error status = " + status);
         }
       });
     }

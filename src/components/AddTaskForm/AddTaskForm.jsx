@@ -6,6 +6,7 @@ import StyledTextField from "../StyledTextField";
 import StyledSelect from "../StyledSelect";
 import StyledButton from "../StyledButton";
 import "./AddTaskForm.css";
+import { MenuItem } from "@mui/material";
 
 const AddTaskForm = () => {
   const [task, setTask] = useState("");
@@ -18,9 +19,11 @@ const AddTaskForm = () => {
         if (status === 201) {
           dispatch(addTaskAction(data));
         } else {
-          alert("Error status = " + status);
+          console.log("Error status = " + status);
         }
       });
+    } else {
+      console.log("Error the name of a task");
     }
   };
 
@@ -32,7 +35,9 @@ const AddTaskForm = () => {
         onChange={(e) => setTask(e.target.value)}
         onKeyPress={(e) => e.key === "Enter" && onAddTask()}
       />
-      <StyledSelect />
+      <StyledSelect value="1">
+        <MenuItem value="1">{"category"}</MenuItem>
+      </StyledSelect>
       <StyledButton variant="outlined" onClick={onAddTask}>
         Add
       </StyledButton>

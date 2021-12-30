@@ -17,26 +17,29 @@ import {
   changeDefaultCategoryServer,
 } from "../../../../utils/apiCategories";
 
-const ListCategories = ({ iconConnecter }) => {
+const ListCategories = () => {
   const dispatch = useDispatch();
   const categories = useSelector(selectCategories);
-  const defaultCategoryId = useSelector(selectDefaultCategory);
+  const defaultCategory = useSelector(selectDefaultCategory);
 
   const changeTitle = (id, title) => {
-    changeCategoryTitleServer(id, title).then(({ status }) => {
-      if (status === 200) {
-        dispatch(changeCategoryTitleAction({ id, title }));
-      } else {
-        alert("Error status = " + status);
-      }
-    });
+    if (title.trim() && title.length <= 15) {
+      changeCategoryTitleServer(id, title).then(({ status }) => {
+        if (status === 200) {
+          dispatch(changeCategoryTitleAction({ id, title }));
+        } else {
+          console.log("Error status = " + status);
+        }
+      });
+    }
   };
 
   const deleteItem = (id) => {
     deleteCategoryServer(id).then(({ status }) => {
       if (status === 200) {
         dispatch(deleteCategoryAction(id));
-        if (id === defaultCategoryId.id) {
+
+        if (id === defaultCategory.id) {
           changeDefaultCategoryServer({
             id: categories.find((item) => item).id,
           }).then(({ status }) => {
@@ -47,25 +50,24 @@ const ListCategories = ({ iconConnecter }) => {
                 })
               );
             } else {
-              alert("Error status = " + status);
+              console.log("Error status = " + status);
             }
           });
         }
       } else {
-        alert("Error status = " + status);
+        console.log("Error status = " + status);
       }
     });
   };
 
   return (
-    <div>
-      {"List of categories"}
+    <>
+      <h2>List of categories</h2>
       {categories.length ? (
         categories.map((item) => (
           <ItemCategory
             item={item}
             key={item.id}
-            iconConnecter={iconConnecter}
             changeTitle={changeTitle}
             deleteItem={deleteItem}
           />
@@ -73,12 +75,12 @@ const ListCategories = ({ iconConnecter }) => {
       ) : (
         <h2>No categories</h2>
       )}
-    </div>
+    </>
   );
 };
 
 ListCategories.propTypes = {
-  iconConnecter: PropTypes.func,
+  getSvgIcon: PropTypes.func,
 };
 
 export default ListCategories;

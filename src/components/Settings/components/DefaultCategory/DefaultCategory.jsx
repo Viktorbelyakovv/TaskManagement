@@ -7,50 +7,47 @@ import {
 } from "../../../../store/categories/selectors";
 import { changeDefaultCategoryAction } from "../../../../store/categories/reducer";
 import { changeDefaultCategoryServer } from "../../../../utils/apiCategories";
-
 import StyledSelect from "../../../StyledSelect";
 
 const DefaultCategory = () => {
   const dispatch = useDispatch();
-  const categories = useSelector(selectCategories);
-  const defaultCategoryId = useSelector(selectDefaultCategory);
+  const categories = useSelector(selectCategories) || {};
+  const defaultCategory = useSelector(selectDefaultCategory) || {};
 
   const [category, setCategory] = useState(
-    categories.find(({ id }) => id === defaultCategoryId.id)
+    categories.find(({ id }) => id === defaultCategory.id).id || {}
   );
 
-  const onChangeCategory = (event) => {
-    changeDefaultCategoryServer(event.target.value).then(({ status }) => {
+  const onChangeCategory = (e) => {
+    changeDefaultCategoryServer(e.target.value).then(({ status }) => {
       if (status === 200) {
-        dispatch(changeDefaultCategoryAction(event.target.value));
+        dispatch(changeDefaultCategoryAction({ id: e.target.value }));
       } else {
-        alert("Error status = " + status);
+        console.log("Error status = " + status);
       }
     });
   };
   return (
-    <div>
-      {"Default category"}
-      <div>
-        <StyledSelect
-          sx={{ width: "80%" }}
-          value={category}
-          label="Category"
-          onChange={(event) => {
-            setCategory(event.target.value);
-          }}
-          onBlur={(event) => {
-            onChangeCategory(event);
-          }}
-        >
-          {categories.map((item) => (
-            <MenuItem value={item} key={item.id}>
-              {item.title}
+    <>
+      <h2>Default category</h2>
+      <StyledSelect
+        sx={{ width: "80%" }}
+        value={category}
+        label="Category"
+        onChange={(e) => setCategory(e.target.value)}
+        onBlur={(e) => onChangeCategory(e)}
+      >
+        {categories ? (
+          categories.map(({ id, title }) => (
+            <MenuItem value={id} key={id}>
+              {title}
             </MenuItem>
-          ))}
-        </StyledSelect>
-      </div>
-    </div>
+          ))
+        ) : (
+          <h2>No categories</h2>
+        )}
+      </StyledSelect>
+    </>
   );
 };
 

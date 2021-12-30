@@ -5,22 +5,12 @@ export const slice = createSlice({
 
   initialState: {
     categories: [],
-    colors: [],
-    icons: [],
     defaultCategory: { id: null },
   },
 
   reducers: {
     uploadCategoriesAction: (state, { payload }) => {
       state.categories = payload;
-    },
-
-    uploadColorsAction: (state, { payload }) => {
-      state.colors = payload;
-    },
-
-    uploadIconsAction: (state, { payload }) => {
-      state.icons = payload;
     },
 
     uploadDefaultCategoryAction: (state, { payload }) => {
@@ -50,10 +40,7 @@ export const slice = createSlice({
 
 export const {
   uploadCategoriesAction,
-  uploadColorsAction,
-  uploadIconsAction,
   uploadDefaultCategoryAction,
-
   changeDefaultCategoryAction,
   addCategoryAction,
   deleteCategoryAction,

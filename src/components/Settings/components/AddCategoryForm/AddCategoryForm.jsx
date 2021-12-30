@@ -2,83 +2,100 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import MenuItem from "@mui/material/MenuItem";
-
+import { selectCategories } from "../../../../store/categories/selectors";
+import { addCategoryAction } from "../../../../store/categories/reducer";
+import { addCategoryServer } from "../../../../utils/apiCategories";
+import { getSvgIcon } from "../../../../helpers/getSvgIcon";
+import { colors } from "../../../../helpers/colors";
+import { icons } from "../../../../helpers/icons";
 import StyledTextField from "../../../StyledTextField";
 import StyledButton from "../../../StyledButton";
 import StyledSelect from "../../../StyledSelect";
-import {
-  selectColors,
-  selectIcons,
-} from "../../../../store/categories/selectors";
-import { addCategoryAction } from "../../../../store/categories/reducer";
-import { addCategoryServer } from "../../../../utils/apiCategories";
 import "./AddCategoryForm.css";
 
-const AddCategoryForm = ({ iconConnecter }) => {
-  const colors = useSelector(selectColors);
-  const icons = useSelector(selectIcons);
+const AddCategoryForm = () => {
+  const categories = useSelector(selectCategories);
 
-  const [color, setColor] = useState(colors.find((item) => item));
-  const [icon, setIcon] = useState(icons.find((item) => item));
+  const [idColor, setIdColor] = useState(1);
+  const [idIcon, setIdIcon] = useState(1);
   const [category, setCategory] = useState("");
   const dispatch = useDispatch();
+
+  const isLimitCategories = categories.length === colors.length * icons.length;
+  const isTooLong = category.length > 15;
+  const isSameCategory =
+    categories.find(
+      ({ colorId, iconId }) => idColor === colorId && idIcon === iconId
+    ) || false;
+  const isTooShort = category.trim().length === 0;
+  const isError =
+    isTooLong || isTooShort || isSameCategory || isLimitCategories;
+  const helperText = isLimitCategories
+    ? "You have reached the limit for the number of categories"
+    : isSameCategory
+    ? "Category with this icon already exists"
+    : isTooLong
+    ? "Category name can not be longer than 15 characters"
+    : isTooShort
+    ? "Category name required"
+    : "";
 
   const onAddCategory = () => {
     if (category.trim()) {
       setCategory("");
-      if (category.length > 15) {
-        alert("The name of a category should contain less than 15 charaters");
-      } else {
-        addCategoryServer(category, color.id, icon.id).then(
-          ({ status, data }) => {
-            if (status === 201) {
-              dispatch(addCategoryAction(data));
-            } else {
-              alert("Error status = " + status);
-            }
-          }
-        );
-      }
+      addCategoryServer(category, idColor, idIcon).then(({ status, data }) => {
+        if (status === 201) {
+          dispatch(addCategoryAction(data));
+        } else {
+          console.log("Error status = " + status);
+        }
+      });
     }
   };
 
   return (
     <>
-      {"Add new category"}
+      <h2>Add new category</h2>
       <div className="AddCategoryForm">
         <StyledTextField
           sx={{ width: "40%" }}
-          label="Category name"
           value={category}
+          onKeyPress={(e) => e.key === "Enter" && onAddCategory()}
+          disabled={isLimitCategories}
           onChange={(e) => setCategory(e.target.value)}
+          error={isError}
+          helperText={helperText}
+          required
         />
         <StyledSelect
-          value={color}
-          label="Color"
+          value={idColor}
           sx={{ width: "12%" }}
           variant="outlined"
-          onChange={(event) => setColor(event.target.value)}
+          onChange={(e) => setIdColor(e.target.value)}
         >
-          {colors.map((item) => (
-            <MenuItem value={item} key={item.id}>
-              {item.title}
+          {colors.map(({ id, colorName }) => (
+            <MenuItem value={id} key={id}>
+              {colorName}
             </MenuItem>
           ))}
         </StyledSelect>
 
         <StyledSelect
-          value={icon}
-          label="Icon"
+          value={idIcon}
           sx={{ width: "15%" }}
-          onChange={(event) => setIcon(event.target.value)}
+          onChange={(e) => setIdIcon(e.target.value)}
         >
-          {icons.map((item) => (
-            <MenuItem value={item} key={item.id}>
-              {iconConnecter(item.title, "black", "30px")}
+          {icons.map(({ id }) => (
+            <MenuItem value={id} key={id}>
+              {getSvgIcon({ iconId: id, colorId: "black", size: "30px" })}
             </MenuItem>
           ))}
         </StyledSelect>
-        <StyledButton variant="outlined" onClick={onAddCategory}>
+        <StyledButton
+          variant="outlined"
+          disabled={isError}
+          onClick={onAddCategory}
+        >
           Add
         </StyledButton>
       </div>
@@ -87,7 +104,7 @@ const AddCategoryForm = ({ iconConnecter }) => {
 };
 
 AddCategoryForm.propTypes = {
-  iconConnecter: PropTypes.func,
+  getSvgIcon: PropTypes.func,
 };
 
 export default AddCategoryForm;
