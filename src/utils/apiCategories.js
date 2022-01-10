@@ -13,7 +13,7 @@ export const getCategoriesServer = async () => {
   }
 };
 
-export const changeDefaultCategoryServer = async (oldId, newId) => {
+export const changeDefaultCategoryServer = async ({ oldId, newId }) => {
   try {
     const promise1 = api.patch(`/categories/${oldId}`, { isDefault: false });
     const promise2 = api.patch(`/categories/${newId}`, { isDefault: true });

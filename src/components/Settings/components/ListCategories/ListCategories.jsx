@@ -9,7 +9,7 @@ import ItemCategory from "../ItemCategory";
 import {
   deleteCategoryAction,
   changeCategoryTitleAction,
-  changeDefaultCategoryAction,
+  //changeDefaultCategoryAction,
 } from "../../../../store/categories/reducer";
 import {
   deleteCategoryServer,
@@ -42,8 +42,8 @@ const ListCategories = () => {
         if (id === defaultCategory.id) {
           changeDefaultCategoryServer({
             id: categories.find((item) => item).id,
-          }).then(({ status }) => {
-            if (status === 200) {
+          }).then((/* {status} */) => {
+            /* if (status === 200) {
               dispatch(
                 changeDefaultCategoryAction({
                   id: categories.find((item) => item).id,
@@ -51,7 +51,7 @@ const ListCategories = () => {
               );
             } else {
               console.log("Error status = " + status);
-            }
+            } */
           });
         }
       } else {

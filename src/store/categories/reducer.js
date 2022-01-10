@@ -1,9 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getCategoriesServer } from "../../utils/apiCategories";
+import {
+  changeDefaultCategoryServer,
+  getCategoriesServer,
+} from "../../utils/apiCategories";
 
 export const getCategories = createAsyncThunk(
   "categories/getCategories",
   getCategoriesServer
+);
+
+export const changeDefaultCategory = createAsyncThunk(
+  "categories/changeDefaultCategory",
+  ({ oldId, newId }) => changeDefaultCategoryServer({ oldId, newId })
 );
 
 export const slice = createSlice({
@@ -14,15 +22,6 @@ export const slice = createSlice({
   },
 
   reducers: {
-    changeDefaultCategoryAction: (state, { payload }) => {
-      const list = [...state.categories];
-      const defaultItem = list.find(({ isDefault }) => isDefault);
-      defaultItem.isDefault = false;
-      const newDefaultItem = list.find(({ id }) => id === payload);
-      newDefaultItem.isDefault = true;
-      state.categories = list;
-    },
-
     addCategoryAction: (state, { payload }) => {
       state.categories = state.categories.concat(payload);
     },
@@ -39,14 +38,21 @@ export const slice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase(getCategories.fulfilled, (state, action) => {
-      state.categories = action.payload;
+    builder.addCase(getCategories.fulfilled, (state, { payload }) => {
+      state.categories = payload;
+    });
+    builder.addCase(changeDefaultCategory.fulfilled, (state, { payload }) => {
+      const list = [...state.categories];
+      const defaultItem = list.find(({ isDefault }) => isDefault);
+      defaultItem.isDefault = false;
+      const newDefaultItem = list.find(({ id }) => id === payload[1].data.id);
+      newDefaultItem.isDefault = true;
+      state.categories = list;
     });
   },
 });
 
 export const {
-  changeDefaultCategoryAction,
   addCategoryAction,
   deleteCategoryAction,
   changeCategoryTitleAction,

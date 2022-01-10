@@ -5,8 +5,7 @@ import {
   selectCategories,
   selectDefaultCategory,
 } from "../../../../store/categories/selectors";
-import { changeDefaultCategoryAction } from "../../../../store/categories/reducer";
-import { changeDefaultCategoryServer } from "../../../../utils/apiCategories";
+import { changeDefaultCategory } from "../../../../store/categories/reducer";
 import StyledSelect from "../../../StyledSelect";
 
 const DefaultCategory = () => {
@@ -17,9 +16,12 @@ const DefaultCategory = () => {
   const [category, setCategory] = useState(defaultCategory.id);
 
   const onChangeCategory = (e) => {
-    changeDefaultCategoryServer(defaultCategory.id, e.target.value).then(() => {
-      dispatch(changeDefaultCategoryAction(e.target.value));
-    });
+    dispatch(
+      changeDefaultCategory({
+        oldId: defaultCategory.id,
+        newId: e.target.value,
+      })
+    ).unwrap();
   };
 
   return (

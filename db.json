@@ -110,13 +110,6 @@
       "iconId": 3,
       "isDefault": false,
       "id": 11
-    },
-    {
-      "title": "fish",
-      "colorId": 1,
-      "iconId": 1,
-      "isDefault": false,
-      "id": 12
     }
   ]
 }
