@@ -13,7 +13,7 @@ import {
   changeFavoriteAction,
 } from "../../store/tasks/reducer";
 import {
-  uploadListServer,
+  getListServer,
   deleteTaskServer,
   changeTitleServer,
   changeCompletedServer,
@@ -22,11 +22,15 @@ import {
 import Item from "../Item";
 import "./List.css";
 
-const List = ({ isCompleted }) => {
+const List = ({ isCompletedTasks }) => {
   const list = useSelector(
-    isCompleted ? selectCompletedList : selectNotCompletedList
+    isCompletedTasks ? selectCompletedList : selectNotCompletedList
   );
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    getListServer().then((list) => list && dispatch(uploadListAction(list)));
+  }, [dispatch]);
 
   const onDeleteItem = (id) => {
     deleteTaskServer(id).then(({ status }) => {
@@ -52,12 +56,12 @@ const List = ({ isCompleted }) => {
     const item = list.find((item) => item.id === id);
 
     if (item) {
-      changeCompletedServer(id, !item.completed).then(({ status }) => {
+      changeCompletedServer(id, !item.isCompleted).then(({ status }) => {
         if (status === 200) {
           dispatch(changeCompletedAction(id));
 
-          if (item.favorite) {
-            changeFavoriteServer(id, !item.favorite).then(({ status }) => {
+          if (item.isFavorite) {
+            changeFavoriteServer(id, !item.isFavorite).then(({ status }) => {
               if (status === 200) {
                 dispatch(changeFavoriteAction(id));
               } else {
@@ -76,7 +80,7 @@ const List = ({ isCompleted }) => {
     const item = list.find((item) => item.id === id);
 
     if (item) {
-      changeFavoriteServer(id, !item.favorite).then(({ status }) => {
+      changeFavoriteServer(id, !item.isFavorite).then(({ status }) => {
         if (status === 200) {
           dispatch(changeFavoriteAction(id));
         } else {
@@ -86,20 +90,16 @@ const List = ({ isCompleted }) => {
     }
   };
 
-  useEffect(() => {
-    uploadListServer().then((list) => list && dispatch(uploadListAction(list)));
-  }, [dispatch]);
-
   return (
     <div className="List">
       {list.length ? (
         list.map((item) => (
           <Item
             item={item}
-            deleteItem={onDeleteItem}
-            changeTitle={onChangeTitle}
-            changeCompleted={onChangeCompleted}
-            changeFavorite={onChangeFavorite}
+            onDeleteItem={onDeleteItem}
+            onChangeTitle={onChangeTitle}
+            onChangeCompleted={onChangeCompleted}
+            onChangeFavorite={onChangeFavorite}
             key={item.id}
           />
         ))
@@ -111,7 +111,7 @@ const List = ({ isCompleted }) => {
 };
 
 List.propTypes = {
-  isCompleted: PropTypes.bool,
+  isCompletedTasks: PropTypes.bool,
 };
 
 export default List;

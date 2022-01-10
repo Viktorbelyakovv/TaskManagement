@@ -14,10 +14,10 @@ const AddTaskForm = () => {
 
   const onAddTask = () => {
     if (task.trim()) {
-      setTask("");
       addTaskServer(task).then(({ status, data }) => {
         if (status === 201) {
           dispatch(addTaskAction(data));
+          setTask("");
         } else {
           console.log("Error status = " + status);
         }

@@ -7,31 +7,27 @@ import StyledTab from "./components/StyledTab";
 const Navigation = () => {
   const location = useLocation();
   const [locationPathName, setPathName] = useState(location.pathname);
-  const handleChange = (event, newValue) => {
+
+  const handleChange = (_, newValue) => {
     setPathName(newValue);
   };
 
   return (
-    <StyledAppBar position="fixed">
+    <StyledAppBar>
       <StyledTabs value={locationPathName} onChange={handleChange}>
-        <StyledTab
-          component={NavLink}
-          to="/"
-          label="Main Page"
-          value="/"
-        ></StyledTab>
+        <StyledTab component={NavLink} to="/" label="Main Page" value="/" />
         <StyledTab
           component={NavLink}
           to="/CompletedTasksPage"
           label="Completed Tasks"
           value="/CompletedTasksPage"
-        ></StyledTab>
+        />
         <StyledTab
           component={NavLink}
           to="/SettingsPage"
           label="Settings"
           value="/SettingsPage"
-        ></StyledTab>
+        />
       </StyledTabs>
     </StyledAppBar>
   );

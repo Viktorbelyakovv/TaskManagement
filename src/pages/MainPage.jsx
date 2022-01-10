@@ -7,7 +7,7 @@ const MainPage = () => (
   <Container>
     <h1>TO-DO LIST AND TASK MANAGEMENT</h1>
     <AddTaskForm />
-    <List isCompleted={false} />
+    <List isCompletedTasks={false} />
   </Container>
 );
 

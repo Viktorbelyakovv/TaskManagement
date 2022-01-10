@@ -6,7 +6,7 @@ const CompletedTasksPage = () => {
   return (
     <Container>
       <h1>COMPLETED TASKS</h1>
-      <List isCompleted={true} />
+      <List isCompletedTasks={true} />
     </Container>
   );
 };

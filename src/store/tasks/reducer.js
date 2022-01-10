@@ -9,7 +9,7 @@ export const slice = createSlice({
 
   reducers: {
     uploadListAction: (state, { payload }) => {
-      state.tasks = payload.sort(({ favorite }) => (favorite ? -1 : 1));
+      state.tasks = payload.sort(({ isFavorite }) => (isFavorite ? -1 : 1));
     },
 
     addTaskAction: (state, { payload }) => {
@@ -30,15 +30,15 @@ export const slice = createSlice({
     changeCompletedAction: (state, { payload }) => {
       let list = [...state.tasks];
       const item = list.find(({ id }) => id === payload);
-      item.completed = !item.completed;
+      item.isCompleted = !item.isCompleted;
       state.tasks = list;
     },
 
     changeFavoriteAction: (state, { payload }) => {
       let list = [...state.tasks];
       const item = list.find(({ id }) => id === payload);
-      item.favorite = !item.favorite;
-      state.tasks = list.sort((item) => (item.favorite ? -1 : 1));
+      item.isFavorite = !item.isFavorite;
+      state.tasks = list.sort((item) => (item.isFavorite ? -1 : 1));
     },
   },
 });

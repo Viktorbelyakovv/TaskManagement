@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { useSelector, useDispatch } from "react-redux";
+import { /* useSelector, */ useDispatch } from "react-redux";
 import MenuItem from "@mui/material/MenuItem";
-import { selectCategories } from "../../../../store/categories/selectors";
+//import { selectCategories } from "../../../../store/categories/selectors";
 import { addCategoryAction } from "../../../../store/categories/reducer";
 import { addCategoryServer } from "../../../../utils/apiCategories";
 import { getSvgIcon } from "../../../../helpers/getSvgIcon";
@@ -14,14 +13,14 @@ import StyledSelect from "../../../StyledSelect";
 import "./AddCategoryForm.css";
 
 const AddCategoryForm = () => {
-  const categories = useSelector(selectCategories);
+  //const categories = useSelector(selectCategories);
 
   const [idColor, setIdColor] = useState(1);
   const [idIcon, setIdIcon] = useState(1);
   const [category, setCategory] = useState("");
   const dispatch = useDispatch();
 
-  const isLimitCategories = categories.length === colors.length * icons.length;
+  /* const isLimitCategories = categories.length === colors.length * icons.length;
   const isTooLong = category.length > 15;
   const isSameCategory =
     categories.find(
@@ -38,7 +37,7 @@ const AddCategoryForm = () => {
     ? "Category name can not be longer than 15 characters"
     : isTooShort
     ? "Category name required"
-    : "";
+    : ""; */
 
   const onAddCategory = () => {
     if (category.trim()) {
@@ -61,10 +60,10 @@ const AddCategoryForm = () => {
           sx={{ width: "40%" }}
           value={category}
           onKeyPress={(e) => e.key === "Enter" && onAddCategory()}
-          disabled={isLimitCategories}
+          //disabled={isLimitCategories}
           onChange={(e) => setCategory(e.target.value)}
-          error={isError}
-          helperText={helperText}
+          //error={isError}
+          //helperText={helperText}
           required
         />
         <StyledSelect
@@ -93,7 +92,7 @@ const AddCategoryForm = () => {
         </StyledSelect>
         <StyledButton
           variant="outlined"
-          disabled={isError}
+          //disabled={isError}
           onClick={onAddCategory}
         >
           Add
@@ -101,10 +100,6 @@ const AddCategoryForm = () => {
       </div>
     </>
   );
-};
-
-AddCategoryForm.propTypes = {
-  getSvgIcon: PropTypes.func,
 };
 
 export default AddCategoryForm;

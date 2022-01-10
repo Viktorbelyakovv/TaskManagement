@@ -11,22 +11,17 @@ import StyledSelect from "../../../StyledSelect";
 
 const DefaultCategory = () => {
   const dispatch = useDispatch();
-  const categories = useSelector(selectCategories) || {};
-  const defaultCategory = useSelector(selectDefaultCategory) || {};
+  const categories = useSelector(selectCategories);
+  const defaultCategory = useSelector(selectDefaultCategory);
 
-  const [category, setCategory] = useState(
-    categories.find(({ id }) => id === defaultCategory.id).id || {}
-  );
+  const [category, setCategory] = useState(defaultCategory.id);
 
   const onChangeCategory = (e) => {
-    changeDefaultCategoryServer(e.target.value).then(({ status }) => {
-      if (status === 200) {
-        dispatch(changeDefaultCategoryAction({ id: e.target.value }));
-      } else {
-        console.log("Error status = " + status);
-      }
+    changeDefaultCategoryServer(defaultCategory.id, e.target.value).then(() => {
+      dispatch(changeDefaultCategoryAction(e.target.value));
     });
   };
+
   return (
     <>
       <h2>Default category</h2>

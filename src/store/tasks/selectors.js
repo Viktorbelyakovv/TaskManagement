@@ -1,7 +1,7 @@
-export const selectList = (state) => state.list.tasks;
+export const selectList = ({ list }) => list.tasks;
 
-export const selectCompletedList = (state) =>
-  state.list.tasks.filter(({ completed }) => completed);
+export const selectCompletedList = ({ list }) =>
+  list.tasks.filter(({ isCompleted }) => isCompleted);
 
-export const selectNotCompletedList = (state) =>
-  state.list.tasks.filter(({ completed }) => !completed);
+export const selectNotCompletedList = ({ list }) =>
+  list.tasks.filter(({ isCompleted }) => !isCompleted);

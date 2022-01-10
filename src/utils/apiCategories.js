@@ -4,48 +4,54 @@ const baseURL = process.env.REACT_APP_API_LINK;
 
 const api = axios.create({ baseURL });
 
-export const uploadCategoriesServer = () => {
-  return api
-    .get(`/categories`)
-    .then(({ data }) => data)
-    .catch((error) => console.log(error));
+export const getCategoriesServer = async () => {
+  try {
+    const { data } = await api.get(`/categories`);
+    return data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 
-export const uploadDefaultCategoryServer = () => {
-  return api
-    .get(`/defaultCategory`)
-    .then(({ data }) => data)
-    .catch((error) => console.log(error));
+export const changeDefaultCategoryServer = async (oldId, newId) => {
+  try {
+    const promise1 = api.patch(`/categories/${oldId}`, { isDefault: false });
+    const promise2 = api.patch(`/categories/${newId}`, { isDefault: true });
+    const response = await Promise.all([promise1, promise2]);
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 
-export const changeDefaultCategoryServer = (id) => {
-  return api
-    .put(`/defaultCategory`, { id })
-    .then((response) => response)
-    .catch((error) => console.log(error));
-};
-
-export const addCategoryServer = (title, colorId, iconId) => {
-  return api
-    .post(`/categories`, {
+export const addCategoryServer = async (title, colorId, iconId) => {
+  try {
+    const response = await api.post(`/categories`, {
       title,
       colorId,
       iconId,
-    })
-    .then((response) => response)
-    .catch((error) => console.log(error));
+      isDefault: false,
+    });
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 
-export const deleteCategoryServer = (id) => {
-  return api
-    .delete(`/categories/${id}`)
-    .then((response) => response)
-    .catch((error) => console.log(error));
+export const deleteCategoryServer = async (id) => {
+  try {
+    const response = await api.delete(`/categories/${id}`);
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 
-export const changeCategoryTitleServer = (id, title) => {
-  return api
-    .patch(`/categories/${id}`, { title })
-    .then((response) => response)
-    .catch((error) => console.log(error));
+export const changeCategoryTitleServer = async (id, title) => {
+  try {
+    const response = await api.patch(`/categories/${id}`, { title });
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };

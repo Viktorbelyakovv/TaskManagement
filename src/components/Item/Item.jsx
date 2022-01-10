@@ -7,42 +7,42 @@ import StyledIconButton from "../StyledIconButton";
 import "./Item.css";
 
 const Item = ({
-  item: { id, title, completed, favorite },
-  deleteItem,
-  changeTitle,
-  changeCompleted,
-  changeFavorite,
+  item: { id, title, isCompleted, isFavorite },
+  onDeleteItem,
+  onChangeTitle,
+  onChangeCompleted,
+  onChangeFavorite,
 }) => {
-  const [starSign, setStarSign] = useState(favorite ? "star" : "star_border");
+  const [starSign, setStarSign] = useState(isFavorite ? "star" : "star_border");
 
   const ChangeStar = () => {
-    setStarSign(favorite ? "star_border" : "star");
-    changeFavorite(id);
+    setStarSign(isFavorite ? "star_border" : "star");
+    onChangeFavorite(id);
   };
 
   return (
     <div className="Item">
       <StyledCheckbox
-        checked={completed}
-        onChange={() => changeCompleted(id)}
+        checked={isCompleted}
+        onChange={() => onChangeCompleted(id)}
       />
       <StyledListItem
         variant="standard"
         defaultValue={title}
-        onBlur={(e) => changeTitle(id, e.target.value)}
-        disabled={completed}
+        onBlur={(e) => onChangeTitle(id, e.target.value)}
+        disabled={isCompleted}
       />
-      {!completed && (
+      {!isCompleted && (
         <span
           className="material-icons"
-          onMouseOver={() => !favorite && setStarSign("star_half")}
-          onMouseOut={() => !favorite && setStarSign("star_border")}
+          onMouseOver={() => !isFavorite && setStarSign("star_half")}
+          onMouseOut={() => !isFavorite && setStarSign("star_border")}
           onClick={() => ChangeStar()}
         >
           {starSign}
         </span>
       )}
-      <StyledIconButton onClick={() => deleteItem(id)}>
+      <StyledIconButton onClick={() => onDeleteItem(id)}>
         <ClearIcon />
       </StyledIconButton>
     </div>
@@ -51,10 +51,10 @@ const Item = ({
 
 Item.propTypes = {
   item: PropTypes.object,
-  deleteItem: PropTypes.func,
-  changeTitle: PropTypes.func,
-  changeCompleted: PropTypes.func,
-  changeFavorite: PropTypes.func,
+  onDeleteItem: PropTypes.func,
+  onChangeTitle: PropTypes.func,
+  onChangeCompleted: PropTypes.func,
+  onChangeFavorite: PropTypes.func,
 };
 
 export default Item;

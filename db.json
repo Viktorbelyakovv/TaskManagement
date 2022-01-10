@@ -2,51 +2,63 @@
   "tasks": [
     {
       "title": "Go to a bar",
-      "completed": true,
-      "favorite": false,
+      "isCompleted": true,
+      "isFavorite": false,
       "id": 1
     },
     {
       "title": "Choose a car",
-      "completed": true,
-      "favorite": false,
+      "isCompleted": true,
+      "isFavorite": false,
       "id": 2
     },
     {
       "title": "Buy ticket",
-      "completed": false,
-      "favorite": true,
+      "isCompleted": false,
+      "isFavorite": true,
       "id": 3
     },
     {
       "title": "Sell earphones",
-      "completed": false,
-      "favorite": false,
+      "isCompleted": false,
+      "isFavorite": false,
       "id": 4
     },
     {
       "title": "Call to Kelly",
-      "completed": true,
-      "favorite": false,
+      "isCompleted": true,
+      "isFavorite": false,
       "id": 6
     },
     {
       "title": "Buy milks",
-      "completed": false,
-      "favorite": false,
+      "isCompleted": false,
+      "isFavorite": false,
       "id": 7
     },
     {
       "title": "Buy tickets",
-      "completed": true,
-      "favorite": false,
+      "isCompleted": true,
+      "isFavorite": false,
       "id": 8
     },
     {
       "title": "Lie down",
-      "completed": false,
-      "favorite": false,
+      "isCompleted": true,
+      "isFavorite": false,
       "id": 9
+    },
+    {
+      "title": "asdasd",
+      "isCompleted": false,
+      "isFavorite": false,
+      "id": 10
+    },
+    {
+      "title": "sdfsdfsd",
+      "isCompleted": false,
+      "isFavorite": false,
+      "id": 11
     }
   ],
   "categories": [
@@ -54,28 +66,57 @@
       "id": 4,
       "title": "red sport",
       "colorId": 1,
-      "iconId": 4
+      "iconId": 4,
+      "isDefault": false
     },
     {
       "id": 5,
       "title": "blue works",
       "colorId": 2,
-      "iconId": 5
+      "iconId": 5,
+      "isDefault": true
     },
     {
       "title": "green family",
       "colorId": 3,
       "iconId": 1,
-      "id": 6
+      "id": 6,
+      "isDefault": false
     },
     {
       "title": "red shopping",
       "colorId": 1,
       "iconId": 3,
-      "id": 7
+      "id": 7,
+      "isDefault": false
+    },
+    {
+      "title": "green food",
+      "colorId": 3,
+      "iconId": 2,
+      "isDefault": false,
+      "id": 8
+    },
+    {
+      "title": "blue sport",
+      "colorId": 2,
+      "iconId": 4,
+      "isDefault": false,
+      "id": 10
+    },
+    {
+      "title": "green shopping",
+      "colorId": 3,
+      "iconId": 3,
+      "isDefault": false,
+      "id": 11
+    },
+    {
+      "title": "fish",
+      "colorId": 1,
+      "iconId": 1,
+      "isDefault": false,
+      "id": 12
     }
-  ],
-  "defaultCategory": {
-    "id": 4
-  }
+  ]
 }
