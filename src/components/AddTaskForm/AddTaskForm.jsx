@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addTask } from "../../store/tasks/reducer";
+import { addTaskAsync } from "../../store/tasks/reducer";
 import { MenuItem } from "@mui/material";
 import StyledTextField from "../StyledTextField";
 import StyledSelect from "../StyledSelect";
@@ -13,7 +13,7 @@ const AddTaskForm = () => {
 
   const onAddTask = () => {
     if (task.trim()) {
-      dispatch(addTask(task));
+      dispatch(addTaskAsync(task));
       setTask("");
     } else {
       console.log("Error the name of a task");

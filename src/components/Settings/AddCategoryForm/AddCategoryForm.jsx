@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import MenuItem from "@mui/material/MenuItem";
-import { selectCategories } from "../../../../store/categories/selectors";
-import { addCategory } from "../../../../store/categories/reducer";
-import { getSvgIcon } from "../../../../helpers/getSvgIcon";
-import { colors } from "../../../../helpers/colors";
-import { icons } from "../../../../helpers/icons";
-import StyledTextField from "../../../StyledTextField";
-import StyledButton from "../../../StyledButton";
-import StyledSelect from "../../../StyledSelect";
+import { selectCategories } from "../../../store/categories/selectors";
+import { addCategoryAsync } from "../../../store/categories/reducer";
+import { getSvgIcon } from "../../../helpers/getSvgIcon";
+import { colors } from "../../../helpers/colors";
+import { icons } from "../../../helpers/icons";
+import StyledTextField from "../../StyledTextField";
+import StyledButton from "../../StyledButton";
+import StyledSelect from "../../StyledSelect";
 import "./AddCategoryForm.css";
 
 const AddCategoryForm = () => {
@@ -40,7 +40,7 @@ const AddCategoryForm = () => {
   const onAddCategory = () => {
     if (category.trim()) {
       dispatch(
-        addCategory({
+        addCategoryAsync({
           title: category,
           colorId: idColor,
           iconId: idIcon,

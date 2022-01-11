@@ -1,23 +1,37 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ClearIcon from "@mui/icons-material/Clear";
+import { useDispatch } from "react-redux";
+import {
+  deleteTaskAsync,
+  changeTitleAsync,
+  changeCompletedAsync,
+  changeFavoriteAsync,
+} from "../../store/tasks/reducer";
 import StyledCheckbox from "./components/StyledCheckbox";
 import StyledListItem from "../StyledListItem";
 import StyledIconButton from "../StyledIconButton";
 import "./Item.css";
 
-const Item = ({
-  item: { id, title, isCompleted, isFavorite },
-  onDeleteItem,
-  onChangeTitle,
-  onChangeCompleted,
-  onChangeFavorite,
-}) => {
+const Item = ({ item: { id, title, isCompleted, isFavorite } }) => {
+  const dispatch = useDispatch();
+
   const [starSign, setStarSign] = useState(isFavorite ? "star" : "star_border");
 
-  const ChangeStar = () => {
+  const onChangeTitle = (id, title) => {
+    dispatch(changeTitleAsync({ id, title }));
+  };
+
+  const onChangeCompleted = (id, isCompleted, isFavorite) => {
+    dispatch(changeCompletedAsync({ id, isCompleted: !isCompleted }));
+    if (isFavorite) {
+      dispatch(changeFavoriteAsync({ id, isFavorite: !isFavorite }));
+    }
+  };
+
+  const onChangeStar = () => {
+    dispatch(changeFavoriteAsync({ id, isFavorite: !isFavorite }));
     setStarSign(isFavorite ? "star_border" : "star");
-    onChangeFavorite(id, isFavorite);
   };
 
   return (
@@ -37,12 +51,12 @@ const Item = ({
           className="material-icons"
           onMouseOver={() => !isFavorite && setStarSign("star_half")}
           onMouseOut={() => !isFavorite && setStarSign("star_border")}
-          onClick={() => ChangeStar()}
+          onClick={() => onChangeStar()}
         >
           {starSign}
         </span>
       )}
-      <StyledIconButton onClick={() => onDeleteItem(id)}>
+      <StyledIconButton onClick={() => dispatch(deleteTaskAsync(id))}>
         <ClearIcon />
       </StyledIconButton>
     </div>
@@ -51,10 +65,6 @@ const Item = ({
 
 Item.propTypes = {
   item: PropTypes.object,
-  onDeleteItem: PropTypes.func,
-  onChangeTitle: PropTypes.func,
-  onChangeCompleted: PropTypes.func,
-  onChangeFavorite: PropTypes.func,
 };
 
 export default Item;

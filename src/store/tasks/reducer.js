@@ -8,28 +8,33 @@ import {
   getListServer,
 } from "../../utils/api";
 
-export const getList = createAsyncThunk("categories/getList", getListServer);
-
-export const addTask = createAsyncThunk("categories/addTask", (title) =>
-  addTaskServer(title)
+export const getListAsync = createAsyncThunk(
+  "categories/getListAsync",
+  getListServer
 );
 
-export const deleteTask = createAsyncThunk("categories/deleteTask", (id) =>
-  deleteTaskServer(id)
+export const addTaskAsync = createAsyncThunk(
+  "categories/addTaskAsync",
+  (title) => addTaskServer(title)
 );
 
-export const changeTitle = createAsyncThunk(
-  "categories/changeTitle",
+export const deleteTaskAsync = createAsyncThunk(
+  "categories/deleteTaskAsync",
+  (id) => deleteTaskServer(id)
+);
+
+export const changeTitleAsync = createAsyncThunk(
+  "categories/changeTitleAsync",
   ({ id, title }) => changeTitleServer({ id, title })
 );
 
-export const changeCompleted = createAsyncThunk(
-  "categories/changeCompleted",
+export const changeCompletedAsync = createAsyncThunk(
+  "categories/changeCompletedAsync",
   ({ id, isCompleted }) => changeCompletedServer({ id, isCompleted })
 );
 
-export const changeFavorite = createAsyncThunk(
-  "categories/changeFavorite",
+export const changeFavoriteAsync = createAsyncThunk(
+  "categories/changeFavoriteAsync",
   ({ id, isFavorite }) => changeFavoriteServer({ id, isFavorite })
 );
 
@@ -43,20 +48,20 @@ export const slice = createSlice({
   reducers: {},
 
   extraReducers(builder) {
-    builder.addCase(getList.fulfilled, (state, { payload: { data } }) => {
+    builder.addCase(getListAsync.fulfilled, (state, { payload: { data } }) => {
       state.tasks = data.sort(({ isFavorite }) => (isFavorite ? -1 : 1));
     });
 
-    builder.addCase(addTask.fulfilled, (state, { payload: { data } }) => {
+    builder.addCase(addTaskAsync.fulfilled, (state, { payload: { data } }) => {
       state.tasks = state.tasks.concat(data);
     });
 
-    builder.addCase(deleteTask.fulfilled, (state, { payload }) => {
+    builder.addCase(deleteTaskAsync.fulfilled, (state, { payload }) => {
       state.tasks = state.tasks.filter(({ id }) => id !== payload);
     });
 
     builder.addCase(
-      changeTitle.fulfilled,
+      changeTitleAsync.fulfilled,
       (
         state,
         {
@@ -73,7 +78,7 @@ export const slice = createSlice({
     );
 
     builder.addCase(
-      changeCompleted.fulfilled,
+      changeCompletedAsync.fulfilled,
       (state, { payload: { data } }) => {
         let list = [...state.tasks];
         const item = list.find(({ id }) => id === data.id);
@@ -83,7 +88,7 @@ export const slice = createSlice({
     );
 
     builder.addCase(
-      changeFavorite.fulfilled,
+      changeFavoriteAsync.fulfilled,
       (state, { payload: { data } }) => {
         let list = [...state.tasks];
         const item = list.find(({ id }) => id === data.id);

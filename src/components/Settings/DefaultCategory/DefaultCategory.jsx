@@ -4,9 +4,9 @@ import MenuItem from "@mui/material/MenuItem";
 import {
   selectCategories,
   selectDefaultCategory,
-} from "../../../../store/categories/selectors";
-import { changeDefaultCategory } from "../../../../store/categories/reducer";
-import StyledSelect from "../../../StyledSelect";
+} from "../../../store/categories/selectors";
+import { changeDefaultCategoryAsync } from "../../../store/categories/reducer";
+import StyledSelect from "../../StyledSelect";
 
 const DefaultCategory = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const DefaultCategory = () => {
 
   const onChangeCategory = (e) => {
     dispatch(
-      changeDefaultCategory({
+      changeDefaultCategoryAsync({
         oldId: defaultCategory.id,
         newId: e.target.value,
       })

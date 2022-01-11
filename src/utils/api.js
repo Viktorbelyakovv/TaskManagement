@@ -46,8 +46,6 @@ export const changeTitleServer = async ({ id, title }) => {
 
 export const changeCompletedServer = async ({ id, isCompleted }) => {
   try {
-    console.log(id);
-    console.log(isCompleted);
     const response = await api.patch(`/tasks/${id}`, { isCompleted });
     return response;
   } catch (error) {
