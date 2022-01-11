@@ -21,7 +21,7 @@ const DefaultCategory = () => {
         oldId: defaultCategory.id,
         newId: e.target.value,
       })
-    ).unwrap();
+    );
   };
 
   return (

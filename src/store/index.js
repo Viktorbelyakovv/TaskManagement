@@ -7,4 +7,8 @@ export default configureStore({
     list: taskReducer,
     category: categoryReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });

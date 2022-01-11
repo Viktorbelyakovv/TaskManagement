@@ -6,8 +6,8 @@ const api = axios.create({ baseURL });
 
 export const getCategoriesServer = async () => {
   try {
-    const { data } = await api.get(`/categories`);
-    return data;
+    const response = await api.get(`/categories`);
+    return response;
   } catch (error) {
     throw new Error(error.message);
   }
@@ -24,7 +24,7 @@ export const changeDefaultCategoryServer = async ({ oldId, newId }) => {
   }
 };
 
-export const addCategoryServer = async (title, colorId, iconId) => {
+export const addCategoryServer = async ({ title, colorId, iconId }) => {
   try {
     const response = await api.post(`/categories`, {
       title,
@@ -40,14 +40,14 @@ export const addCategoryServer = async (title, colorId, iconId) => {
 
 export const deleteCategoryServer = async (id) => {
   try {
-    const response = await api.delete(`/categories/${id}`);
-    return response;
+    await api.delete(`/categories/${id}`);
+    return id;
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-export const changeCategoryTitleServer = async (id, title) => {
+export const changeCategoryTitleServer = async ({ id, title }) => {
   try {
     const response = await api.patch(`/categories/${id}`, { title });
     return response;
