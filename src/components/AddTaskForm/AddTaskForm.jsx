@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addTaskAction } from "../../store/tasks/reducer";
-import { addTaskServer } from "../../utils/api.js";
+import { addTask } from "../../store/tasks/reducer";
+import { MenuItem } from "@mui/material";
 import StyledTextField from "../StyledTextField";
 import StyledSelect from "../StyledSelect";
 import StyledButton from "../StyledButton";
 import "./AddTaskForm.css";
-import { MenuItem } from "@mui/material";
 
 const AddTaskForm = () => {
   const [task, setTask] = useState("");
@@ -14,14 +13,8 @@ const AddTaskForm = () => {
 
   const onAddTask = () => {
     if (task.trim()) {
-      addTaskServer(task).then(({ status, data }) => {
-        if (status === 201) {
-          dispatch(addTaskAction(data));
-          setTask("");
-        } else {
-          console.log("Error status = " + status);
-        }
-      });
+      dispatch(addTask(task));
+      setTask("");
     } else {
       console.log("Error the name of a task");
     }

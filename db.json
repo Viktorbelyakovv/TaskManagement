@@ -15,7 +15,7 @@
     {
       "title": "Buy ticket",
       "isCompleted": false,
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 3
     },
     {
@@ -31,12 +31,6 @@
       "id": 6
     },
     {
-      "title": "Buy milks",
-      "isCompleted": false,
-      "isFavorite": false,
-      "id": 7
-    },
-    {
       "title": "Buy tickets",
       "isCompleted": true,
       "isFavorite": false,
@@ -44,19 +38,19 @@
     },
     {
       "title": "Lie down",
-      "isCompleted": true,
-      "isFavorite": false,
+      "isCompleted": false,
+      "isFavorite": true,
       "id": 9
     },
     {
-      "title": "asdasd",
+      "title": "Sell milk",
       "isCompleted": false,
       "isFavorite": true,
       "id": 10
     },
     {
-      "title": "sdfsdfsd",
-      "isCompleted": false,
+      "title": "Buy milk",
+      "isCompleted": true,
       "isFavorite": false,
       "id": 11
     }
@@ -81,7 +75,7 @@
       "colorId": 3,
       "iconId": 1,
       "id": 6,
-      "isDefault": false
+      "isDefault": true
     },
     {
       "title": "red shopping",
@@ -101,7 +95,7 @@
       "title": "blue sport",
       "colorId": 2,
       "iconId": 4,
-      "isDefault": true,
+      "isDefault": false,
       "id": 10
     }
   ]

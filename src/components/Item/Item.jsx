@@ -17,14 +17,14 @@ const Item = ({
 
   const ChangeStar = () => {
     setStarSign(isFavorite ? "star_border" : "star");
-    onChangeFavorite(id);
+    onChangeFavorite(id, isFavorite);
   };
 
   return (
     <div className="Item">
       <StyledCheckbox
         checked={isCompleted}
-        onChange={() => onChangeCompleted(id)}
+        onChange={() => onChangeCompleted(id, isCompleted, isFavorite)}
       />
       <StyledListItem
         variant="standard"

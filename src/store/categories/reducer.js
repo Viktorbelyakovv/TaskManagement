@@ -40,6 +40,7 @@ export const slice = createSlice({
   },
 
   reducers: {},
+
   extraReducers(builder) {
     builder.addCase(getCategories.fulfilled, (state, { payload: { data } }) => {
       state.categories = data;

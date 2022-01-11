@@ -6,8 +6,8 @@ const api = axios.create({ baseURL });
 
 export const getListServer = async () => {
   try {
-    const { data } = await api.get(`/tasks`);
-    return data;
+    const response = await api.get(`/tasks`);
+    return response;
   } catch (error) {
     throw new Error(error.message);
   }
@@ -28,14 +28,14 @@ export const addTaskServer = async (title) => {
 
 export const deleteTaskServer = async (id) => {
   try {
-    const response = await api.delete(`/tasks/${id}`);
-    return response;
+    await api.delete(`/tasks/${id}`);
+    return id;
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-export const changeTitleServer = async (id, title) => {
+export const changeTitleServer = async ({ id, title }) => {
   try {
     const response = await api.patch(`/tasks/${id}`, { title });
     return response;
@@ -44,8 +44,10 @@ export const changeTitleServer = async (id, title) => {
   }
 };
 
-export const changeCompletedServer = async (id, isCompleted) => {
+export const changeCompletedServer = async ({ id, isCompleted }) => {
   try {
+    console.log(id);
+    console.log(isCompleted);
     const response = await api.patch(`/tasks/${id}`, { isCompleted });
     return response;
   } catch (error) {
@@ -53,7 +55,7 @@ export const changeCompletedServer = async (id, isCompleted) => {
   }
 };
 
-export const changeFavoriteServer = async (id, isFavorite) => {
+export const changeFavoriteServer = async ({ id, isFavorite }) => {
   try {
     const response = await api.patch(`/tasks/${id}`, { isFavorite });
     return response;
