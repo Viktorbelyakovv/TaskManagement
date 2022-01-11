@@ -51,7 +51,7 @@
     {
       "title": "asdasd",
       "isCompleted": false,
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 10
     },
     {
@@ -74,7 +74,7 @@
       "title": "blue works",
       "colorId": 2,
       "iconId": 5,
-      "isDefault": true
+      "isDefault": false
     },
     {
       "title": "green family",
@@ -101,15 +101,8 @@
       "title": "blue sport",
       "colorId": 2,
       "iconId": 4,
-      "isDefault": false,
+      "isDefault": true,
       "id": 10
-    },
-    {
-      "title": "green shopping",
-      "colorId": 3,
-      "iconId": 3,
-      "isDefault": false,
-      "id": 11
     }
   ]
 }
