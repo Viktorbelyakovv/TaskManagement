@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 import StyledAppBar from "./components/StyledAppBar";
 import StyledTabs from "./components/StyledTabs";
 import StyledTab from "./components/StyledTab";
+import { pages } from "./components/pages";
 
 const Navigation = () => {
   const location = useLocation();
-  const [locationPathName, setPathName] = useState(location.pathname);
+  const locationIntercepted = pages.find(
+    ({ value }) => value === location.pathname
+  )
+    ? location.pathname
+    : false;
+  const [locationPathName, setPathName] = useState(locationIntercepted);
 
   const handleChange = (_, newValue) => {
     setPathName(newValue);
@@ -15,19 +21,15 @@ const Navigation = () => {
   return (
     <StyledAppBar>
       <StyledTabs value={locationPathName} onChange={handleChange}>
-        <StyledTab component={NavLink} to="/" label="Main Page" value="/" />
-        <StyledTab
-          component={NavLink}
-          to="/CompletedTasksPage"
-          label="Completed Tasks"
-          value="/CompletedTasksPage"
-        />
-        <StyledTab
-          component={NavLink}
-          to="/SettingsPage"
-          label="Settings"
-          value="/SettingsPage"
-        />
+        {pages.map(({ id, to, label, value }) => (
+          <StyledTab
+            component={NavLink}
+            to={to}
+            label={label}
+            value={value}
+            key={id}
+          />
+        ))}
       </StyledTabs>
     </StyledAppBar>
   );

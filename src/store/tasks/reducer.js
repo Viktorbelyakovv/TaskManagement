@@ -8,14 +8,13 @@ import {
   getListServer,
 } from "../../utils/api";
 
-export const getListAsync = createAsyncThunk(
-  "categories/getListAsync",
-  getListServer
+export const getListAsync = createAsyncThunk("categories/getListAsync", () =>
+  getListServer().then(({ data }) => data)
 );
 
 export const addTaskAsync = createAsyncThunk(
   "categories/addTaskAsync",
-  (title) => addTaskServer(title)
+  (title) => addTaskServer(title).then(({ data }) => data)
 );
 
 export const deleteTaskAsync = createAsyncThunk(
@@ -25,17 +24,19 @@ export const deleteTaskAsync = createAsyncThunk(
 
 export const changeTitleAsync = createAsyncThunk(
   "categories/changeTitleAsync",
-  ({ id, title }) => changeTitleServer({ id, title })
+  ({ id, title }) => changeTitleServer({ id, title }).then(({ data }) => data)
 );
 
 export const changeCompletedAsync = createAsyncThunk(
   "categories/changeCompletedAsync",
-  ({ id, isCompleted }) => changeCompletedServer({ id, isCompleted })
+  ({ id, isCompleted }) =>
+    changeCompletedServer({ id, isCompleted }).then(({ data }) => data)
 );
 
 export const changeFavoriteAsync = createAsyncThunk(
   "categories/changeFavoriteAsync",
-  ({ id, isFavorite }) => changeFavoriteServer({ id, isFavorite })
+  ({ id, isFavorite }) =>
+    changeFavoriteServer({ id, isFavorite }).then(({ data }) => data)
 );
 
 export const slice = createSlice({
@@ -48,12 +49,12 @@ export const slice = createSlice({
   reducers: {},
 
   extraReducers(builder) {
-    builder.addCase(getListAsync.fulfilled, (state, { payload: { data } }) => {
-      state.tasks = data.sort(({ isFavorite }) => (isFavorite ? -1 : 1));
+    builder.addCase(getListAsync.fulfilled, (state, { payload }) => {
+      state.tasks = payload.sort(({ isFavorite }) => (isFavorite ? -1 : 1));
     });
 
-    builder.addCase(addTaskAsync.fulfilled, (state, { payload: { data } }) => {
-      state.tasks = state.tasks.concat(data);
+    builder.addCase(addTaskAsync.fulfilled, (state, { payload }) => {
+      state.tasks.push(payload);
     });
 
     builder.addCase(deleteTaskAsync.fulfilled, (state, { payload }) => {
@@ -62,40 +63,21 @@ export const slice = createSlice({
 
     builder.addCase(
       changeTitleAsync.fulfilled,
-      (
-        state,
-        {
-          payload: {
-            data: { id, title },
-          },
-        }
-      ) => {
-        const list = [...state.tasks];
-        const item = list.find((item) => item.id === id);
-        item.title = title;
-        state.tasks = list;
+      (state, { payload: { title, id } }) => {
+        state.tasks.find((item) => item.id === id).title = title;
       }
     );
 
-    builder.addCase(
-      changeCompletedAsync.fulfilled,
-      (state, { payload: { data } }) => {
-        let list = [...state.tasks];
-        const item = list.find(({ id }) => id === data.id);
-        item.isCompleted = !item.isCompleted;
-        state.tasks = list;
-      }
-    );
+    builder.addCase(changeCompletedAsync.fulfilled, (state, { payload }) => {
+      const item = state.tasks.find(({ id }) => id === payload.id);
+      item.isCompleted = !item.isCompleted;
+    });
 
-    builder.addCase(
-      changeFavoriteAsync.fulfilled,
-      (state, { payload: { data } }) => {
-        let list = [...state.tasks];
-        const item = list.find(({ id }) => id === data.id);
-        item.isFavorite = !item.isFavorite;
-        state.tasks = list.sort((item) => (item.isFavorite ? -1 : 1));
-      }
-    );
+    builder.addCase(changeFavoriteAsync.fulfilled, (state, { payload }) => {
+      const item = state.tasks.find(({ id }) => id === payload.id);
+      item.isFavorite = !item.isFavorite;
+      state.tasks.sort((item) => (item.isFavorite ? -1 : 1));
+    });
   },
 });
 

@@ -52,17 +52,13 @@ export const slice = createSlice({
     builder.addCase(
       changeDefaultCategoryAsync.fulfilled,
       (state, { payload }) => {
-        const list = [...state.categories];
-        const defaultItem = list.find(({ isDefault }) => isDefault);
-        defaultItem.isDefault = false;
-        const newDefaultItem = list.find(({ id }) => id === payload.id);
-        newDefaultItem.isDefault = true;
-        state.categories = list;
+        state.categories.find(({ isDefault }) => isDefault).isDefault = false;
+        state.categories.find(({ id }) => id === payload.id).isDefault = true;
       }
     );
 
     builder.addCase(addCategoryAsync.fulfilled, (state, { payload }) => {
-      state.categories = state.categories.concat(payload);
+      state.categories.push(payload);
     });
 
     builder.addCase(deleteCategoryAsync.fulfilled, (state, { payload }) => {
@@ -72,8 +68,7 @@ export const slice = createSlice({
     builder.addCase(
       changeCategoryTitleAsync.fulfilled,
       (state, { payload: { title, id } }) => {
-        const item = state.categories.find((item) => item.id === id);
-        item.title = title;
+        state.categories.find((item) => item.id === id).title = title;
       }
     );
   },

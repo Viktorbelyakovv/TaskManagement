@@ -14,7 +14,7 @@
     },
     {
       "title": "Buy ticket",
-      "isCompleted": true,
+      "isCompleted": false,
       "isFavorite": false,
       "id": 3
     },
@@ -26,7 +26,7 @@
     },
     {
       "title": "Buy milk",
-      "isCompleted": false,
+      "isCompleted": true,
       "isFavorite": false,
       "id": 11
     },
@@ -50,7 +50,7 @@
       "title": "blue works",
       "colorId": 2,
       "iconId": 5,
-      "isDefault": false
+      "isDefault": true
     },
     {
       "title": "green family",
@@ -70,7 +70,7 @@
       "title": "green foods",
       "colorId": 3,
       "iconId": 2,
-      "isDefault": true,
+      "isDefault": false,
       "id": 8
     },
     {
