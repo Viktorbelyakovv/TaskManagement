@@ -1,55 +1,84 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  addTask,
+  changeTaskField,
+  deleteTask,
+  getTasks,
+} from "../../utils/api";
 
-export const slice = createSlice({
-  name: "list",
+export const getTasksThunk = createAsyncThunk(
+  "categories/getTasks",
+  (isCompletedTasks) => getTasks(isCompletedTasks).then(({ data }) => data)
+);
 
+export const addTaskThunk = createAsyncThunk("categories/addTask", (title) =>
+  addTask(title).then(({ data }) => data)
+);
+
+export const deleteTaskThunk = createAsyncThunk("categories/deleteTask", (id) =>
+  deleteTask(id)
+);
+
+export const changeTitleThunk = createAsyncThunk(
+  "categories/changeTitle",
+  ({ id, title }) =>
+    changeTaskField({ id, fieldName: "title", field: title }).then(
+      ({ data }) => data
+    )
+);
+
+export const changeCompletedThunk = createAsyncThunk(
+  "categories/changeCompleted",
+  ({ id, isCompleted }) =>
+    changeTaskField({ id, fieldName: "isCompleted", field: isCompleted }).then(
+      ({ data }) => data
+    )
+);
+
+export const changeFavoriteThunk = createAsyncThunk(
+  "categories/changeFavorite",
+  ({ id, isFavorite }) =>
+    changeTaskField({ id, fieldName: "isFavorite", field: isFavorite }).then(
+      ({ data }) => data
+    )
+);
+
+export const tasksReducer = createSlice({
+  name: "tasks",
   initialState: {
     tasks: [],
   },
+  reducers: {},
+  extraReducers(builder) {
+    builder.addCase(getTasksThunk.fulfilled, (state, { payload }) => {
+      state.tasks = payload.sort(({ isFavorite }) => (isFavorite ? -1 : 1));
+    });
 
-  reducers: {
-    uploadListAction: (state, { payload }) => {
-      state.tasks = payload.sort(({ favorite }) => (favorite ? -1 : 1));
-    },
+    builder.addCase(addTaskThunk.fulfilled, (state, { payload }) => {
+      state.tasks.push(payload);
+    });
 
-    addTaskAction: (state, { payload }) => {
-      state.tasks = state.tasks.concat(payload);
-    },
-
-    deleteTaskAction: (state, { payload }) => {
+    builder.addCase(deleteTaskThunk.fulfilled, (state, { payload }) => {
       state.tasks = state.tasks.filter(({ id }) => id !== payload);
-    },
+    });
 
-    changeTitleAction: (state, { payload: { id, title } }) => {
-      const list = [...state.tasks];
-      const item = list.find((item) => item.id === id);
-      item.title = title;
-      state.tasks = list;
-    },
+    builder.addCase(
+      changeTitleThunk.fulfilled,
+      (state, { payload: { title, id } }) => {
+        state.tasks.find((item) => item.id === id).title = title;
+      }
+    );
 
-    changeCompletedAction: (state, { payload }) => {
-      let list = [...state.tasks];
-      const item = list.find(({ id }) => id === payload);
-      item.completed = !item.completed;
-      state.tasks = list;
-    },
+    builder.addCase(changeCompletedThunk.fulfilled, (state, { payload }) => {
+      state.tasks = state.tasks.filter(({ id }) => id !== payload.id);
+    });
 
-    changeFavoriteAction: (state, { payload }) => {
-      let list = [...state.tasks];
-      const item = list.find(({ id }) => id === payload);
-      item.favorite = !item.favorite;
-      state.tasks = list.sort((item) => (item.favorite ? -1 : 1));
-    },
+    builder.addCase(changeFavoriteThunk.fulfilled, (state, { payload }) => {
+      const item = state.tasks.find(({ id }) => id === payload.id);
+      item.isFavorite = !item.isFavorite;
+      state.tasks.sort((item) => (item.isFavorite ? -1 : 1));
+    });
   },
 });
 
-export const {
-  uploadListAction,
-  addTaskAction,
-  deleteTaskAction,
-  changeTitleAction,
-  changeCompletedAction,
-  changeFavoriteAction,
-} = slice.actions;
-
-export default slice.reducer;
+export default tasksReducer.reducer;

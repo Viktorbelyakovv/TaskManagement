@@ -1,13 +1,12 @@
 import React from "react";
-import Container from "../components/Container";
-import List from "../components/List";
+import ListTasks from "../components/ListTasks";
 
 const CompletedTasksPage = () => {
   return (
-    <Container>
+    <>
       <h1>COMPLETED TASKS</h1>
-      <List isCompleted={true} />
-    </Container>
+      <ListTasks isCompletedTasks={true} />
+    </>
   );
 };
 

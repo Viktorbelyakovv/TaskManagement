@@ -1,47 +1,62 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ClearIcon from "@mui/icons-material/Clear";
-import StyledCheckbox from "./components/StyledCheckbox";
-import StyledInput from "./components/StyledInput";
-import StyledIconButton from "./components/StyledIconButton";
+import { useDispatch } from "react-redux";
+import {
+  deleteTaskThunk,
+  changeTitleThunk,
+  changeCompletedThunk,
+  changeFavoriteThunk,
+} from "../../store/tasks/reducer";
+import StyledCheckbox from "../ui-kit/StyledCheckbox";
+import StyledListItem from "../ui-kit/StyledListItem";
+import StyledIconButton from "../ui-kit/StyledIconButton";
 import "./Item.css";
 
-const Item = ({
-  item: { id, title, completed, favorite },
-  deleteItem,
-  changeTitle,
-  changeCompleted,
-  changeFavorite,
-}) => {
-  const [starSign, setStarSign] = useState(favorite ? "star" : "star_border");
+const Item = ({ item: { id, title, isCompleted, isFavorite } }) => {
+  const dispatch = useDispatch();
+  const [starSign, setStarSign] = useState(isFavorite ? "star" : "star_border");
 
-  const ChangeStar = () => {
-    setStarSign(favorite ? "star_border" : "star");
-    changeFavorite(id);
+  const onChangeTitle = (payload) => {
+    dispatch(changeTitleThunk(payload));
+  };
+
+  const onChangeCompleted = () => {
+    dispatch(changeCompletedThunk({ id, isCompleted: !isCompleted }));
+
+    if (isFavorite) {
+      dispatch(changeFavoriteThunk({ id, isFavorite: !isFavorite }));
+    }
+  };
+
+  const onChangeStar = () => {
+    dispatch(changeFavoriteThunk({ id, isFavorite: !isFavorite }));
+    setStarSign(isFavorite ? "star_border" : "star");
   };
 
   return (
     <div className="Item">
       <StyledCheckbox
-        checked={completed}
-        onChange={() => changeCompleted(id)}
+        checked={isCompleted}
+        onChange={() => onChangeCompleted()}
       />
-      <StyledInput
+      <StyledListItem
+        variant="standard"
         defaultValue={title}
-        onBlur={(e) => changeTitle(id, e.target.value)}
-        disabled={completed}
+        onBlur={(e) => onChangeTitle({ id, title: e.target.value })}
+        disabled={isCompleted}
       />
-      {!completed && (
+      {!isCompleted && (
         <span
           className="material-icons"
-          onMouseOver={() => !favorite && setStarSign("star_half")}
-          onMouseOut={() => !favorite && setStarSign("star_border")}
-          onClick={() => ChangeStar()}
+          onMouseOver={() => !isFavorite && setStarSign("star_half")}
+          onMouseOut={() => !isFavorite && setStarSign("star_border")}
+          onClick={() => onChangeStar()}
         >
           {starSign}
         </span>
       )}
-      <StyledIconButton onClick={() => deleteItem(id)}>
+      <StyledIconButton onClick={() => dispatch(deleteTaskThunk(id))}>
         <ClearIcon />
       </StyledIconButton>
     </div>
@@ -50,10 +65,6 @@ const Item = ({
 
 Item.propTypes = {
   item: PropTypes.object,
-  deleteItem: PropTypes.func,
-  changeTitle: PropTypes.func,
-  changeCompleted: PropTypes.func,
-  changeFavorite: PropTypes.func,
 };
 
 export default Item;

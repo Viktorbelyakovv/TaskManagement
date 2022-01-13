@@ -1,14 +1,13 @@
 import React from "react";
-import Container from "../components/Container";
 import AddTaskForm from "../components/AddTaskForm";
-import List from "../components/List";
+import ListTasks from "../components/ListTasks";
 
 const MainPage = () => (
-  <Container>
+  <>
     <h1>TO-DO LIST AND TASK MANAGEMENT</h1>
     <AddTaskForm />
-    <List isCompleted={false} />
-  </Container>
+    <ListTasks isCompletedTasks={false} />
+  </>
 );
 
 export default MainPage;

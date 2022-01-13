@@ -1,0 +1,84 @@
+{
+  "tasks": [
+    {
+      "title": "Go to a bar",
+      "isCompleted": true,
+      "isFavorite": false,
+      "id": 1
+    },
+    {
+      "title": "Choose a car",
+      "isCompleted": false,
+      "isFavorite": false,
+      "id": 2
+    },
+    {
+      "title": "Buy ticket",
+      "isCompleted": false,
+      "isFavorite": true,
+      "id": 3
+    },
+    {
+      "title": "Call to Kelly",
+      "isCompleted": true,
+      "isFavorite": false,
+      "id": 6
+    },
+    {
+      "title": "Buy milk",
+      "isCompleted": true,
+      "isFavorite": false,
+      "id": 11
+    },
+    {
+      "title": "Go to a doctor",
+      "isCompleted": false,
+      "isFavorite": false,
+      "id": 12
+    }
+  ],
+  "categories": [
+    {
+      "id": 4,
+      "title": "red sport",
+      "colorId": 1,
+      "iconId": 4,
+      "isDefault": false
+    },
+    {
+      "id": 5,
+      "title": "blue works",
+      "colorId": 2,
+      "iconId": 5,
+      "isDefault": false
+    },
+    {
+      "title": "green family",
+      "colorId": 3,
+      "iconId": 1,
+      "id": 6,
+      "isDefault": false
+    },
+    {
+      "title": "red shopping",
+      "colorId": 1,
+      "iconId": 3,
+      "id": 7,
+      "isDefault": true
+    },
+    {
+      "title": "green foods",
+      "colorId": 3,
+      "iconId": 2,
+      "isDefault": false,
+      "id": 8
+    },
+    {
+      "title": "blue sport",
+      "colorId": 2,
+      "iconId": 4,
+      "isDefault": false,
+      "id": 9
+    }
+  ]
+}

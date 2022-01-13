@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addTaskAction } from "../../store/tasks/reducer";
-import { addTaskServer } from "../../utils/api.js";
-import StyledTextField from "./components/StyledTextField";
-import StyledSelect from "./components/StyledSelect";
-import StyledButton from "./components/StyledButton";
+import { MenuItem } from "@mui/material";
+import { addTaskThunk } from "../../store/tasks/reducer";
+import StyledTextField from "../ui-kit/StyledTextField";
+import StyledSelect from "../ui-kit/StyledSelect";
+import StyledButton from "../ui-kit/StyledButton";
 import "./AddTaskForm.css";
 
 const AddTaskForm = () => {
@@ -13,26 +13,25 @@ const AddTaskForm = () => {
 
   const onAddTask = () => {
     if (task.trim()) {
+      dispatch(addTaskThunk(task));
       setTask("");
-      addTaskServer(task).then(({ status, data }) => {
-        if (status === 201) {
-          dispatch(addTaskAction(data));
-        } else {
-          alert("Error status = " + status);
-        }
-      });
+    } else {
+      console.log("Error the name of a task");
     }
   };
 
   return (
     <div className="AddTaskForm">
       <StyledTextField
+        width="60%"
         label="Task name"
         value={task}
         onChange={(e) => setTask(e.target.value)}
         onKeyPress={(e) => e.key === "Enter" && onAddTask()}
       />
-      <StyledSelect />
+      <StyledSelect value="1">
+        <MenuItem value="1">{"category"}</MenuItem>
+      </StyledSelect>
       <StyledButton variant="outlined" onClick={onAddTask}>
         Add
       </StyledButton>

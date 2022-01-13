@@ -1,9 +1,9 @@
 import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
 
-const StyledTextField = styled(TextField)({
+const StyledTextField = styled(TextField)(({ width, error }) => ({
   height: "50px",
-  width: "60%",
+  width: width,
   margin: "10px",
 
   "& label.Mui-focused": {
@@ -16,16 +16,11 @@ const StyledTextField = styled(TextField)({
       borderWidth: 2,
     },
 
-    "&:hover fieldset": {
-      borderColor: "rgb(250, 235, 96)",
-      borderWidth: 2,
-    },
-
     "&.Mui-focused fieldset": {
-      borderColor: "rgb(241, 93, 93)",
+      borderColor: !error && "rgb(250, 235, 96)",
       borderWidth: 2,
     },
   },
-});
+}));
 
 export default StyledTextField;
