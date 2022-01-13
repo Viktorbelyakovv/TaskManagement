@@ -1,55 +1,58 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
-  addTaskServer,
-  changeCompletedServer,
-  changeFavoriteServer,
-  changeTitleServer,
-  deleteTaskServer,
-  getListServer,
+  addTask,
+  changeTaskField,
+  deleteTask,
+  getTasks,
 } from "../../utils/api";
 
-export const getListAsync = createAsyncThunk("categories/getListAsync", () =>
-  getListServer().then(({ data }) => data)
+export const getTasksAsync = createAsyncThunk(
+  "categories/getTasksAsync",
+  (isCompletedTasks) => getTasks(isCompletedTasks).then(({ data }) => data)
 );
 
 export const addTaskAsync = createAsyncThunk(
   "categories/addTaskAsync",
-  (title) => addTaskServer(title).then(({ data }) => data)
+  (title) => addTask(title).then(({ data }) => data)
 );
 
 export const deleteTaskAsync = createAsyncThunk(
   "categories/deleteTaskAsync",
-  (id) => deleteTaskServer(id)
+  (id) => deleteTask(id)
 );
 
 export const changeTitleAsync = createAsyncThunk(
   "categories/changeTitleAsync",
-  ({ id, title }) => changeTitleServer({ id, title }).then(({ data }) => data)
+  ({ id, title }) =>
+    changeTaskField({ id, fieldName: "title", field: title }).then(
+      ({ data }) => data
+    )
 );
 
 export const changeCompletedAsync = createAsyncThunk(
   "categories/changeCompletedAsync",
   ({ id, isCompleted }) =>
-    changeCompletedServer({ id, isCompleted }).then(({ data }) => data)
+    changeTaskField({ id, fieldName: "isCompleted", field: isCompleted }).then(
+      ({ data }) => data
+    )
 );
 
 export const changeFavoriteAsync = createAsyncThunk(
   "categories/changeFavoriteAsync",
   ({ id, isFavorite }) =>
-    changeFavoriteServer({ id, isFavorite }).then(({ data }) => data)
+    changeTaskField({ id, fieldName: "isFavorite", field: isFavorite }).then(
+      ({ data }) => data
+    )
 );
 
-export const slice = createSlice({
-  name: "list",
-
+export const tasksReducer = createSlice({
+  name: "tasks",
   initialState: {
     tasks: [],
   },
-
   reducers: {},
-
   extraReducers(builder) {
-    builder.addCase(getListAsync.fulfilled, (state, { payload }) => {
+    builder.addCase(getTasksAsync.fulfilled, (state, { payload }) => {
       state.tasks = payload.sort(({ isFavorite }) => (isFavorite ? -1 : 1));
     });
 
@@ -81,4 +84,4 @@ export const slice = createSlice({
   },
 });
 
-export default slice.reducer;
+export default tasksReducer.reducer;

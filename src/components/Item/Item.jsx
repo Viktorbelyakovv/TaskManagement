@@ -8,22 +8,22 @@ import {
   changeCompletedAsync,
   changeFavoriteAsync,
 } from "../../store/tasks/reducer";
-import StyledCheckbox from "./components/StyledCheckbox";
-import StyledListItem from "../StyledListItem";
-import StyledIconButton from "../StyledIconButton";
+import StyledCheckbox from "../ui-kit/StyledCheckbox";
+import StyledListItem from "../ui-kit/StyledListItem";
+import StyledIconButton from "../ui-kit/StyledIconButton";
 import "./Item.css";
 
 const Item = ({ item: { id, title, isCompleted, isFavorite } }) => {
   const dispatch = useDispatch();
-
   const [starSign, setStarSign] = useState(isFavorite ? "star" : "star_border");
 
-  const onChangeTitle = (id, title) => {
-    dispatch(changeTitleAsync({ id, title }));
+  const onChangeTitle = (data) => {
+    dispatch(changeTitleAsync(data));
   };
 
-  const onChangeCompleted = (id, isCompleted, isFavorite) => {
+  const onChangeCompleted = () => {
     dispatch(changeCompletedAsync({ id, isCompleted: !isCompleted }));
+
     if (isFavorite) {
       dispatch(changeFavoriteAsync({ id, isFavorite: !isFavorite }));
     }
@@ -38,12 +38,12 @@ const Item = ({ item: { id, title, isCompleted, isFavorite } }) => {
     <div className="Item">
       <StyledCheckbox
         checked={isCompleted}
-        onChange={() => onChangeCompleted(id, isCompleted, isFavorite)}
+        onChange={() => onChangeCompleted()}
       />
       <StyledListItem
         variant="standard"
         defaultValue={title}
-        onBlur={(e) => onChangeTitle(id, e.target.value)}
+        onBlur={(e) => onChangeTitle({ id, title: e.target.value })}
         disabled={isCompleted}
       />
       {!isCompleted && (

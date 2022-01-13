@@ -6,27 +6,28 @@ import { addCategoryAsync } from "../../../store/categories/reducer";
 import { getSvgIcon } from "../../../helpers/getSvgIcon";
 import { colors } from "../../../helpers/colors";
 import { icons } from "../../../helpers/icons";
-import StyledTextField from "../../StyledTextField";
-import StyledButton from "../../StyledButton";
-import StyledSelect from "../../StyledSelect";
+import StyledTextField from "../../ui-kit/StyledTextField";
+import StyledButton from "../../ui-kit/StyledButton";
+import StyledSelect from "../../ui-kit/StyledSelect";
 import "./AddCategoryForm.css";
 
 const AddCategoryForm = () => {
+  const dispatch = useDispatch();
   const categories = useSelector(selectCategories);
 
   const [idColor, setIdColor] = useState(1);
   const [idIcon, setIdIcon] = useState(1);
   const [category, setCategory] = useState("");
-  const dispatch = useDispatch();
 
-  const isLimitCategories = categories.length === colors.length * icons.length;
-  const isTooLong = category.trim().length > 15;
+  const [isTooShort, setTooShort] = useState(false);
+  const [isTooLong, setTooLong] = useState(false);
   const isSameCategory = !!categories.find(
     ({ colorId, iconId }) => idColor === colorId && idIcon === iconId
   );
-  const isTooShort = category.trim().length === 0;
+  const isLimitCategories = categories.length === colors.length * icons.length;
   const isError =
     isTooLong || isTooShort || isSameCategory || isLimitCategories;
+
   const helperText = isLimitCategories
     ? "You have reached the limit for the number of categories"
     : isSameCategory
@@ -55,18 +56,23 @@ const AddCategoryForm = () => {
       <h2>Add new category</h2>
       <div className="AddCategoryForm">
         <StyledTextField
-          sx={{ width: "40%" }}
+          width="40%"
           value={category}
           onKeyPress={(e) => e.key === "Enter" && onAddCategory()}
           disabled={isLimitCategories}
-          onChange={(e) => setCategory(e.target.value)}
+          onChange={(e) => {
+            setCategory(e.target.value);
+            setTooShort(e.target.value.trim().length === 0);
+            setTooLong(e.target.value.trim().length > 15);
+          }}
+          color="error"
           error={isError}
           helperText={helperText}
           required
         />
         <StyledSelect
+          width="12%"
           value={idColor}
-          sx={{ width: "12%" }}
           variant="outlined"
           onChange={(e) => setIdColor(e.target.value)}
         >
@@ -78,8 +84,8 @@ const AddCategoryForm = () => {
         </StyledSelect>
 
         <StyledSelect
+          width="15%"
           value={idIcon}
-          sx={{ width: "15%" }}
           onChange={(e) => setIdIcon(e.target.value)}
         >
           {icons.map(({ id }) => (

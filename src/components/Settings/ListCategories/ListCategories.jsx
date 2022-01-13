@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { selectCategories } from "../../../store/categories/selectors";
 import ItemCategory from "../ItemCategory";
@@ -17,10 +16,6 @@ const ListCategories = () => {
       )}
     </>
   );
-};
-
-ListCategories.propTypes = {
-  getSvgIcon: PropTypes.func,
 };
 
 export default ListCategories;

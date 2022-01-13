@@ -1,42 +1,41 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
-  getCategoriesServer,
-  changeDefaultCategoryServer,
-  addCategoryServer,
-  deleteCategoryServer,
-  changeCategoryTitleServer,
+  getCategories,
+  changeDefaultCategory,
+  addCategory,
+  deleteCategory,
+  changeCategoryTitle,
 } from "../../utils/apiCategories";
 
 export const getCategoriesAsync = createAsyncThunk(
   "categories/getCategoriesAsync",
-  () => getCategoriesServer().then(({ data }) => data)
+  () => getCategories().then(({ data }) => data)
 );
 
 export const changeDefaultCategoryAsync = createAsyncThunk(
   "categories/changeDefaultCategoryAsync",
   ({ oldId, newId }) =>
-    changeDefaultCategoryServer({ oldId, newId }).then((res) => res[1].data)
+    changeDefaultCategory({ oldId, newId }).then((res) => res[1].data)
 );
 
 export const addCategoryAsync = createAsyncThunk(
   "categories/addCategoryAsync",
   ({ title, colorId, iconId }) =>
-    addCategoryServer({ title, colorId, iconId }).then(({ data }) => data)
+    addCategory({ title, colorId, iconId }).then(({ data }) => data)
 );
 
 export const deleteCategoryAsync = createAsyncThunk(
   "categories/deleteCategoryAsync",
-  (id) => deleteCategoryServer(id)
+  (id) => deleteCategory(id)
 );
 
 export const changeCategoryTitleAsync = createAsyncThunk(
   "categories/changeCategoryTitleAsync",
-  ({ id, title }) =>
-    changeCategoryTitleServer({ id, title }).then(({ data }) => data)
+  ({ id, title }) => changeCategoryTitle({ id, title }).then(({ data }) => data)
 );
 
-export const slice = createSlice({
-  name: "category",
+export const categoriesReducer = createSlice({
+  name: "categories",
 
   initialState: {
     categories: [],
@@ -74,4 +73,4 @@ export const slice = createSlice({
   },
 });
 
-export default slice.reducer;
+export default categoriesReducer.reducer;

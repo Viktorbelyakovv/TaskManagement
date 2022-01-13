@@ -4,58 +4,48 @@ const baseURL = process.env.REACT_APP_API_LINK;
 
 const api = axios.create({ baseURL });
 
-export const getListServer = async () => {
+export const getTasks = async (isCompletedTasks) => {
   try {
-    const response = await api.get(`/tasks`);
+    const response = await api.get(`/tasks`, {
+      params: {
+        isCompleted: isCompletedTasks,
+      },
+    });
+
     return response;
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-export const addTaskServer = async (title) => {
+export const addTask = async (title) => {
   try {
     const response = await api.post(`/tasks`, {
       title,
       isCompleted: false,
       isFavorite: false,
     });
+
     return response;
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-export const deleteTaskServer = async (id) => {
+export const deleteTask = async (id) => {
   try {
     await api.delete(`/tasks/${id}`);
+
     return id;
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-export const changeTitleServer = async ({ id, title }) => {
+export const changeTaskField = async ({ id, fieldName, field }) => {
   try {
-    const response = await api.patch(`/tasks/${id}`, { title });
-    return response;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
+    const response = await api.patch(`/tasks/${id}`, { [fieldName]: field });
 
-export const changeCompletedServer = async ({ id, isCompleted }) => {
-  try {
-    const response = await api.patch(`/tasks/${id}`, { isCompleted });
-    return response;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
-
-export const changeFavoriteServer = async ({ id, isFavorite }) => {
-  try {
-    const response = await api.patch(`/tasks/${id}`, { isFavorite });
     return response;
   } catch (error) {
     throw new Error(error.message);

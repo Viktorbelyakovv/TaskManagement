@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import MenuItem from "@mui/material/MenuItem";
+import { changeDefaultCategoryAsync } from "../../../store/categories/reducer";
 import {
   selectCategories,
   selectDefaultCategory,
 } from "../../../store/categories/selectors";
-import { changeDefaultCategoryAsync } from "../../../store/categories/reducer";
-import StyledSelect from "../../StyledSelect";
+import StyledSelect from "../../ui-kit/StyledSelect";
 
 const DefaultCategory = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const DefaultCategory = () => {
     <>
       <h2>Default category</h2>
       <StyledSelect
-        sx={{ width: "80%" }}
+        width="80%"
         value={category}
         label="Category"
         onChange={(e) => setCategory(e.target.value)}

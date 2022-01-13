@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import taskReducer from "./tasks";
-import categoryReducer from "./categories";
+import tasksReducer from "./tasks";
+import categoriesReducer from "./categories";
 
 export default configureStore({
   reducer: {
-    list: taskReducer,
-    category: categoryReducer,
+    tasks: tasksReducer,
+    categories: categoriesReducer,
   },
 });

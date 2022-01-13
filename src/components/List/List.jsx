@@ -1,23 +1,18 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  selectCompletedList,
-  selectNotCompletedList,
-} from "../../store/tasks/selectors";
-import { getListAsync } from "../../store/tasks/reducer";
+import { getTasksAsync } from "../../store/tasks/reducer";
+import { selectList } from "../../store/tasks/selectors";
 import Item from "../Item";
 import "./List.css";
 
 const List = ({ isCompletedTasks }) => {
-  const list = useSelector(
-    isCompletedTasks ? selectCompletedList : selectNotCompletedList
-  );
+  const list = useSelector(selectList);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getListAsync());
-  }, [dispatch]);
+    dispatch(getTasksAsync(isCompletedTasks));
+  }, [dispatch, isCompletedTasks]);
 
   return (
     <div className="List">

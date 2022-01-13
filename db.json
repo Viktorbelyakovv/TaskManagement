@@ -50,7 +50,7 @@
       "title": "blue works",
       "colorId": 2,
       "iconId": 5,
-      "isDefault": true
+      "isDefault": false
     },
     {
       "title": "green family",
@@ -70,7 +70,7 @@
       "title": "green foods",
       "colorId": 3,
       "iconId": 2,
-      "isDefault": false,
+      "isDefault": true,
       "id": 8
     },
     {

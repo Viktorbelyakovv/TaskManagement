@@ -6,8 +6,8 @@ import {
   deleteCategoryAsync,
 } from "../../../store/categories/reducer";
 import ClearIcon from "@mui/icons-material/Clear";
-import StyledListItem from "../../StyledListItem";
-import StyledIconButton from "../../StyledIconButton";
+import StyledListItem from "../../ui-kit/StyledListItem";
+import StyledIconButton from "../../ui-kit/StyledIconButton";
 import { getSvgIcon } from "../../../helpers/getSvgIcon";
 import "./ItemCategory.css";
 
@@ -18,8 +18,8 @@ const ItemCategory = ({ item: { id, title, colorId, iconId, isDefault } }) => {
   const isError =
     categoryTitle.trim().length < 1 || categoryTitle.trim().length > 15;
 
-  const changeTitle = (id, title) => {
-    dispatch(changeCategoryTitleAsync({ id, title }));
+  const onChangeTitle = (data) => {
+    dispatch(changeCategoryTitleAsync(data));
   };
 
   return (
@@ -27,7 +27,7 @@ const ItemCategory = ({ item: { id, title, colorId, iconId, isDefault } }) => {
       <StyledListItem
         value={categoryTitle}
         onChange={(e) => setCategoryTitle(e.target.value)}
-        onBlur={(e) => !isError && changeTitle(id, e.target.value)}
+        onBlur={(e) => !isError && onChangeTitle({ id, title: e.target.value })}
         error={isError}
         variant="standard"
         color="success"
