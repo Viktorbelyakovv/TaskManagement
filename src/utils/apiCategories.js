@@ -16,9 +16,11 @@ export const getCategories = async () => {
 
 export const changeDefaultCategory = async ({ oldId, newId }) => {
   try {
-    const promise1 = api.patch(`/categories/${oldId}`, { isDefault: false });
-    const promise2 = api.patch(`/categories/${newId}`, { isDefault: true });
-    const response = await Promise.all([promise1, promise2]);
+    const removeDefault = api.patch(`/categories/${oldId}`, {
+      isDefault: false,
+    });
+    const addDefault = api.patch(`/categories/${newId}`, { isDefault: true });
+    const response = await Promise.all([removeDefault, addDefault]);
 
     return response;
   } catch (error) {

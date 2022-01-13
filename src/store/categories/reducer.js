@@ -7,30 +7,30 @@ import {
   changeCategoryTitle,
 } from "../../utils/apiCategories";
 
-export const getCategoriesAsync = createAsyncThunk(
-  "categories/getCategoriesAsync",
+export const getCategoriesThunk = createAsyncThunk(
+  "categories/getCategories",
   () => getCategories().then(({ data }) => data)
 );
 
-export const changeDefaultCategoryAsync = createAsyncThunk(
-  "categories/changeDefaultCategoryAsync",
+export const changeDefaultCategoryThunk = createAsyncThunk(
+  "categories/changeDefaultCategory",
   ({ oldId, newId }) =>
     changeDefaultCategory({ oldId, newId }).then((res) => res[1].data)
 );
 
-export const addCategoryAsync = createAsyncThunk(
-  "categories/addCategoryAsync",
+export const addCategoryThunk = createAsyncThunk(
+  "categories/addCategory",
   ({ title, colorId, iconId }) =>
     addCategory({ title, colorId, iconId }).then(({ data }) => data)
 );
 
-export const deleteCategoryAsync = createAsyncThunk(
-  "categories/deleteCategoryAsync",
+export const deleteCategoryThunk = createAsyncThunk(
+  "categories/deleteCategory",
   (id) => deleteCategory(id)
 );
 
-export const changeCategoryTitleAsync = createAsyncThunk(
-  "categories/changeCategoryTitleAsync",
+export const changeCategoryTitleThunk = createAsyncThunk(
+  "categories/changeCategoryTitle",
   ({ id, title }) => changeCategoryTitle({ id, title }).then(({ data }) => data)
 );
 
@@ -44,28 +44,28 @@ export const categoriesReducer = createSlice({
   reducers: {},
 
   extraReducers(builder) {
-    builder.addCase(getCategoriesAsync.fulfilled, (state, { payload }) => {
+    builder.addCase(getCategoriesThunk.fulfilled, (state, { payload }) => {
       state.categories = payload;
     });
 
     builder.addCase(
-      changeDefaultCategoryAsync.fulfilled,
+      changeDefaultCategoryThunk.fulfilled,
       (state, { payload }) => {
         state.categories.find(({ isDefault }) => isDefault).isDefault = false;
         state.categories.find(({ id }) => id === payload.id).isDefault = true;
       }
     );
 
-    builder.addCase(addCategoryAsync.fulfilled, (state, { payload }) => {
+    builder.addCase(addCategoryThunk.fulfilled, (state, { payload }) => {
       state.categories.push(payload);
     });
 
-    builder.addCase(deleteCategoryAsync.fulfilled, (state, { payload }) => {
+    builder.addCase(deleteCategoryThunk.fulfilled, (state, { payload }) => {
       state.categories = state.categories.filter(({ id }) => id !== payload);
     });
 
     builder.addCase(
-      changeCategoryTitleAsync.fulfilled,
+      changeCategoryTitleThunk.fulfilled,
       (state, { payload: { title, id } }) => {
         state.categories.find((item) => item.id === id).title = title;
       }

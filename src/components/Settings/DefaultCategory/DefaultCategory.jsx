@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import MenuItem from "@mui/material/MenuItem";
-import { changeDefaultCategoryAsync } from "../../../store/categories/reducer";
+import { changeDefaultCategoryThunk } from "../../../store/categories/reducer";
 import {
-  selectCategories,
-  selectDefaultCategory,
+  getCategories,
+  getDefaultCategory,
 } from "../../../store/categories/selectors";
 import StyledSelect from "../../ui-kit/StyledSelect";
 
 const DefaultCategory = () => {
   const dispatch = useDispatch();
-  const categories = useSelector(selectCategories);
-  const defaultCategory = useSelector(selectDefaultCategory);
+  const categories = useSelector(getCategories);
+  const defaultCategory = useSelector(getDefaultCategory);
 
-  const [category, setCategory] = useState(defaultCategory.id);
+  const [categoryId, setCategoryId] = useState(defaultCategory.id);
 
   const onChangeCategory = (e) => {
     dispatch(
-      changeDefaultCategoryAsync({
+      changeDefaultCategoryThunk({
         oldId: defaultCategory.id,
         newId: e.target.value,
       })
@@ -29,9 +29,9 @@ const DefaultCategory = () => {
       <h2>Default category</h2>
       <StyledSelect
         width="80%"
-        value={category}
+        value={categoryId}
         label="Category"
-        onChange={(e) => setCategory(e.target.value)}
+        onChange={(e) => setCategoryId(e.target.value)}
         onBlur={(e) => onChangeCategory(e)}
       >
         {categories ? (

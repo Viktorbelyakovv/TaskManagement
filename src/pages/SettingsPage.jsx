@@ -1,19 +1,18 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCategories } from "../store/categories/selectors";
-import { getCategoriesAsync } from "../store/categories/reducer";
+import { getCategories } from "../store/categories/selectors";
+import { getCategoriesThunk } from "../store/categories/reducer";
 import DefaultCategory from "../components/Settings/DefaultCategory";
 import AddCategoryForm from "../components/Settings/AddCategoryForm";
 import ListCategories from "../components/Settings/ListCategories";
 
 const SettingsPage = () => {
+  const categoriesList = useSelector(getCategories);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCategoriesAsync());
+    dispatch(getCategoriesThunk());
   }, [dispatch]);
-
-  const categoriesList = useSelector(selectCategories);
 
   return (
     <>

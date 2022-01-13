@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectCategories } from "../../../store/categories/selectors";
+import { getCategories } from "../../../store/categories/selectors";
 import ItemCategory from "../ItemCategory";
 
 const ListCategories = () => {
-  const categories = useSelector(selectCategories);
+  const categories = useSelector(getCategories);
 
   return (
     <>

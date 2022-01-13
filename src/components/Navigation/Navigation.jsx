@@ -21,14 +21,8 @@ const Navigation = () => {
   return (
     <StyledAppBar>
       <StyledTabs value={locationPathName} onChange={handleChange}>
-        {pages.map(({ id, to, label, value }) => (
-          <StyledTab
-            component={NavLink}
-            to={to}
-            label={label}
-            value={value}
-            key={id}
-          />
+        {pages.map(({ id, ...other }) => (
+          <StyledTab component={NavLink} key={id} {...other} />
         ))}
       </StyledTabs>
     </StyledAppBar>

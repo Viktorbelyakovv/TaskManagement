@@ -8,19 +8,19 @@
     },
     {
       "title": "Choose a car",
-      "isCompleted": true,
+      "isCompleted": false,
       "isFavorite": false,
       "id": 2
     },
     {
       "title": "Buy ticket",
       "isCompleted": false,
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 3
     },
     {
       "title": "Call to Kelly",
-      "isCompleted": false,
+      "isCompleted": true,
       "isFavorite": false,
       "id": 6
     },
@@ -33,7 +33,7 @@
     {
       "title": "Go to a doctor",
       "isCompleted": false,
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 12
     }
   ],
@@ -64,13 +64,13 @@
       "colorId": 1,
       "iconId": 3,
       "id": 7,
-      "isDefault": false
+      "isDefault": true
     },
     {
       "title": "green foods",
       "colorId": 3,
       "iconId": 2,
-      "isDefault": true,
+      "isDefault": false,
       "id": 8
     },
     {

@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useDispatch } from "react-redux";
 import {
-  deleteTaskAsync,
-  changeTitleAsync,
-  changeCompletedAsync,
-  changeFavoriteAsync,
+  deleteTaskThunk,
+  changeTitleThunk,
+  changeCompletedThunk,
+  changeFavoriteThunk,
 } from "../../store/tasks/reducer";
 import StyledCheckbox from "../ui-kit/StyledCheckbox";
 import StyledListItem from "../ui-kit/StyledListItem";
@@ -17,20 +17,20 @@ const Item = ({ item: { id, title, isCompleted, isFavorite } }) => {
   const dispatch = useDispatch();
   const [starSign, setStarSign] = useState(isFavorite ? "star" : "star_border");
 
-  const onChangeTitle = (data) => {
-    dispatch(changeTitleAsync(data));
+  const onChangeTitle = (payload) => {
+    dispatch(changeTitleThunk(payload));
   };
 
   const onChangeCompleted = () => {
-    dispatch(changeCompletedAsync({ id, isCompleted: !isCompleted }));
+    dispatch(changeCompletedThunk({ id, isCompleted: !isCompleted }));
 
     if (isFavorite) {
-      dispatch(changeFavoriteAsync({ id, isFavorite: !isFavorite }));
+      dispatch(changeFavoriteThunk({ id, isFavorite: !isFavorite }));
     }
   };
 
   const onChangeStar = () => {
-    dispatch(changeFavoriteAsync({ id, isFavorite: !isFavorite }));
+    dispatch(changeFavoriteThunk({ id, isFavorite: !isFavorite }));
     setStarSign(isFavorite ? "star_border" : "star");
   };
 
@@ -56,7 +56,7 @@ const Item = ({ item: { id, title, isCompleted, isFavorite } }) => {
           {starSign}
         </span>
       )}
-      <StyledIconButton onClick={() => dispatch(deleteTaskAsync(id))}>
+      <StyledIconButton onClick={() => dispatch(deleteTaskThunk(id))}>
         <ClearIcon />
       </StyledIconButton>
     </div>

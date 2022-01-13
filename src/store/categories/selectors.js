@@ -1,4 +1,4 @@
-export const selectCategories = ({ categories }) => categories.categories;
+export const getCategories = ({ categories }) => categories.categories;
 
-export const selectDefaultCategory = ({ categories }) =>
+export const getDefaultCategory = ({ categories }) =>
   categories.categories.find(({ isDefault }) => isDefault);

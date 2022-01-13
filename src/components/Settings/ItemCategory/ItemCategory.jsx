@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import {
-  changeCategoryTitleAsync,
-  deleteCategoryAsync,
+  changeCategoryTitleThunk,
+  deleteCategoryThunk,
 } from "../../../store/categories/reducer";
 import ClearIcon from "@mui/icons-material/Clear";
 import StyledListItem from "../../ui-kit/StyledListItem";
@@ -18,8 +18,8 @@ const ItemCategory = ({ item: { id, title, colorId, iconId, isDefault } }) => {
   const isError =
     categoryTitle.trim().length < 1 || categoryTitle.trim().length > 15;
 
-  const onChangeTitle = (data) => {
-    dispatch(changeCategoryTitleAsync(data));
+  const onChangeTitle = (payload) => {
+    dispatch(changeCategoryTitleThunk(payload));
   };
 
   return (
@@ -38,7 +38,7 @@ const ItemCategory = ({ item: { id, title, colorId, iconId, isDefault } }) => {
       />
       {getSvgIcon({ iconId, colorId, size: "40px" })}
       <StyledIconButton
-        onClick={() => !isDefault && dispatch(deleteCategoryAsync(id))}
+        onClick={() => !isDefault && dispatch(deleteCategoryThunk(id))}
       >
         <ClearIcon />
       </StyledIconButton>
