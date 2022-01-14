@@ -1,40 +1,81 @@
 {
   "tasks": [
     {
-      "title": "Go to a bar",
-      "isCompleted": true,
+      "title": "Buy fruits",
+      "categoryId": 11,
+      "isCompleted": false,
       "isFavorite": false,
       "id": 1
     },
     {
-      "title": "Choose a car",
+      "title": "Buy a vacuum cleaner",
+      "categoryId": 7,
       "isCompleted": false,
       "isFavorite": false,
       "id": 2
     },
     {
-      "title": "Buy ticket",
+      "title": "Sign up the working contract",
+      "categoryId": 5,
       "isCompleted": false,
       "isFavorite": true,
       "id": 3
     },
     {
-      "title": "Call to Kelly",
+      "title": "Play volleyball",
+      "categoryId": 4,
       "isCompleted": true,
+      "isFavorite": false,
+      "id": 4
+    },
+    {
+      "title": "Get a subscription to a swimming pool",
+      "categoryId": 9,
+      "isCompleted": false,
+      "isFavorite": false,
+      "id": 5
+    },
+    {
+      "title": "Book an appointment with a doctor",
+      "categoryId": 12,
+      "isCompleted": false,
       "isFavorite": false,
       "id": 6
     },
     {
-      "title": "Buy milk",
+      "title": "Cook the dinner",
+      "categoryId": 8,
+      "isCompleted": false,
+      "isFavorite": true,
+      "id": 7
+    },
+    {
+      "title": "Call to the uncle",
+      "categoryId": 6,
+      "isCompleted": false,
+      "isFavorite": true,
+      "id": 8
+    },
+    {
+      "title": "Get the reference for the swimmimg pool",
+      "categoryId": 9,
+      "isCompleted": true,
+      "isFavorite": false,
+      "id": 9
+    },
+    {
+      "title": "Finish the pumpkin",
+      "categoryId": 8,
+      "isCompleted": false,
+      "isFavorite": false,
+      "id": 10
+    },
+    {
+      "title": "Make an appoinment with a hairdresser (13:00)",
+      "categoryId": 6,
       "isCompleted": true,
       "isFavorite": false,
       "id": 11
-    },
-    {
-      "title": "Go to a doctor",
-      "isCompleted": false,
-      "isFavorite": false,
-      "id": 12
     }
   ],
   "categories": [
@@ -43,7 +84,7 @@
       "title": "red sport",
       "colorId": 1,
       "iconId": 4,
-      "isDefault": false
+      "isDefault": true
     },
     {
       "id": 5,
@@ -64,10 +105,10 @@
       "colorId": 1,
       "iconId": 3,
       "id": 7,
-      "isDefault": true
+      "isDefault": false
     },
     {
-      "title": "green foods",
+      "title": "green food",
       "colorId": 3,
       "iconId": 2,
       "isDefault": false,
@@ -79,6 +120,27 @@
       "iconId": 4,
       "isDefault": false,
       "id": 9
+    },
+    {
+      "title": "red work",
+      "colorId": 1,
+      "iconId": 5,
+      "isDefault": false,
+      "id": 10
+    },
+    {
+      "title": "green shopping",
+      "colorId": 3,
+      "iconId": 3,
+      "isDefault": false,
+      "id": 11
+    },
+    {
+      "title": "blue family",
+      "colorId": 2,
+      "iconId": 1,
+      "isDefault": false,
+      "id": 12
     }
   ]
 }

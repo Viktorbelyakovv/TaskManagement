@@ -22,6 +22,10 @@ const ItemCategory = ({ item: { id, title, colorId, iconId, isDefault } }) => {
     dispatch(changeCategoryTitleThunk(payload));
   };
 
+  const onDeleteCategory = () => {
+    !isDefault && dispatch(deleteCategoryThunk(id));
+  };
+
   return (
     <div className="ItemCategory">
       <StyledListItem
@@ -37,9 +41,7 @@ const ItemCategory = ({ item: { id, title, colorId, iconId, isDefault } }) => {
         }
       />
       {getSvgIcon({ iconId, colorId, size: "40px" })}
-      <StyledIconButton
-        onClick={() => !isDefault && dispatch(deleteCategoryThunk(id))}
-      >
+      <StyledIconButton disabled={isDefault} onClick={() => onDeleteCategory()}>
         <ClearIcon />
       </StyledIconButton>
     </div>

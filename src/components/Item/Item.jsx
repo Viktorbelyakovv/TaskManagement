@@ -11,11 +11,22 @@ import {
 import StyledCheckbox from "../ui-kit/StyledCheckbox";
 import StyledListItem from "../ui-kit/StyledListItem";
 import StyledIconButton from "../ui-kit/StyledIconButton";
+import { getSvgIcon } from "../../helpers/getSvgIcon";
 import "./Item.css";
 
-const Item = ({ item: { id, title, isCompleted, isFavorite } }) => {
+const Item = ({
+  item: {
+    id,
+    title,
+    isCompleted,
+    isFavorite,
+    category: { colorId, iconId },
+  },
+}) => {
   const dispatch = useDispatch();
   const [starSign, setStarSign] = useState(isFavorite ? "star" : "star_border");
+  const [taskTitle, setTaskTitle] = useState(title);
+  const isError = taskTitle.trim().length < 1 || taskTitle.trim().length > 50;
 
   const onChangeTitle = (payload) => {
     dispatch(changeTitleThunk(payload));
@@ -42,10 +53,16 @@ const Item = ({ item: { id, title, isCompleted, isFavorite } }) => {
       />
       <StyledListItem
         variant="standard"
-        defaultValue={title}
-        onBlur={(e) => onChangeTitle({ id, title: e.target.value })}
+        value={taskTitle}
+        onChange={(e) => setTaskTitle(e.target.value)}
+        onBlur={(e) => !isError && onChangeTitle({ id, title: e.target.value })}
+        error={isError}
+        helperText={
+          isError ? "Task name must be between 1 and 50 characters" : ""
+        }
         disabled={isCompleted}
       />
+      {getSvgIcon({ iconId, colorId, size: "30px" })}
       {!isCompleted && (
         <span
           className="material-icons"

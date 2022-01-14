@@ -11,8 +11,8 @@ export const getTasksThunk = createAsyncThunk(
   (isCompletedTasks) => getTasks(isCompletedTasks).then(({ data }) => data)
 );
 
-export const addTaskThunk = createAsyncThunk("categories/addTask", (title) =>
-  addTask(title).then(({ data }) => data)
+export const addTaskThunk = createAsyncThunk("categories/addTask", (payload) =>
+  addTask(payload).then(({ data }) => data)
 );
 
 export const deleteTaskThunk = createAsyncThunk("categories/deleteTask", (id) =>
@@ -74,7 +74,7 @@ export const tasksReducer = createSlice({
     });
 
     builder.addCase(changeFavoriteThunk.fulfilled, (state, { payload }) => {
-      const item = state.tasks.find(({ id }) => id === payload.id);
+      const item = state.tasks.find(({ id }) => id === payload.id) || {};
       item.isFavorite = !item.isFavorite;
       state.tasks.sort((item) => (item.isFavorite ? -1 : 1));
     });

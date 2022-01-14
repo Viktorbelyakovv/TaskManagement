@@ -1,9 +1,9 @@
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 
-const StyledButton = styled(Button)({
+const StyledButton = styled(Button)(({ width }) => ({
   height: "55px",
-  width: "10%",
+  width: width,
   margin: "10px",
   color: "black",
   borderColor: "black",
@@ -19,6 +19,6 @@ const StyledButton = styled(Button)({
     borderColor: "rgb(250, 235, 96)",
     borderWidth: 2,
   },
-});
+}));
 
 export default StyledButton;
