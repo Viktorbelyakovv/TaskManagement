@@ -2,39 +2,59 @@
   "tasks": [
     {
       "title": "Go to a bar",
-      "isCompleted": true,
+      "isCompleted": false,
       "isFavorite": false,
-      "id": 1
+      "id": 1,
+      "categoryId": 4
     },
     {
       "title": "Choose a car",
       "isCompleted": false,
       "isFavorite": false,
-      "id": 2
+      "id": 2,
+      "categoryId": 5
     },
     {
-      "title": "Buy ticket",
+      "title": "Buy a car",
       "isCompleted": false,
-      "isFavorite": true,
-      "id": 3
+      "isFavorite": false,
+      "id": 3,
+      "categoryId": 6
     },
     {
       "title": "Call to Kelly",
       "isCompleted": true,
       "isFavorite": false,
-      "id": 6
+      "id": 6,
+      "categoryId": 7
     },
     {
       "title": "Buy milk",
       "isCompleted": true,
       "isFavorite": false,
-      "id": 11
+      "id": 11,
+      "categoryId": 8
     },
     {
       "title": "Go to a doctor",
+      "isCompleted": true,
+      "isFavorite": false,
+      "id": 12,
+      "categoryId": 9
+    },
+    {
+      "title": "Hello",
+      "categoryId": 6,
+      "isCompleted": true,
+      "isFavorite": false,
+      "id": 13
+    },
+    {
+      "title": "Sell drugs",
+      "categoryId": 9,
       "isCompleted": false,
       "isFavorite": false,
-      "id": 12
+      "id": 14
     }
   ],
   "categories": [
@@ -64,13 +84,13 @@
       "colorId": 1,
       "iconId": 3,
       "id": 7,
-      "isDefault": true
+      "isDefault": false
     },
     {
-      "title": "green foods",
+      "title": "green food",
       "colorId": 3,
       "iconId": 2,
-      "isDefault": false,
+      "isDefault": true,
       "id": 8
     },
     {
@@ -79,6 +99,13 @@
       "iconId": 4,
       "isDefault": false,
       "id": 9
+    },
+    {
+      "title": "red work",
+      "colorId": 1,
+      "iconId": 5,
+      "isDefault": false,
+      "id": 10
     }
   ]
 }

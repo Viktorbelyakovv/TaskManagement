@@ -11,8 +11,8 @@ export const getTasksThunk = createAsyncThunk(
   (isCompletedTasks) => getTasks(isCompletedTasks).then(({ data }) => data)
 );
 
-export const addTaskThunk = createAsyncThunk("categories/addTask", (title) =>
-  addTask(title).then(({ data }) => data)
+export const addTaskThunk = createAsyncThunk("categories/addTask", (payload) =>
+  addTask(payload).then(({ data }) => data)
 );
 
 export const deleteTaskThunk = createAsyncThunk("categories/deleteTask", (id) =>

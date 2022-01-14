@@ -6,9 +6,7 @@ const api = axios.create({ baseURL });
 
 export const getCategories = async () => {
   try {
-    const response = await api.get(`/categories`);
-
-    return response;
+    return await api.get(`/categories`);
   } catch (error) {
     throw new Error(error.message);
   }
@@ -20,9 +18,7 @@ export const changeDefaultCategory = async ({ oldId, newId }) => {
       isDefault: false,
     });
     const addDefault = api.patch(`/categories/${newId}`, { isDefault: true });
-    const response = await Promise.all([removeDefault, addDefault]);
-
-    return response;
+    return await Promise.all([removeDefault, addDefault]);
   } catch (error) {
     throw new Error(error.message);
   }
@@ -30,14 +26,12 @@ export const changeDefaultCategory = async ({ oldId, newId }) => {
 
 export const addCategory = async ({ title, colorId, iconId }) => {
   try {
-    const response = await api.post(`/categories`, {
+    return await api.post(`/categories`, {
       title,
       colorId,
       iconId,
       isDefault: false,
     });
-
-    return response;
   } catch (error) {
     throw new Error(error.message);
   }
@@ -55,9 +49,7 @@ export const deleteCategory = async (id) => {
 
 export const changeCategoryTitle = async ({ id, title }) => {
   try {
-    const response = await api.patch(`/categories/${id}`, { title });
-
-    return response;
+    return await api.patch(`/categories/${id}`, { title });
   } catch (error) {
     throw new Error(error.message);
   }

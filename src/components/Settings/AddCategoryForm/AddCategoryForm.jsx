@@ -19,7 +19,7 @@ const AddCategoryForm = () => {
   const [idIcon, setIdIcon] = useState(1);
   const [categoryTitle, setCategoryTitle] = useState("");
 
-  const [isEmpty, setTooShort] = useState(false);
+  const [isEmpty, setEmpty] = useState(false);
   const [isTooLong, setTooLong] = useState(false);
   const isSameCategory = !!categories.find(
     ({ colorId, iconId }) => idColor === colorId && idIcon === iconId
@@ -38,19 +38,23 @@ const AddCategoryForm = () => {
     : "";
 
   const onAddCategory = () => {
-    dispatch(
-      addCategoryThunk({
-        title: categoryTitle,
-        colorId: idColor,
-        iconId: idIcon,
-      })
-    );
-    setCategoryTitle("");
+    if (categoryTitle.trim()) {
+      dispatch(
+        addCategoryThunk({
+          title: categoryTitle,
+          colorId: idColor,
+          iconId: idIcon,
+        })
+      );
+      setCategoryTitle("");
+    } else {
+      setEmpty(true);
+    }
   };
 
   const handleTitleChange = (e) => {
     setCategoryTitle(e.target.value);
-    setTooShort(e.target.value.trim().length === 0);
+    setEmpty(e.target.value.trim().length === 0);
     setTooLong(e.target.value.trim().length > 15);
   };
 
@@ -61,10 +65,9 @@ const AddCategoryForm = () => {
         <StyledTextField
           width="40%"
           value={categoryTitle}
+          onChange={(e) => handleTitleChange(e)}
           onKeyPress={(e) => e.key === "Enter" && onAddCategory()}
           disabled={isLimitCategories}
-          onChange={(e) => handleTitleChange(e)}
-          color="error"
           error={isError}
           helperText={helperText}
           required
@@ -94,6 +97,7 @@ const AddCategoryForm = () => {
           ))}
         </StyledSelect>
         <StyledButton
+          width="10%"
           variant="outlined"
           disabled={isError}
           onClick={onAddCategory}
