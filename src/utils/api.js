@@ -17,7 +17,7 @@ export const getTasks = async (isCompletedTasks) => {
   }
 };
 
-export const addTask = async ({ title, categoryId }) => {
+export const addTask = async ({ title, categoryId, date }) => {
   try {
     return await api
       .post(`/tasks`, {
@@ -25,6 +25,7 @@ export const addTask = async ({ title, categoryId }) => {
         categoryId,
         isCompleted: false,
         isFavorite: false,
+        date,
       })
       .then((response) => {
         return api.get(`/tasks/${response.data.id}`, {

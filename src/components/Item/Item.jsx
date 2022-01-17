@@ -20,6 +20,7 @@ const Item = ({
     title,
     isCompleted,
     isFavorite,
+    date,
     category: { colorId, iconId },
   },
 }) => {
@@ -62,6 +63,7 @@ const Item = ({
         }
         disabled={isCompleted}
       />
+      {date}
       {getSvgIcon({ iconId, colorId, size: "30px" })}
       {!isCompleted && (
         <span

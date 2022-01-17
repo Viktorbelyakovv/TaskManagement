@@ -4,6 +4,7 @@ import { getCategories } from "../store/categories/selectors";
 import { getCategoriesThunk } from "../store/categories/reducer";
 import AddTaskForm from "../components/AddTaskForm";
 import ListTasks from "../components/ListTasks";
+import Filtering from "../components/Filtering";
 
 const MainPage = () => {
   const categoriesList = useSelector(getCategories);
@@ -19,6 +20,7 @@ const MainPage = () => {
       {categoriesList.length && (
         <div>
           <AddTaskForm />
+          <Filtering />
           <ListTasks isCompletedTasks={false} />
         </div>
       )}

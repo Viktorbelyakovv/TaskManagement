@@ -11,6 +11,7 @@ import StyledSelect from "../ui-kit/StyledSelect";
 import StyledButton from "../ui-kit/StyledButton";
 import { getSvgIcon } from "../../helpers/getSvgIcon";
 import "./AddTaskForm.css";
+import { format } from "date-fns";
 
 const AddTaskForm = () => {
   const [title, setTitle] = useState("");
@@ -35,6 +36,7 @@ const AddTaskForm = () => {
         addTaskThunk({
           title,
           categoryId,
+          date: format(new Date(), "yyyy-MM-dd"),
         })
       );
       setTitle("");
