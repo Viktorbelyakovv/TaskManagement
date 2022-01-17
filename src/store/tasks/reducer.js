@@ -8,7 +8,7 @@ import {
 
 export const getTasksThunk = createAsyncThunk(
   "categories/getTasks",
-  (isCompletedTasks) => getTasks(isCompletedTasks).then(({ data }) => data)
+  (payload) => getTasks(payload).then(({ data }) => data)
 );
 
 export const addTaskThunk = createAsyncThunk("categories/addTask", (payload) =>
@@ -37,9 +37,9 @@ export const changeCompletedThunk = createAsyncThunk(
 
 export const changeFavoriteThunk = createAsyncThunk(
   "categories/changeFavorite",
-  ({ id, isFavorite }) =>
+  ({ id, isFavorite, payload }) =>
     changeTaskField({ id, fieldName: "isFavorite", field: isFavorite }).then(
-      ({ data }) => data
+      () => getTasks(payload).then(({ data }) => data)
     )
 );
 
@@ -51,7 +51,7 @@ export const tasksReducer = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder.addCase(getTasksThunk.fulfilled, (state, { payload }) => {
-      state.tasks = payload.sort(({ isFavorite }) => (isFavorite ? -1 : 1));
+      state.tasks = payload;
     });
 
     builder.addCase(addTaskThunk.fulfilled, (state, { payload }) => {
@@ -74,9 +74,7 @@ export const tasksReducer = createSlice({
     });
 
     builder.addCase(changeFavoriteThunk.fulfilled, (state, { payload }) => {
-      const item = state.tasks.find(({ id }) => id === payload.id) || {};
-      item.isFavorite = !item.isFavorite;
-      state.tasks.sort((item) => (item.isFavorite ? -1 : 1));
+      state.tasks = payload;
     });
   },
 });

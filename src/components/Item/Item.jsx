@@ -23,6 +23,7 @@ const Item = ({
     date,
     category: { colorId, iconId },
   },
+  payload,
 }) => {
   const dispatch = useDispatch();
   const [starSign, setStarSign] = useState(isFavorite ? "star" : "star_border");
@@ -37,12 +38,24 @@ const Item = ({
     dispatch(changeCompletedThunk({ id, isCompleted: !isCompleted }));
 
     if (isFavorite) {
-      dispatch(changeFavoriteThunk({ id, isFavorite: !isFavorite }));
+      dispatch(
+        changeFavoriteThunk({
+          id,
+          isFavorite: !isFavorite,
+          payload,
+        })
+      );
     }
   };
 
   const onChangeStar = () => {
-    dispatch(changeFavoriteThunk({ id, isFavorite: !isFavorite }));
+    dispatch(
+      changeFavoriteThunk({
+        id,
+        isFavorite: !isFavorite,
+        payload,
+      })
+    );
     setStarSign(isFavorite ? "star_border" : "star");
   };
 
@@ -84,6 +97,7 @@ const Item = ({
 
 Item.propTypes = {
   item: PropTypes.object,
+  payload: PropTypes.objectOf(PropTypes.bool),
 };
 
 export default Item;

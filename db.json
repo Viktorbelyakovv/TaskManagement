@@ -12,7 +12,7 @@
       "title": "Buy a vacuum cleaner",
       "categoryId": 7,
       "isCompleted": false,
-      "isFavorite": false,
+      "isFavorite": true,
       "date": "2021-11-18",
       "id": 2
     },
@@ -20,7 +20,7 @@
       "title": "Sign up the working contract",
       "categoryId": 5,
       "isCompleted": false,
-      "isFavorite": true,
+      "isFavorite": false,
       "date": "2021-12-13",
       "id": 3
     },
@@ -60,7 +60,7 @@
       "title": "Call to the uncle",
       "categoryId": 6,
       "isCompleted": false,
-      "isFavorite": true,
+      "isFavorite": false,
       "date": "2022-01-12",
       "id": 8
     },
@@ -76,7 +76,7 @@
       "title": "Finish the pumpkin",
       "categoryId": 8,
       "isCompleted": false,
-      "isFavorite": false,
+      "isFavorite": true,
       "date": "2022-01-10",
       "id": 10
     },

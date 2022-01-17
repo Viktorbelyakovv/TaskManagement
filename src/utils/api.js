@@ -4,12 +4,16 @@ const baseURL = process.env.REACT_APP_API_LINK;
 
 const api = axios.create({ baseURL });
 
-export const getTasks = async (isCompletedTasks) => {
+export const getTasks = async ({ isCompletedTasks, sortDate, sortName }) => {
   try {
     return await api.get(`/tasks`, {
       params: {
         isCompleted: isCompletedTasks,
         _expand: "category",
+        _sort: `isFavorite${sortDate ? ",date" : ""}${
+          sortName ? ",title" : ""
+        }`,
+        _order: `desc${sortDate ? ",desc" : ""}${sortName ? ",asc" : ""}`,
       },
     });
   } catch (error) {
