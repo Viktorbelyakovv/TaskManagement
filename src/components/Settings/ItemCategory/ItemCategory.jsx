@@ -41,7 +41,7 @@ const ItemCategory = ({ item: { id, title, colorId, iconId, isDefault } }) => {
         }
       />
       {getSvgIcon({ iconId, colorId, size: "40px" })}
-      <StyledIconButton disabled={isDefault} onClick={() => onDeleteCategory()}>
+      <StyledIconButton disabled={isDefault} onClick={onDeleteCategory}>
         <ClearIcon />
       </StyledIconButton>
     </div>

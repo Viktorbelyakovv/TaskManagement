@@ -15,14 +15,14 @@ const AddCategoryForm = () => {
   const dispatch = useDispatch();
   const categories = useSelector(getCategories);
 
-  const [idColor, setIdColor] = useState(1);
-  const [idIcon, setIdIcon] = useState(1);
-  const [categoryTitle, setCategoryTitle] = useState("");
+  const [colorId, setСolorId] = useState(1);
+  const [iconId, setIconId] = useState(1);
+  const [title, setTitle] = useState("");
 
   const [isEmpty, setEmpty] = useState(false);
   const [isTooLong, setTooLong] = useState(false);
   const isSameCategory = !!categories.find(
-    ({ colorId, iconId }) => idColor === colorId && idIcon === iconId
+    (category) => category.colorId === colorId && category.iconId === iconId
   );
   const isLimitCategories = categories.length >= colors.length * icons.length;
   const isError = isTooLong || isEmpty || isSameCategory || isLimitCategories;
@@ -38,24 +38,24 @@ const AddCategoryForm = () => {
     : "";
 
   const onAddCategory = () => {
-    if (categoryTitle.trim()) {
+    if (title.trim()) {
       dispatch(
         addCategoryThunk({
-          title: categoryTitle,
-          colorId: idColor,
-          iconId: idIcon,
+          title,
+          colorId,
+          iconId,
         })
       );
-      setCategoryTitle("");
+      setTitle("");
     } else {
       setEmpty(true);
     }
   };
 
-  const handleTitleChange = (e) => {
-    setCategoryTitle(e.target.value);
-    setEmpty(e.target.value.trim().length === 0);
-    setTooLong(e.target.value.trim().length > 15);
+  const handleTitleChange = (value) => {
+    setTitle(value);
+    setEmpty(value.trim().length === 0);
+    setTooLong(value.trim().length > 15);
   };
 
   return (
@@ -64,8 +64,8 @@ const AddCategoryForm = () => {
       <div className="AddCategoryForm">
         <StyledTextField
           width="40%"
-          value={categoryTitle}
-          onChange={(e) => handleTitleChange(e)}
+          value={title}
+          onChange={(e) => handleTitleChange(e.target.value)}
           onKeyPress={(e) => e.key === "Enter" && onAddCategory()}
           disabled={isLimitCategories}
           error={isError}
@@ -74,9 +74,9 @@ const AddCategoryForm = () => {
         />
         <StyledSelect
           width="12%"
-          value={idColor}
+          value={colorId}
           variant="outlined"
-          onChange={(e) => setIdColor(e.target.value)}
+          onChange={(e) => setСolorId(e.target.value)}
         >
           {colors.map(({ id, colorName }) => (
             <MenuItem value={id} key={id}>
@@ -87,8 +87,8 @@ const AddCategoryForm = () => {
 
         <StyledSelect
           width="15%"
-          value={idIcon}
-          onChange={(e) => setIdIcon(e.target.value)}
+          value={iconId}
+          onChange={(e) => setIconId(e.target.value)}
         >
           {icons.map(({ id }) => (
             <MenuItem value={id} key={id}>

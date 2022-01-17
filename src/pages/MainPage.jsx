@@ -12,6 +12,7 @@ const MainPage = () => {
   useEffect(() => {
     dispatch(getCategoriesThunk());
   }, [dispatch]);
+
   return (
     <>
       <h1>TO-DO LIST AND TASK MANAGEMENT</h1>
