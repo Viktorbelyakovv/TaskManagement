@@ -34,7 +34,7 @@ const DefaultCategory = () => {
         onChange={(e) => setCategoryId(e.target.value)}
         onBlur={(e) => onChangeCategory(e)}
       >
-        {categories ? (
+        {categories.length ? (
           categories.map(({ id, title }) => (
             <MenuItem value={id} key={id}>
               {title}

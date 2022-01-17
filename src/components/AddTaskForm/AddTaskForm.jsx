@@ -13,7 +13,7 @@ import { getSvgIcon } from "../../helpers/getSvgIcon";
 import "./AddTaskForm.css";
 
 const AddTaskForm = () => {
-  const [taskTitle, setTaskTitle] = useState("");
+  const [title, setTitle] = useState("");
   const [isEmpty, setEmpty] = useState(false);
   const [isTooLong, setTooLong] = useState(false);
   const dispatch = useDispatch();
@@ -30,29 +30,35 @@ const AddTaskForm = () => {
     : "";
 
   const onAddTask = () => {
-    if (taskTitle.trim()) {
-      dispatch(addTaskThunk({ title: taskTitle, categoryId }));
-      setTaskTitle("");
+    if (title.trim()) {
+      dispatch(
+        addTaskThunk({
+          title,
+          categoryId,
+        })
+      );
+      setTitle("");
     } else {
       setEmpty(true);
     }
   };
 
-  const handleTitleChange = (e) => {
-    setTaskTitle(e.target.value);
-    setEmpty(e.target.value.trim().length === 0);
-    setTooLong(e.target.value.trim().length > 50);
+  const handleTitleChange = (value) => {
+    setTitle(value);
+    setEmpty(value.trim().length === 0);
+    setTooLong(value.trim().length > 50);
   };
 
-  const onIconRender = (selected) => {
-    const selectedCategory = selected
-      ? categories.find(({ id }) => id === selected)
+  const renderIcon = (selectedId) => {
+    const { iconId, colorId } = selectedId
+      ? categories.find(({ id }) => id === selectedId)
       : defaultCategory;
+
     return (
       <>
         {getSvgIcon({
-          iconId: selectedCategory.iconId,
-          colorId: selectedCategory.colorId,
+          iconId,
+          colorId,
           size: "30px",
         })}
       </>
@@ -63,8 +69,8 @@ const AddTaskForm = () => {
     <div className="AddTaskForm">
       <StyledTextField
         width="60%"
-        value={taskTitle}
-        onChange={(e) => handleTitleChange(e)}
+        value={title}
+        onChange={(e) => handleTitleChange(e.target.value)}
         onKeyPress={(e) => e.key === "Enter" && onAddTask()}
         error={isError}
         helperText={helperText}
@@ -77,9 +83,9 @@ const AddTaskForm = () => {
         label="Category"
         onChange={(e) => setCategoryId(e.target.value)}
         displayEmpty
-        renderValue={(selected) => onIconRender(selected)}
+        renderValue={(selectedId) => renderIcon(selectedId)}
       >
-        {categories ? (
+        {categories.length ? (
           categories.map(({ id, title, colorId, iconId }) => (
             <MenuItem value={id} key={id}>
               {getSvgIcon({ iconId, colorId, size: "30px" })}
