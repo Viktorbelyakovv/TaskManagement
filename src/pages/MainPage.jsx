@@ -19,27 +19,29 @@ const MainPage = () => {
   return (
     <>
       <h1>TO-DO LIST AND TASK MANAGEMENT</h1>
-      {categoriesList.length && (
-        <div>
+      <div>
+        {categoriesList.length && (
           <AddTaskForm
             isCompletedTasks={false}
             sortDate={sortDate}
             sortName={sortName}
           />
-          <Sorting
+        )}
+        <Sorting
+          isCompletedTasks={false}
+          sortDate={sortDate}
+          setSortDate={setSortDate}
+          sortName={sortName}
+          setSortName={setSortName}
+        />
+        {
+          /* categoriesList.length &&  */ <ListTasks
             isCompletedTasks={false}
             sortDate={sortDate}
-            setSortDate={setSortDate}
-            sortName={sortName}
-            setSortName={setSortName}
-          />
-          <ListTasks
-            isCompletedTasks={false}
-            sortDate={sortDate}
             sortName={sortName}
           />
-        </div>
-      )}
+        }
+      </div>
     </>
   );
 };

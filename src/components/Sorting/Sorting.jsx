@@ -15,19 +15,24 @@ const Sorting = ({
   const dispatch = useDispatch();
 
   const onApplySorting = () => {
-    dispatch(
-      getTasksThunk({
-        isCompletedTasks,
-        sortDate,
-        sortName,
-      })
-    );
+    (sortDate || sortName) &&
+      dispatch(
+        getTasksThunk({
+          isCompletedTasks,
+          sortDate,
+          sortName,
+        })
+      );
   };
 
   const onResetSorting = () => {
-    dispatch(
-      getTasksThunk({ isCompletedTasks, sortDate: false, sortName: false })
-    );
+    if (sortDate || sortName) {
+      setSortDate(false);
+      setSortName(false);
+      dispatch(
+        getTasksThunk({ isCompletedTasks, sortDate: false, sortName: false })
+      );
+    }
   };
 
   return (
