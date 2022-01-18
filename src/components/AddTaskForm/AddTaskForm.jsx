@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCategories,
@@ -11,8 +12,9 @@ import StyledSelect from "../ui-kit/StyledSelect";
 import StyledButton from "../ui-kit/StyledButton";
 import { getSvgIcon } from "../../helpers/getSvgIcon";
 import "./AddTaskForm.css";
+import { format } from "date-fns";
 
-const AddTaskForm = () => {
+const AddTaskForm = ({ isCompletedTasks, sortDate, sortName }) => {
   const [title, setTitle] = useState("");
   const [isEmpty, setEmpty] = useState(false);
   const [isTooLong, setTooLong] = useState(false);
@@ -33,8 +35,16 @@ const AddTaskForm = () => {
     if (title.trim()) {
       dispatch(
         addTaskThunk({
-          title,
-          categoryId,
+          addPayload: {
+            title,
+            categoryId,
+            date: format(new Date(), "yyyy-MM-dd"),
+          },
+          sortPayload: {
+            isCompletedTasks,
+            sortDate,
+            sortName,
+          },
         })
       );
       setTitle("");
@@ -107,6 +117,12 @@ const AddTaskForm = () => {
       </StyledButton>
     </div>
   );
+};
+
+AddTaskForm.propTypes = {
+  isCompletedTasks: PropTypes.bool,
+  sortDate: PropTypes.bool,
+  sortName: PropTypes.bool,
 };
 
 export default AddTaskForm;
