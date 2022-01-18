@@ -1,14 +1,16 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
-import { getError } from "../../store/tasks/selectors";
+import { getTasksError } from "../../store/tasks/selectors";
+import { getCategoriesError } from "../../store/categories/selectors";
 import "./Error.css";
 
 const Error = ({ message }) => {
-  const error = useSelector(getError);
+  const errorTasks = useSelector(getTasksError);
+  const errorCategories = useSelector(getCategoriesError);
   return (
     <div className="Error">
-      <h1>{error ? message : ""} </h1>
+      <h1>{errorTasks || errorCategories ? message : ""} </h1>
     </div>
   );
 };

@@ -2,7 +2,11 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { getTasksThunk } from "../../store/tasks/reducer";
-import { getTasks, getLoading, getError } from "../../store/tasks/selectors";
+import {
+  getTasks,
+  getTasksLoading,
+  getTasksError,
+} from "../../store/tasks/selectors";
 import Item from "../Item";
 import Loader from "../Loader";
 import Error from "../Error";
@@ -10,8 +14,8 @@ import "./ListTasks.css";
 
 const ListTasks = ({ isCompletedTasks, sortDate, sortName }) => {
   const tasksList = useSelector(getTasks);
-  const loading = useSelector(getLoading);
-  const error = useSelector(getError);
+  const loading = useSelector(getTasksLoading);
+  const error = useSelector(getTasksError);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,28 +24,22 @@ const ListTasks = ({ isCompletedTasks, sortDate, sortName }) => {
     );
   }, [dispatch, isCompletedTasks]);
 
+  if (error) return <Error message={"Error downloading tasks"} />;
+
+  if (loading === "pending") return <Loader />;
+
+  if (!tasksList.length) return <h2>No tasks</h2>;
+
   return (
-    <>
-      {error ? (
-        <Error message={"Error downloading tasks"} />
-      ) : loading === "pending" ? (
-        <Loader />
-      ) : (
-        <div className="ListTasks">
-          {tasksList.length ? (
-            tasksList.map((item) => (
-              <Item
-                item={item}
-                key={item.id}
-                payload={{ isCompletedTasks, sortDate, sortName }}
-              />
-            ))
-          ) : (
-            <h2>No tasks</h2>
-          )}
-        </div>
-      )}
-    </>
+    <div className="ListTasks">
+      {tasksList.map((item) => (
+        <Item
+          item={item}
+          key={item.id}
+          payload={{ isCompletedTasks, sortDate, sortName }}
+        />
+      ))}
+    </div>
   );
 };
 

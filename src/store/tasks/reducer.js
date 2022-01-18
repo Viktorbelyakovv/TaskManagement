@@ -102,6 +102,7 @@ export const tasksReducer = createSlice({
         }
       })
       .addCase(getTasksThunk.fulfilled, (state, { payload }) => {
+        state.error = null;
         state.tasks = payload;
         if (state.loading === "pending") {
           state.loading = "idle";
@@ -116,16 +117,9 @@ export const tasksReducer = createSlice({
       });
 
     builder
-      /* .addCase(addTaskThunk.pending, (state) => {
-        if (state.loading === "idle") {
-          state.loading = "pending";
-        }
-      }) */
       .addCase(addTaskThunk.fulfilled, (state, { payload }) => {
+        state.error = null;
         state.tasks = payload;
-        /* if (state.loading === "pending") {
-          state.loading = "idle";
-        } */
       })
       .addCase(addTaskThunk.rejected, (state, action) => {
         if (action.payload) {
@@ -136,16 +130,9 @@ export const tasksReducer = createSlice({
       });
 
     builder
-      /* .addCase(deleteTaskThunk.pending, (state) => {
-        if (state.loading === "idle") {
-          state.loading = "pending";
-        }
-      }) */
       .addCase(deleteTaskThunk.fulfilled, (state, { payload }) => {
+        state.error = null;
         state.tasks = state.tasks.filter(({ id }) => id !== payload);
-        /* if (state.loading === "pending") {
-          state.loading = "idle";
-        } */
       })
       .addCase(deleteTaskThunk.rejected, (state, action) => {
         if (action.payload) {
@@ -156,18 +143,11 @@ export const tasksReducer = createSlice({
       });
 
     builder
-      /* .addCase(changeTitleThunk.pending, (state) => {
-        if (state.loading === "idle") {
-          state.loading = "pending";
-        }
-      }) */
       .addCase(
         changeTitleThunk.fulfilled,
         (state, { payload: { title, id } }) => {
+          state.error = null;
           state.tasks.find((item) => item.id === id).title = title;
-          /* if (state.loading === "pending") {
-            state.loading = "idle";
-          } */
         }
       )
       .addCase(changeTitleThunk.rejected, (state, action) => {
@@ -179,16 +159,9 @@ export const tasksReducer = createSlice({
       });
 
     builder
-      /* .addCase(changeCompletedThunk.pending, (state) => {
-        if (state.loading === "idle") {
-          state.loading = "pending";
-        }
-      }) */
       .addCase(changeCompletedThunk.fulfilled, (state, { payload }) => {
+        state.error = null;
         state.tasks = state.tasks.filter(({ id }) => id !== payload.id);
-        /* if (state.loading === "pending") {
-          state.loading = "idle";
-        } */
       })
       .addCase(changeCompletedThunk.rejected, (state, action) => {
         if (action.payload) {
@@ -199,16 +172,9 @@ export const tasksReducer = createSlice({
       });
 
     builder
-      /* .addCase(changeFavoriteThunk.pending, (state) => {
-        if (state.loading === "idle") {
-          state.loading = "pending";
-        }
-      }) */
       .addCase(changeFavoriteThunk.fulfilled, (state, { payload }) => {
+        state.error = null;
         state.tasks = payload;
-        /* if (state.loading === "pending") {
-          state.loading = "idle";
-        } */
       })
       .addCase(changeFavoriteThunk.rejected, (state, action) => {
         if (action.payload) {

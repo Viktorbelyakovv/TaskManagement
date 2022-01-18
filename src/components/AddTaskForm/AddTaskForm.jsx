@@ -21,7 +21,7 @@ const AddTaskForm = ({ isCompletedTasks, sortDate, sortName }) => {
   const dispatch = useDispatch();
   const categories = useSelector(getCategories);
   const defaultCategory = useSelector(getDefaultCategory);
-  const [categoryId, setCategoryId] = useState(defaultCategory.id);
+  const [categoryId, setCategoryId] = useState(defaultCategory?.id);
 
   const isError = isTooLong || isEmpty;
 
@@ -74,6 +74,8 @@ const AddTaskForm = ({ isCompletedTasks, sortDate, sortName }) => {
       </>
     );
   };
+
+  if (!categories.length) return null;
 
   return (
     <div className="AddTaskForm">

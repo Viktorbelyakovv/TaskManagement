@@ -11,7 +11,7 @@ export const changeDefaultCategory = ({ oldId, newId }) => {
     isDefault: false,
   });
   const addDefault = api.patch(`/categories/${newId}`, { isDefault: true });
-  return Promise.all([removeDefault, addDefault]);
+  return Promise.all([removeDefault, addDefault]).then((values) => values[1]);
 };
 
 export const addCategory = ({ title, colorId, iconId }) =>

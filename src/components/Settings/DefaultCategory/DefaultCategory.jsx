@@ -13,7 +13,7 @@ const DefaultCategory = () => {
   const categories = useSelector(getCategories);
   const defaultCategory = useSelector(getDefaultCategory);
 
-  const [categoryId, setCategoryId] = useState(defaultCategory.id);
+  const [categoryId, setCategoryId] = useState(defaultCategory?.id);
 
   const onChangeCategory = (e) => {
     dispatch(
@@ -23,6 +23,8 @@ const DefaultCategory = () => {
       })
     );
   };
+
+  if (!categories.length) return null;
 
   return (
     <>

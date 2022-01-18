@@ -1,5 +1,5 @@
 export const getTasks = ({ tasks }) => tasks.tasks;
 
-export const getLoading = ({ tasks }) => tasks.loading;
+export const getTasksLoading = ({ tasks }) => tasks.loading;
 
-export const getError = ({ tasks }) => tasks.error;
+export const getTasksError = ({ tasks }) => tasks.error;
