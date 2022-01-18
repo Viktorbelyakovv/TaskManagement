@@ -21,7 +21,11 @@ const MainPage = () => {
       <h1>TO-DO LIST AND TASK MANAGEMENT</h1>
       {categoriesList.length && (
         <div>
-          <AddTaskForm />
+          <AddTaskForm
+            isCompletedTasks={false}
+            sortDate={sortDate}
+            sortName={sortName}
+          />
           <Sorting
             isCompletedTasks={false}
             sortDate={sortDate}

@@ -11,8 +11,12 @@ export const getTasksThunk = createAsyncThunk(
   (payload) => getTasks(payload).then(({ data }) => data)
 );
 
-export const addTaskThunk = createAsyncThunk("categories/addTask", (payload) =>
-  addTask(payload).then(({ data }) => data)
+export const addTaskThunk = createAsyncThunk(
+  "categories/addTask",
+  ({ addPayload, sortPayload }) =>
+    addTask(addPayload).then(() =>
+      getTasks(sortPayload).then(({ data }) => data)
+    )
 );
 
 export const deleteTaskThunk = createAsyncThunk("categories/deleteTask", (id) =>
@@ -55,7 +59,8 @@ export const tasksReducer = createSlice({
     });
 
     builder.addCase(addTaskThunk.fulfilled, (state, { payload }) => {
-      state.tasks.push(payload);
+      console.log(payload);
+      state.tasks = payload;
     });
 
     builder.addCase(deleteTaskThunk.fulfilled, (state, { payload }) => {
