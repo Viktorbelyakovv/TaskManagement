@@ -55,10 +55,10 @@ const Sorting = ({
   const onResetSorting = () => {
     setSortDate(false);
     setSortName(false);
+    setSearchParams(createSearchParams());
     dispatch(
       getTasksThunk({ isCompletedTasks, sortDate: false, sortName: false })
     );
-    setSearchParams(createSearchParams());
   };
 
   useEffect(() => {
