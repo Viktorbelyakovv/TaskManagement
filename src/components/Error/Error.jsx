@@ -8,6 +8,7 @@ import "./Error.css";
 const Error = ({ message }) => {
   const errorTasks = useSelector(getTasksError);
   const errorCategories = useSelector(getCategoriesError);
+
   return (
     <div className="Error">
       <h1>{errorTasks || errorCategories ? message : ""} </h1>

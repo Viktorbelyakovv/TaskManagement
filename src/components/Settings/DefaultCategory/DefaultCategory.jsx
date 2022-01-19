@@ -4,14 +4,20 @@ import MenuItem from "@mui/material/MenuItem";
 import { changeDefaultCategoryThunk } from "../../../store/categories/reducer";
 import {
   getCategories,
+  getCategoriesError,
+  getCategoriesLoading,
   getDefaultCategory,
 } from "../../../store/categories/selectors";
+import Error from "../../Error";
+import Loader from "../../Loader";
 import StyledSelect from "../../ui-kit/StyledSelect";
 
 const DefaultCategory = () => {
   const dispatch = useDispatch();
   const categories = useSelector(getCategories);
   const defaultCategory = useSelector(getDefaultCategory);
+  const loading = useSelector(getCategoriesLoading);
+  const error = useSelector(getCategoriesError);
 
   const [categoryId, setCategoryId] = useState(defaultCategory?.id || "");
 
@@ -24,7 +30,9 @@ const DefaultCategory = () => {
     );
   };
 
-  if (!categories.length) return null;
+  if (error) return <Error message={"Error downloading"} />;
+
+  if (loading === "pending" || !categories.length) return <Loader />;
 
   return (
     <>
@@ -36,15 +44,11 @@ const DefaultCategory = () => {
         onChange={(e) => setCategoryId(e.target.value)}
         onBlur={(e) => onChangeCategory(e)}
       >
-        {categories.length ? (
-          categories.map(({ id, title }) => (
-            <MenuItem value={id} key={id}>
-              {title}
-            </MenuItem>
-          ))
-        ) : (
-          <h2>No categories</h2>
-        )}
+        {categories.map(({ id, title }) => (
+          <MenuItem value={id} key={id}>
+            {title}
+          </MenuItem>
+        ))}
       </StyledSelect>
     </>
   );

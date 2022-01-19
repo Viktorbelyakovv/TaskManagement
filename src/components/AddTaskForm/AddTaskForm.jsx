@@ -3,16 +3,20 @@ import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCategories,
+  getCategoriesError,
+  getCategoriesLoading,
   getDefaultCategory,
 } from "../../store/categories/selectors";
 import { addTaskThunk } from "../../store/tasks/reducer";
 import { MenuItem } from "@mui/material";
+import { format } from "date-fns";
+import Error from "../Error";
+import Loader from "../Loader";
 import StyledTextField from "../ui-kit/StyledTextField";
 import StyledSelect from "../ui-kit/StyledSelect";
 import StyledButton from "../ui-kit/StyledButton";
 import { getSvgIcon } from "../../helpers/getSvgIcon";
 import "./AddTaskForm.css";
-import { format } from "date-fns";
 
 const AddTaskForm = ({ isCompletedTasks, sortDate, sortName }) => {
   const [title, setTitle] = useState("");
@@ -22,6 +26,8 @@ const AddTaskForm = ({ isCompletedTasks, sortDate, sortName }) => {
   const categories = useSelector(getCategories);
   const defaultCategory = useSelector(getDefaultCategory);
   const [categoryId, setCategoryId] = useState(defaultCategory?.id || "");
+  const loading = useSelector(getCategoriesLoading);
+  const error = useSelector(getCategoriesError);
 
   const isError = isTooLong || isEmpty;
 
@@ -75,7 +81,9 @@ const AddTaskForm = ({ isCompletedTasks, sortDate, sortName }) => {
     );
   };
 
-  if (!categories.length) return null;
+  if (error) return <Error message={"Error downloading"} />;
+
+  if (loading === "pending" || !categories.length) return <Loader />;
 
   return (
     <>
@@ -98,16 +106,12 @@ const AddTaskForm = ({ isCompletedTasks, sortDate, sortName }) => {
           displayEmpty
           renderValue={(selectedId) => renderIcon(selectedId)}
         >
-          {categories.length ? (
-            categories.map(({ id, title, colorId, iconId }) => (
-              <MenuItem value={id} key={id}>
-                {getSvgIcon({ iconId, colorId, size: "30px" })}
-                {title}
-              </MenuItem>
-            ))
-          ) : (
-            <h2>No categories</h2>
-          )}
+          {categories.map(({ id, title, colorId, iconId }) => (
+            <MenuItem value={id} key={id}>
+              {getSvgIcon({ iconId, colorId, size: "30px" })}
+              {title}
+            </MenuItem>
+          ))}
         </StyledSelect>
         <StyledButton
           width="15%"
