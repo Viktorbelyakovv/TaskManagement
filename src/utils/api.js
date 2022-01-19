@@ -4,59 +4,34 @@ const baseURL = process.env.REACT_APP_API_LINK;
 
 const api = axios.create({ baseURL });
 
-export const getTasks = async ({ isCompletedTasks, sortDate, sortName }) => {
-  try {
-    return await api.get(`/tasks`, {
-      params: {
-        isCompleted: isCompletedTasks,
-        _expand: "category",
-        _sort: `isFavorite${sortDate ? ",date" : ""}${
-          sortName ? ",title" : ""
-        }`,
-        _order: `desc${sortDate ? ",desc" : ""}${sortName ? ",asc" : ""}`,
-      },
-    });
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
+export const getTasks = ({ isCompletedTasks, sortDate, sortName }) =>
+  api.get(`/tasks`, {
+    params: {
+      isCompleted: isCompletedTasks,
+      _expand: "category",
+      _sort: `isFavorite${sortDate ? ",date" : ""}${sortName ? ",title" : ""}`,
+      _order: `desc${sortDate ? ",desc" : ""}${sortName ? ",asc" : ""}`,
+    },
+  });
 
-export const addTask = async ({ title, categoryId, date }) => {
-  try {
-    return await api
-      .post(`/tasks`, {
-        title,
-        categoryId,
-        isCompleted: false,
-        isFavorite: false,
-        date,
-      })
-      .then((response) => {
-        return api.get(`/tasks/${response.data.id}`, {
-          params: {
-            _expand: "category",
-          },
-        });
+export const addTask = ({ title, categoryId, date }) =>
+  api
+    .post(`/tasks`, {
+      title,
+      categoryId,
+      isCompleted: false,
+      isFavorite: false,
+      date,
+    })
+    .then((response) => {
+      return api.get(`/tasks/${response.data.id}`, {
+        params: {
+          _expand: "category",
+        },
       });
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
+    });
 
-export const deleteTask = async (id) => {
-  try {
-    await api.delete(`/tasks/${id}`);
+export const deleteTask = (id) => api.delete(`/tasks/${id}`);
 
-    return id;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
-
-export const changeTaskField = async ({ id, fieldName, field }) => {
-  try {
-    return await api.patch(`/tasks/${id}`, { [fieldName]: field });
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
+export const changeTaskField = ({ id, fieldName, field }) =>
+  api.patch(`/tasks/${id}`, { [fieldName]: field });

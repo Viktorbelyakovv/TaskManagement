@@ -1,13 +1,11 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getCategories } from "../store/categories/selectors";
+import { useDispatch } from "react-redux";
 import { getCategoriesThunk } from "../store/categories/reducer";
 import DefaultCategory from "../components/Settings/DefaultCategory";
 import AddCategoryForm from "../components/Settings/AddCategoryForm";
 import ListCategories from "../components/Settings/ListCategories";
 
 const SettingsPage = () => {
-  const categoriesList = useSelector(getCategories);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -17,13 +15,11 @@ const SettingsPage = () => {
   return (
     <>
       <h1>SETTINGS</h1>
-      {categoriesList.length && (
-        <div>
-          <DefaultCategory />
-          <AddCategoryForm />
-          <ListCategories />
-        </div>
-      )}
+      <div>
+        <DefaultCategory />
+        <AddCategoryForm />
+        <ListCategories />
+      </div>
     </>
   );
 };
