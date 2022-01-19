@@ -21,7 +21,7 @@ const AddTaskForm = ({ isCompletedTasks, sortDate, sortName }) => {
   const dispatch = useDispatch();
   const categories = useSelector(getCategories);
   const defaultCategory = useSelector(getDefaultCategory);
-  const [categoryId, setCategoryId] = useState(defaultCategory?.id);
+  const [categoryId, setCategoryId] = useState(defaultCategory?.id || "");
 
   const isError = isTooLong || isEmpty;
 
@@ -78,46 +78,47 @@ const AddTaskForm = ({ isCompletedTasks, sortDate, sortName }) => {
   if (!categories.length) return null;
 
   return (
-    <div className="AddTaskForm">
-      <StyledTextField
-        width="60%"
-        value={title}
-        onChange={(e) => handleTitleChange(e.target.value)}
-        onKeyPress={(e) => e.key === "Enter" && onAddTask()}
-        error={isError}
-        helperText={helperText}
-        required
-      />
-
-      <StyledSelect
-        width="10%"
-        value={categoryId}
-        label="Category"
-        onChange={(e) => setCategoryId(e.target.value)}
-        displayEmpty
-        renderValue={(selectedId) => renderIcon(selectedId)}
-      >
-        {categories.length ? (
-          categories.map(({ id, title, colorId, iconId }) => (
-            <MenuItem value={id} key={id}>
-              {getSvgIcon({ iconId, colorId, size: "30px" })}
-              {title}
-            </MenuItem>
-          ))
-        ) : (
-          <h2>No categories</h2>
-        )}
-      </StyledSelect>
-
-      <StyledButton
-        width="15%"
-        variant="outlined"
-        disabled={isError}
-        onClick={onAddTask}
-      >
-        Add
-      </StyledButton>
-    </div>
+    <>
+      <h2>Add new task</h2>
+      <div className="AddTaskForm">
+        <StyledTextField
+          width="60%"
+          value={title}
+          onChange={(e) => handleTitleChange(e.target.value)}
+          onKeyPress={(e) => e.key === "Enter" && onAddTask()}
+          error={isError}
+          helperText={helperText}
+          required
+        />
+        <StyledSelect
+          width="10%"
+          value={categoryId}
+          label="Category"
+          onChange={(e) => setCategoryId(e.target.value)}
+          displayEmpty
+          renderValue={(selectedId) => renderIcon(selectedId)}
+        >
+          {categories.length ? (
+            categories.map(({ id, title, colorId, iconId }) => (
+              <MenuItem value={id} key={id}>
+                {getSvgIcon({ iconId, colorId, size: "30px" })}
+                {title}
+              </MenuItem>
+            ))
+          ) : (
+            <h2>No categories</h2>
+          )}
+        </StyledSelect>
+        <StyledButton
+          width="15%"
+          variant="outlined"
+          disabled={isError}
+          onClick={onAddTask}
+        >
+          Add
+        </StyledButton>
+      </div>
+    </>
   );
 };
 
