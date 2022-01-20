@@ -3,8 +3,8 @@
     {
       "title": "Buy fruits",
       "categoryId": 11,
-      "isCompleted": false,
-      "isFavorite": true,
+      "isCompleted": true,
+      "isFavorite": false,
       "date": "2022-01-11",
       "id": 1
     },
@@ -12,7 +12,7 @@
       "title": "Buy a vacuum cleaner",
       "categoryId": 7,
       "isCompleted": false,
-      "isFavorite": false,
+      "isFavorite": true,
       "date": "2021-11-18",
       "id": 2
     },
@@ -36,7 +36,7 @@
       "title": "Get a subscription to a swimming pool",
       "categoryId": 9,
       "isCompleted": false,
-      "isFavorite": false,
+      "isFavorite": true,
       "date": "2022-01-10",
       "id": 5
     },
@@ -52,14 +52,14 @@
       "title": "Cook the dinner",
       "categoryId": 8,
       "isCompleted": false,
-      "isFavorite": false,
+      "isFavorite": true,
       "date": "2022-01-14",
       "id": 7
     },
     {
       "title": "Call to uncle",
       "categoryId": 6,
-      "isCompleted": false,
+      "isCompleted": true,
       "isFavorite": false,
       "date": "2022-01-12",
       "id": 8
@@ -100,25 +100,9 @@
       "title": "Make a salad",
       "categoryId": 8,
       "isCompleted": false,
-      "isFavorite": false,
+      "isFavorite": true,
       "date": "2022-01-19",
       "id": 13
-    },
-    {
-      "title": "VHello",
-      "categoryId": 8,
-      "isCompleted": false,
-      "isFavorite": false,
-      "date": "2022-01-20",
-      "id": 14
-    },
-    {
-      "title": "DK",
-      "categoryId": 9,
-      "isCompleted": false,
-      "isFavorite": false,
-      "date": "2022-01-20",
-      "id": 15
     }
   ],
   "categories": [
