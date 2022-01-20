@@ -44,7 +44,7 @@
       "title": "Book an appointment with a doctor",
       "categoryId": 12,
       "isCompleted": false,
-      "isFavorite": true,
+      "isFavorite": false,
       "date": "2022-01-07",
       "id": 6
     },
@@ -52,7 +52,7 @@
       "title": "Cook the dinner",
       "categoryId": 8,
       "isCompleted": false,
-      "isFavorite": true,
+      "isFavorite": false,
       "date": "2022-01-14",
       "id": 7
     },
@@ -60,7 +60,7 @@
       "title": "Call to uncle",
       "categoryId": 6,
       "isCompleted": false,
-      "isFavorite": true,
+      "isFavorite": false,
       "date": "2022-01-12",
       "id": 8
     },
@@ -73,10 +73,10 @@
       "id": 9
     },
     {
-      "title": "Finish the pumpkin",
+      "title": "Open a bottle",
       "categoryId": 8,
       "isCompleted": false,
-      "isFavorite": true,
+      "isFavorite": false,
       "date": "2022-01-10",
       "id": 10
     },
@@ -132,7 +132,7 @@
       "colorId": 1,
       "iconId": 3,
       "id": 7,
-      "isDefault": true
+      "isDefault": false
     },
     {
       "title": "green food",
@@ -145,7 +145,7 @@
       "title": "blue sport",
       "colorId": 2,
       "iconId": 4,
-      "isDefault": false,
+      "isDefault": true,
       "id": 9
     },
     {

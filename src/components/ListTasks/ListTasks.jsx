@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React /* , { useEffect }  */ from "react";
 import PropTypes from "prop-types";
-import { useSelector, useDispatch } from "react-redux";
-import { getTasksThunk } from "../../store/tasks/reducer";
+import { useSelector /* , useDispatch  */ } from "react-redux";
+/* import { getTasksThunk } from "../../store/tasks/reducer"; */
 import {
   getTasks,
   getTasksLoading,
@@ -16,13 +16,19 @@ const ListTasks = ({ isCompletedTasks, sortDate, sortName }) => {
   const tasksList = useSelector(getTasks);
   const loading = useSelector(getTasksLoading);
   const error = useSelector(getTasksError);
-  const dispatch = useDispatch();
+  /* const dispatch = useDispatch(); */
 
-  useEffect(() => {
-    dispatch(
-      getTasksThunk({ isCompletedTasks, sortDate: false, sortName: false })
-    );
-  }, [dispatch, isCompletedTasks]);
+  /* dispatch(
+    getTasksThunk({
+      isCompletedTasks,
+      sortDate: false,
+      sortName: false,
+    })
+  ); */
+
+  /* useEffect(() => {
+    
+  }, [dispatch, isCompletedTasks]); */
 
   if (error) return <Error message={"Error downloading tasks"} />;
 

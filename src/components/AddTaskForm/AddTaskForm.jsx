@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -81,9 +81,13 @@ const AddTaskForm = ({ isCompletedTasks, sortDate, sortName }) => {
     );
   };
 
+  useEffect(() => {
+    setCategoryId(defaultCategory?.id);
+  }, [defaultCategory]);
+
   if (error) return <Error message={"Error downloading"} />;
 
-  if (loading === "pending" || !categories.length) return <Loader />;
+  if (loading === "pending" || !categoryId) return <Loader />;
 
   return (
     <>
