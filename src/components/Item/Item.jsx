@@ -69,7 +69,9 @@ const Item = ({
         variant="standard"
         value={taskTitle}
         onChange={(e) => setTaskTitle(e.target.value)}
-        onBlur={(e) => !isError && onChangeTitle({ id, title: e.target.value })}
+        onBlur={(e) =>
+          !isError && onChangeTitle({ id, title: e.target.value, payload })
+        }
         error={isError}
         helperText={
           isError ? "Task name must be between 1 and 50 characters" : ""
@@ -97,7 +99,12 @@ const Item = ({
 
 Item.propTypes = {
   item: PropTypes.object,
-  payload: PropTypes.objectOf(PropTypes.bool),
+  payload: PropTypes.shape({
+    isCompletedTasks: PropTypes.bool,
+    sortDate: PropTypes.bool,
+    sortName: PropTypes.bool,
+    filterCategory: PropTypes.number,
+  }),
 };
 
 export default Item;

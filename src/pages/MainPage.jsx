@@ -105,18 +105,7 @@ const MainPage = () => {
     }
   };
 
-  const onApplySorting = () => {
-    setParams();
-    dispatch(
-      getTasksThunk({
-        isCompletedTasks: false,
-        sortDate,
-        sortName,
-        filterCategory,
-      })
-    );
-  };
-  const onApplyFiltering = () => {
+  const onApply = () => {
     setParams();
     dispatch(
       getTasksThunk({
@@ -176,25 +165,27 @@ const MainPage = () => {
           isCompletedTasks={false}
           sortDate={sortDate}
           sortName={sortName}
+          filterCategory={filterCategory}
         />
         <Sorting
           sortDate={sortDate}
           setSortDate={setSortDate}
           sortName={sortName}
           setSortName={setSortName}
-          onApplySorting={onApplySorting}
+          onApplySorting={onApply}
           onResetSorting={onResetSorting}
         />
         <Filtering
           filterCategory={filterCategory}
           setFilterCategory={setFilterCategory}
-          onApplyFiltering={onApplyFiltering}
+          onApplyFiltering={onApply}
           onResetFiltering={onResetFiltering}
         />
         <ListTasks
           isCompletedTasks={false}
           sortDate={sortDate}
           sortName={sortName}
+          filterCategory={filterCategory}
         />
       </div>
     </>

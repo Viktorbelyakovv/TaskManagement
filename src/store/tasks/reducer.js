@@ -19,10 +19,10 @@ export const getTasksThunk = createAsyncThunk(
 
 export const addTaskThunk = createAsyncThunk(
   "categories/addTask",
-  async ({ addPayload, sortPayload }, { rejectWithValue }) => {
+  async ({ addPayload, sortFilterPayload }, { rejectWithValue }) => {
     try {
       return await addTask(addPayload).then(() =>
-        getTasks(sortPayload).then(({ data }) => data)
+        getTasks(sortFilterPayload).then(({ data }) => data)
       );
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -43,13 +43,13 @@ export const deleteTaskThunk = createAsyncThunk(
 
 export const changeTitleThunk = createAsyncThunk(
   "categories/changeTitle",
-  async ({ id, title }, { rejectWithValue }) => {
+  async ({ id, title, payload }, { rejectWithValue }) => {
     try {
       return await changeTaskField({
         id,
         fieldName: "title",
         field: title,
-      }).then(({ data }) => data);
+      }).then(() => getTasks(payload).then(({ data }) => data));
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -143,13 +143,10 @@ export const tasksReducer = createSlice({
       });
 
     builder
-      .addCase(
-        changeTitleThunk.fulfilled,
-        (state, { payload: { title, id } }) => {
-          state.error = null;
-          state.tasks.find((item) => item.id === id).title = title;
-        }
-      )
+      .addCase(changeTitleThunk.fulfilled, (state, { payload }) => {
+        state.error = null;
+        state.tasks = payload;
+      })
       .addCase(changeTitleThunk.rejected, (state, action) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;

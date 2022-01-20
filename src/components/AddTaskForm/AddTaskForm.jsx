@@ -18,7 +18,12 @@ import StyledButton from "../ui-kit/StyledButton";
 import { getSvgIcon } from "../../helpers/getSvgIcon";
 import "./AddTaskForm.css";
 
-const AddTaskForm = ({ isCompletedTasks, sortDate, sortName }) => {
+const AddTaskForm = ({
+  isCompletedTasks,
+  sortDate,
+  sortName,
+  filterCategory,
+}) => {
   const [title, setTitle] = useState("");
   const [isEmpty, setEmpty] = useState(false);
   const [isTooLong, setTooLong] = useState(false);
@@ -46,10 +51,11 @@ const AddTaskForm = ({ isCompletedTasks, sortDate, sortName }) => {
             categoryId,
             date: format(new Date(), "yyyy-MM-dd"),
           },
-          sortPayload: {
+          sortFilterPayload: {
             isCompletedTasks,
             sortDate,
             sortName,
+            filterCategory,
           },
         })
       );
@@ -134,6 +140,7 @@ AddTaskForm.propTypes = {
   isCompletedTasks: PropTypes.bool,
   sortDate: PropTypes.bool,
   sortName: PropTypes.bool,
+  filterCategory: PropTypes.number,
 };
 
 export default AddTaskForm;
