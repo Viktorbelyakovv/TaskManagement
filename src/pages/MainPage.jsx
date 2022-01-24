@@ -16,6 +16,10 @@ const MainPage = () => {
     onApply,
     onResetSorting,
     onResetFiltering,
+    start,
+    end,
+    setStartTask,
+    getMoreTasks,
   } = useTaskPageHook(false);
 
   return (
@@ -27,6 +31,9 @@ const MainPage = () => {
           sortDate={sortDate}
           sortName={sortName}
           filterCategory={filterCategory}
+          start={start}
+          end={end}
+          setStartTask={setStartTask}
         />
         <Sorting
           sortDate={sortDate}
@@ -47,6 +54,10 @@ const MainPage = () => {
           sortDate={sortDate}
           sortName={sortName}
           filterCategory={filterCategory}
+          start={start}
+          end={end}
+          setStartTask={setStartTask}
+          getMoreTasks={getMoreTasks}
         />
       </div>
     </>

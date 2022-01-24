@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useDispatch } from "react-redux";
@@ -24,14 +24,18 @@ const Item = ({
     category: { colorId, iconId },
   },
   payload,
+  setStartTask,
 }) => {
   const dispatch = useDispatch();
   const [starSign, setStarSign] = useState(isFavorite ? "star" : "star_border");
   const [taskTitle, setTaskTitle] = useState(title);
   const isError = taskTitle.trim().length < 1 || taskTitle.trim().length > 50;
 
+  const paginationLimit = Number(process.env.REACT_APP_PAGINATION_LIMIT);
+
   const onChangeTitle = (payload) => {
     dispatch(changeTitleThunk(payload));
+    setStartTask(paginationLimit);
   };
 
   const onChangeCompleted = () => {
@@ -56,8 +60,12 @@ const Item = ({
         payload,
       })
     );
-    setStarSign(isFavorite ? "star_border" : "star");
+    setStartTask(paginationLimit);
   };
+
+  useEffect(() => {
+    setStarSign(isFavorite ? "star" : "star_border");
+  }, [isFavorite]);
 
   return (
     <div className="Item">
@@ -104,7 +112,10 @@ Item.propTypes = {
     sortDate: PropTypes.bool,
     sortName: PropTypes.bool,
     filterCategory: PropTypes.number,
+    start: PropTypes.number,
+    end: PropTypes.number,
   }),
+  setStartTask: PropTypes.func,
 };
 
 export default Item;

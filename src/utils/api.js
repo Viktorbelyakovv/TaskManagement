@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const baseURL = process.env.REACT_APP_API_LINK;
-const paginationLimit = Number(process.env.REACT_APP_PAGINATION_LIMIT);
 
 const api = axios.create({ baseURL });
 
@@ -11,6 +10,7 @@ export const getTasks = ({
   sortName,
   filterCategory,
   start,
+  end,
 }) =>
   api.get(`/tasks`, {
     params: {
@@ -20,7 +20,7 @@ export const getTasks = ({
       _sort: `isFavorite${sortDate ? ",date" : ""}${sortName ? ",title" : ""}`,
       _order: `desc${sortDate ? ",desc" : ""}${sortName ? ",asc" : ""}`,
       _start: start,
-      _end: start + paginationLimit,
+      _end: end,
     },
   });
 

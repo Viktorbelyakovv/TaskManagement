@@ -15,6 +15,10 @@ const CompletedTasksPage = () => {
     onApply,
     onResetSorting,
     onResetFiltering,
+    start,
+    end,
+    setStartTask,
+    getMoreTasks,
   } = useTaskPageHook(true);
 
   return (
@@ -39,6 +43,10 @@ const CompletedTasksPage = () => {
         sortDate={sortDate}
         sortName={sortName}
         filterCategory={filterCategory}
+        start={start}
+        end={end}
+        setStartTask={setStartTask}
+        getMoreTasks={getMoreTasks}
       />
     </>
   );

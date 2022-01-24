@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
-import { getTasksThunk } from "../../store/tasks/reducer";
+import { useSelector } from "react-redux";
 import {
   getTasks,
   getTasksError,
   getTasksHasMore,
+  getTasksLoading,
 } from "../../store/tasks/selectors";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Item from "../Item";
@@ -18,29 +18,17 @@ const ListTasks = ({
   sortDate,
   sortName,
   filterCategory,
+  start,
+  end,
+  setStartTask,
+  getMoreTasks,
 }) => {
-  const dispatch = useDispatch();
+  const firstLoading = useSelector(getTasksLoading);
 
   const error = useSelector(getTasksError);
   const hasMore = useSelector(getTasksHasMore);
-  const paginationLimit = Number(process.env.REACT_APP_PAGINATION_LIMIT);
-
-  const [length, setLength] = useState(paginationLimit);
   const newTasks = useSelector(getTasks);
   const [listTasks, setlistTasks] = useState({ items: newTasks });
-
-  const getMoreTasks = () => {
-    setLength((prevCount) => prevCount + paginationLimit);
-    dispatch(
-      getTasksThunk({
-        isCompletedTasks,
-        sortDate,
-        sortName,
-        filterCategory,
-        start: length,
-      })
-    );
-  };
 
   useEffect(() => {
     setlistTasks({ items: newTasks });
@@ -48,7 +36,9 @@ const ListTasks = ({
 
   if (error) return <Error message={"Error downloading tasks"} />;
 
-  if (!listTasks.items.length) return <h2>No tasks</h2>;
+  if (firstLoading === "firstPending") return <Loader />;
+
+  if (!newTasks.length) return <h2>No tasks</h2>;
 
   return (
     <div className="ListTasks">
@@ -69,7 +59,10 @@ const ListTasks = ({
                   sortDate,
                   sortName,
                   filterCategory,
+                  start,
+                  end,
                 }}
+                setStartTask={setStartTask}
               />
             ))}
         </InfiniteScroll>
@@ -83,6 +76,10 @@ ListTasks.propTypes = {
   sortDate: PropTypes.bool,
   sortName: PropTypes.bool,
   filterCategory: PropTypes.number,
+  start: PropTypes.number,
+  end: PropTypes.number,
+  setStartTask: PropTypes.func,
+  getMoreTasks: PropTypes.func,
 };
 
 export default ListTasks;

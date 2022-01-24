@@ -23,6 +23,9 @@ const AddTaskForm = ({
   sortDate,
   sortName,
   filterCategory,
+  start,
+  end,
+  setStartTask,
 }) => {
   const [title, setTitle] = useState("");
   const [isEmpty, setEmpty] = useState(false);
@@ -33,7 +36,6 @@ const AddTaskForm = ({
   const [categoryId, setCategoryId] = useState(defaultCategory?.id || "");
   const loading = useSelector(getCategoriesLoading);
   const error = useSelector(getCategoriesError);
-
   const isError = isTooLong || isEmpty;
 
   const helperText = isTooLong
@@ -56,9 +58,12 @@ const AddTaskForm = ({
             sortDate,
             sortName,
             filterCategory,
+            start,
+            end,
           },
         })
       );
+      setStartTask(end);
       setTitle("");
     } else {
       setEmpty(true);
@@ -141,6 +146,9 @@ AddTaskForm.propTypes = {
   sortDate: PropTypes.bool,
   sortName: PropTypes.bool,
   filterCategory: PropTypes.number,
+  start: PropTypes.number,
+  end: PropTypes.number,
+  setStartTask: PropTypes.func,
 };
 
 export default AddTaskForm;

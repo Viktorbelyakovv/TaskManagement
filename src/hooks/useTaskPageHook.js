@@ -7,6 +7,10 @@ import { getTasksThunk } from "../store/tasks/reducer";
 const useTaskPageHook = (isCompletedTasks) => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams({});
+  const [firstLoading, setFirstLoading] = useState(true);
+  const start = 0;
+  const end = Number(process.env.REACT_APP_PAGINATION_LIMIT);
+  const [startTask, setStartTask] = useState(end);
 
   const parseSortString = (sortString) => {
     try {
@@ -109,8 +113,11 @@ const useTaskPageHook = (isCompletedTasks) => {
         sortDate,
         sortName,
         filterCategory,
+        start,
+        end,
       })
     );
+    setStartTask(end);
   };
 
   const onResetSorting = () => {
@@ -123,8 +130,11 @@ const useTaskPageHook = (isCompletedTasks) => {
         sortDate: false,
         sortName: false,
         filterCategory,
+        start,
+        end,
       })
     );
+    setStartTask(end);
   };
 
   const onResetFiltering = () => {
@@ -136,22 +146,52 @@ const useTaskPageHook = (isCompletedTasks) => {
         sortDate,
         sortName,
         filterCategory: 0,
+        start,
+        end,
       })
     );
+    setStartTask(end);
   };
 
-  useEffect(() => {
+  const getMoreTasks = () => {
     dispatch(
       getTasksThunk({
         isCompletedTasks,
-        sortDate: date,
-        sortName: name,
-        filterCategory: categoryId,
-        start: 0,
+        sortDate,
+        sortName,
+        filterCategory,
+        start: startTask,
+        end: startTask + end,
       })
     );
-    dispatch(getCategoriesThunk());
-  }, [dispatch, isCompletedTasks, date, name, categoryId]);
+    setStartTask((prevStart) => prevStart + end);
+  };
+
+  useEffect(() => {
+    if (firstLoading) {
+      setFirstLoading(false);
+      dispatch(
+        getTasksThunk({
+          isCompletedTasks,
+          sortDate: date,
+          sortName: name,
+          filterCategory: categoryId,
+          start,
+          end,
+        })
+      );
+      dispatch(getCategoriesThunk());
+    }
+  }, [
+    dispatch,
+    isCompletedTasks,
+    date,
+    name,
+    categoryId,
+    start,
+    end,
+    firstLoading,
+  ]);
 
   return {
     sortDate,
@@ -163,6 +203,10 @@ const useTaskPageHook = (isCompletedTasks) => {
     onApply,
     onResetSorting,
     onResetFiltering,
+    start,
+    end,
+    setStartTask,
+    getMoreTasks,
   };
 };
 

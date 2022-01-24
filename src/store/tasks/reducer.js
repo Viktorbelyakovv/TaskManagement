@@ -97,27 +97,56 @@ export const tasksReducer = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(getTasksThunk.pending, (state) => {
-        if (state.loading === "idle") {
-          state.loading = "pending";
-        }
-        if (state.hasMore == false) {
-          state.hasMore = true;
-          state.tasks = [];
-        }
-      })
-      .addCase(getTasksThunk.fulfilled, (state, { payload }) => {
-        state.error = null;
-        state.tasks = state.tasks.concat(payload);
+      .addCase(
+        getTasksThunk.pending,
+        (
+          state,
+          {
+            meta: {
+              arg: { start },
+            },
+          }
+        ) => {
+          if (state.loading === "idle" && start === 0) {
+            state.loading = "firstPending";
+          }
 
-        if (!payload.length) {
-          state.hasMore = false;
+          if (state.hasMore == false) {
+            state.hasMore = true;
+            state.tasks = [];
+          }
         }
+      )
+      .addCase(
+        getTasksThunk.fulfilled,
+        (
+          state,
+          {
+            payload,
+            meta: {
+              arg: { start },
+            },
+          }
+        ) => {
+          state.error = null;
 
-        if (state.loading === "pending") {
-          state.loading = "idle";
+          if (payload.length < Number(process.env.REACT_APP_PAGINATION_LIMIT)) {
+            state.hasMore = false;
+          }
+
+          if (start === 0) {
+            state.tasks = payload;
+          } else {
+            if (payload.length) {
+              state.tasks = state.tasks.concat(payload);
+            }
+          }
+
+          if (state.loading === "firstPending") {
+            state.loading = "idle";
+          }
         }
-      })
+      )
       .addCase(getTasksThunk.rejected, (state, action) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
@@ -128,6 +157,7 @@ export const tasksReducer = createSlice({
 
     builder
       .addCase(addTaskThunk.fulfilled, (state, { payload }) => {
+        state.hasMore = true;
         state.error = null;
         state.tasks = payload;
       })
@@ -154,6 +184,7 @@ export const tasksReducer = createSlice({
 
     builder
       .addCase(changeTitleThunk.fulfilled, (state, { payload }) => {
+        state.hasMore = true;
         state.error = null;
         state.tasks = payload;
       })
@@ -180,6 +211,7 @@ export const tasksReducer = createSlice({
 
     builder
       .addCase(changeFavoriteThunk.fulfilled, (state, { payload }) => {
+        state.hasMore = true;
         state.error = null;
         state.tasks = payload;
       })
