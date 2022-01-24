@@ -147,6 +147,7 @@ const useTaskPageHook = (isCompletedTasks) => {
         sortDate: date,
         sortName: name,
         filterCategory: categoryId,
+        start: 0,
       })
     );
     dispatch(getCategoriesThunk());

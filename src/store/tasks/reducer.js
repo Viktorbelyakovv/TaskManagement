@@ -92,6 +92,7 @@ export const tasksReducer = createSlice({
     tasks: [],
     loading: "idle",
     error: null,
+    hasMore: true,
   },
   reducers: {},
   extraReducers(builder) {
@@ -100,10 +101,19 @@ export const tasksReducer = createSlice({
         if (state.loading === "idle") {
           state.loading = "pending";
         }
+        if (state.hasMore == false) {
+          state.hasMore = true;
+          state.tasks = [];
+        }
       })
       .addCase(getTasksThunk.fulfilled, (state, { payload }) => {
         state.error = null;
-        state.tasks = payload;
+        state.tasks = state.tasks.concat(payload);
+
+        if (!payload.length) {
+          state.hasMore = false;
+        }
+
         if (state.loading === "pending") {
           state.loading = "idle";
         }

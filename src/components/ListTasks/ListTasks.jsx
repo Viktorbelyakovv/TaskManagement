@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getTasksThunk } from "../../store/tasks/reducer";
 import {
   getTasks,
-  getTasksLoading,
   getTasksError,
+  getTasksHasMore,
 } from "../../store/tasks/selectors";
+import InfiniteScroll from "react-infinite-scroll-component";
 import Item from "../Item";
 import Loader from "../Loader";
 import Error from "../Error";
@@ -17,25 +19,61 @@ const ListTasks = ({
   sortName,
   filterCategory,
 }) => {
-  const tasksList = useSelector(getTasks);
-  const loading = useSelector(getTasksLoading);
+  const dispatch = useDispatch();
+
   const error = useSelector(getTasksError);
+  const hasMore = useSelector(getTasksHasMore);
+  const paginationLimit = Number(process.env.REACT_APP_PAGINATION_LIMIT);
+
+  const [length, setLength] = useState(paginationLimit);
+  const newTasks = useSelector(getTasks);
+  const [listTasks, setlistTasks] = useState({ items: newTasks });
+
+  const getMoreTasks = () => {
+    setLength((prevCount) => prevCount + paginationLimit);
+    dispatch(
+      getTasksThunk({
+        isCompletedTasks,
+        sortDate,
+        sortName,
+        filterCategory,
+        start: length,
+      })
+    );
+  };
+
+  useEffect(() => {
+    setlistTasks({ items: newTasks });
+  }, [newTasks]);
 
   if (error) return <Error message={"Error downloading tasks"} />;
 
-  if (loading === "pending") return <Loader />;
-
-  if (!tasksList.length) return <h2>No tasks</h2>;
+  if (!listTasks.items.length) return <h2>No tasks</h2>;
 
   return (
     <div className="ListTasks">
-      {tasksList.map((item) => (
-        <Item
-          item={item}
-          key={item.id}
-          payload={{ isCompletedTasks, sortDate, sortName, filterCategory }}
-        />
-      ))}
+      {
+        <InfiniteScroll
+          dataLength={listTasks.items.length}
+          next={getMoreTasks}
+          hasMore={hasMore}
+          loader={<Loader />}
+        >
+          {listTasks.items.length &&
+            listTasks.items.map((item) => (
+              <Item
+                item={item}
+                key={item.id}
+                payload={{
+                  isCompletedTasks,
+                  sortDate,
+                  sortName,
+                  filterCategory,
+                }}
+              />
+            ))}
+        </InfiniteScroll>
+      }
     </div>
   );
 };
