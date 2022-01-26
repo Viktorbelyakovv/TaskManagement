@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { getTasksThunk } from "../../store/tasks/reducer";
@@ -44,18 +44,23 @@ const ListTasks = ({
     setStartTask((prevStart) => prevStart + end);
   };
 
+  const [first, setFirst] = useState(true);
+
   useEffect(() => {
-    if (!listTasks.length) {
-      dispatch(
-        getTasksThunk({
-          isCompletedTasks,
-          sortDate,
-          sortName,
-          filterCategory,
-          start,
-          end,
-        })
-      );
+    if (/* !listTasks.length */ first) {
+      {
+        setFirst(false);
+        dispatch(
+          getTasksThunk({
+            isCompletedTasks,
+            sortDate,
+            sortName,
+            filterCategory,
+            start,
+            end,
+          })
+        );
+      }
     }
   }, [
     dispatch,
@@ -65,7 +70,8 @@ const ListTasks = ({
     filterCategory,
     start,
     end,
-    listTasks.length,
+    first,
+    /* listTasks.length, */
   ]);
 
   if (error) return <Error message={"Error downloading tasks"} />;

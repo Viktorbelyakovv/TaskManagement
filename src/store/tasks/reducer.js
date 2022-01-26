@@ -98,46 +98,39 @@ export const tasksReducer = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(getTasksThunk.pending, (state) => {
-        if (state.loading === "idle") {
-          state.loading = "pending";
-        }
-
-        if (state.hasMore == false) {
-          state.hasMore = true;
-          state.tasks = [];
-        }
-      })
       .addCase(
-        getTasksThunk.fulfilled,
+        getTasksThunk.pending,
         (
           state,
           {
-            payload,
             meta: {
               arg: { start },
             },
           }
         ) => {
-          state.error = null;
-
-          if (payload.length < state.paginationLimit) {
-            state.hasMore = false;
+          if (state.loading === "idle") {
+            state.loading = "pending";
           }
 
           if (start === 0) {
-            state.tasks = payload;
-          } else {
-            if (payload.length) {
-              state.tasks = state.tasks.concat(payload);
-            }
-          }
-
-          if (state.loading === "pending") {
-            state.loading = "idle";
+            state.hasMore = true;
+            state.tasks = [];
           }
         }
       )
+      .addCase(getTasksThunk.fulfilled, (state, { payload }) => {
+        state.error = null;
+
+        state.tasks = state.tasks.concat(payload);
+
+        if (payload.length < state.paginationLimit) {
+          state.hasMore = false;
+        }
+
+        if (state.loading === "pending") {
+          state.loading = "idle";
+        }
+      })
       .addCase(getTasksThunk.rejected, (state, action) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
