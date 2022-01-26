@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getTasksThunk } from "../store/tasks/reducer";
+import { getPaginationLimit } from "../store/tasks/selectors";
 import Sorting from "../components/Sorting";
 import ListTasks from "../components/ListTasks";
 import Filtering from "../components/Filtering/Filtering";
-import useTaskPageHook from "../hooks/useTaskPageHook";
+import useQueryParams from "../hooks/useQueryParams";
 
 const CompletedTasksPage = () => {
+  const isCompletedTasks = true;
+  const dispatch = useDispatch();
+  const start = 0;
+  const end = useSelector(getPaginationLimit);
+  const [startTask, setStartTask] = useState(end);
+
   const {
     sortDate,
     setSortDate,
@@ -12,14 +21,57 @@ const CompletedTasksPage = () => {
     setSortName,
     filterCategory,
     setFilterCategory,
-    onApply,
-    onResetSorting,
-    onResetFiltering,
-    start,
-    end,
-    setStartTask,
-    getMoreTasks,
-  } = useTaskPageHook(true);
+    setParams,
+    resetParams,
+  } = useQueryParams();
+
+  const onApply = () => {
+    setParams();
+    dispatch(
+      getTasksThunk({
+        isCompletedTasks,
+        sortDate,
+        sortName,
+        filterCategory,
+        start,
+        end,
+      })
+    );
+    setStartTask(end);
+  };
+
+  const onResetSorting = () => {
+    resetParams(false, false, !!filterCategory);
+    setSortDate(false);
+    setSortName(false);
+    dispatch(
+      getTasksThunk({
+        isCompletedTasks,
+        sortDate: false,
+        sortName: false,
+        filterCategory,
+        start,
+        end,
+      })
+    );
+    setStartTask(end);
+  };
+
+  const onResetFiltering = () => {
+    resetParams(sortDate, sortName, !!0);
+    setFilterCategory(0);
+    dispatch(
+      getTasksThunk({
+        isCompletedTasks,
+        sortDate,
+        sortName,
+        filterCategory: 0,
+        start,
+        end,
+      })
+    );
+    setStartTask(end);
+  };
 
   return (
     <>
@@ -39,14 +91,14 @@ const CompletedTasksPage = () => {
         onResetFiltering={onResetFiltering}
       />
       <ListTasks
-        isCompletedTasks={true}
+        isCompletedTasks={isCompletedTasks}
         sortDate={sortDate}
         sortName={sortName}
         filterCategory={filterCategory}
         start={start}
         end={end}
+        startTask={startTask}
         setStartTask={setStartTask}
-        getMoreTasks={getMoreTasks}
       />
     </>
   );

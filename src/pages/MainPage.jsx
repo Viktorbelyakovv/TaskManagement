@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getTasksThunk } from "../store/tasks/reducer";
+import { getPaginationLimit } from "../store/tasks/selectors";
 import AddTaskForm from "../components/AddTaskForm";
 import Sorting from "../components/Sorting";
 import ListTasks from "../components/ListTasks";
 import Filtering from "../components/Filtering/Filtering";
-import useTaskPageHook from "../hooks/useTaskPageHook";
+import useQueryParams from "../hooks/useQueryParams";
 
 const MainPage = () => {
+  const isCompletedTasks = false;
+  const dispatch = useDispatch();
+  const start = 0;
+  const end = useSelector(getPaginationLimit);
+  const [startTask, setStartTask] = useState(end);
+
   const {
     sortDate,
     setSortDate,
@@ -13,21 +22,64 @@ const MainPage = () => {
     setSortName,
     filterCategory,
     setFilterCategory,
-    onApply,
-    onResetSorting,
-    onResetFiltering,
-    start,
-    end,
-    setStartTask,
-    getMoreTasks,
-  } = useTaskPageHook(false);
+    setParams,
+    resetParams,
+  } = useQueryParams();
+
+  const onApply = () => {
+    setParams();
+    dispatch(
+      getTasksThunk({
+        isCompletedTasks,
+        sortDate,
+        sortName,
+        filterCategory,
+        start,
+        end,
+      })
+    );
+    setStartTask(end);
+  };
+
+  const onResetSorting = () => {
+    resetParams(false, false, !!filterCategory);
+    setSortDate(false);
+    setSortName(false);
+    dispatch(
+      getTasksThunk({
+        isCompletedTasks,
+        sortDate: false,
+        sortName: false,
+        filterCategory,
+        start,
+        end,
+      })
+    );
+    setStartTask(end);
+  };
+
+  const onResetFiltering = () => {
+    resetParams(sortDate, sortName, !!0);
+    setFilterCategory(0);
+    dispatch(
+      getTasksThunk({
+        isCompletedTasks,
+        sortDate,
+        sortName,
+        filterCategory: 0,
+        start,
+        end,
+      })
+    );
+    setStartTask(end);
+  };
 
   return (
     <>
       <h1>TO-DO LIST AND TASK MANAGEMENT</h1>
       <div>
         <AddTaskForm
-          isCompletedTasks={false}
+          isCompletedTasks={isCompletedTasks}
           sortDate={sortDate}
           sortName={sortName}
           filterCategory={filterCategory}
@@ -50,14 +102,14 @@ const MainPage = () => {
           onResetFiltering={onResetFiltering}
         />
         <ListTasks
-          isCompletedTasks={false}
+          isCompletedTasks={isCompletedTasks}
           sortDate={sortDate}
           sortName={sortName}
           filterCategory={filterCategory}
           start={start}
           end={end}
+          startTask={startTask}
           setStartTask={setStartTask}
-          getMoreTasks={getMoreTasks}
         />
       </div>
     </>

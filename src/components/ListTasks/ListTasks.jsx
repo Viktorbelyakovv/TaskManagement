@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getTasksThunk } from "../../store/tasks/reducer";
 import {
   getTasks,
   getTasksError,
@@ -20,37 +21,70 @@ const ListTasks = ({
   filterCategory,
   start,
   end,
+  startTask,
   setStartTask,
-  getMoreTasks,
 }) => {
-  const firstLoading = useSelector(getTasksLoading);
-
+  const loading = useSelector(getTasksLoading);
   const error = useSelector(getTasksError);
   const hasMore = useSelector(getTasksHasMore);
-  const newTasks = useSelector(getTasks);
-  const [listTasks, setlistTasks] = useState({ items: newTasks });
+  const listTasks = useSelector(getTasks);
+  const dispatch = useDispatch();
+
+  const getMoreTasks = () => {
+    dispatch(
+      getTasksThunk({
+        isCompletedTasks,
+        sortDate,
+        sortName,
+        filterCategory,
+        start: startTask,
+        end: startTask + end,
+      })
+    );
+    setStartTask((prevStart) => prevStart + end);
+  };
 
   useEffect(() => {
-    setlistTasks({ items: newTasks });
-  }, [newTasks]);
+    if (!listTasks.length) {
+      dispatch(
+        getTasksThunk({
+          isCompletedTasks,
+          sortDate,
+          sortName,
+          filterCategory,
+          start,
+          end,
+        })
+      );
+    }
+  }, [
+    dispatch,
+    isCompletedTasks,
+    sortDate,
+    sortName,
+    filterCategory,
+    start,
+    end,
+    listTasks.length,
+  ]);
 
   if (error) return <Error message={"Error downloading tasks"} />;
 
-  if (firstLoading === "firstPending") return <Loader />;
+  if (!listTasks.length && loading === "pending") return <Loader />;
 
-  if (!newTasks.length) return <h2>No tasks</h2>;
+  if (!listTasks.length) return <h2>No tasks</h2>;
 
   return (
     <div className="ListTasks">
       {
         <InfiniteScroll
-          dataLength={listTasks.items.length}
+          dataLength={listTasks.length}
           next={getMoreTasks}
           hasMore={hasMore}
           loader={<Loader />}
         >
-          {listTasks.items.length &&
-            listTasks.items.map((item) => (
+          {listTasks.length &&
+            listTasks.map((item) => (
               <Item
                 item={item}
                 key={item.id}
@@ -78,8 +112,8 @@ ListTasks.propTypes = {
   filterCategory: PropTypes.number,
   start: PropTypes.number,
   end: PropTypes.number,
+  startTask: PropTypes.number,
   setStartTask: PropTypes.func,
-  getMoreTasks: PropTypes.func,
 };
 
 export default ListTasks;

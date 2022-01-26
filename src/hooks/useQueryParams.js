@@ -2,15 +2,10 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { createSearchParams, useSearchParams } from "react-router-dom";
 import { getCategoriesThunk } from "../store/categories/reducer";
-import { getTasksThunk } from "../store/tasks/reducer";
 
-const useTaskPageHook = (isCompletedTasks) => {
+const useQueryParams = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams({});
-  const [firstLoading, setFirstLoading] = useState(true);
-  const start = 0;
-  const end = Number(process.env.REACT_APP_PAGINATION_LIMIT);
-  const [startTask, setStartTask] = useState(end);
 
   const parseSortString = (sortString) => {
     try {
@@ -105,93 +100,9 @@ const useTaskPageHook = (isCompletedTasks) => {
     }
   };
 
-  const onApply = () => {
-    setParams();
-    dispatch(
-      getTasksThunk({
-        isCompletedTasks,
-        sortDate,
-        sortName,
-        filterCategory,
-        start,
-        end,
-      })
-    );
-    setStartTask(end);
-  };
-
-  const onResetSorting = () => {
-    resetParams(false, false, !!filterCategory);
-    setSortDate(false);
-    setSortName(false);
-    dispatch(
-      getTasksThunk({
-        isCompletedTasks,
-        sortDate: false,
-        sortName: false,
-        filterCategory,
-        start,
-        end,
-      })
-    );
-    setStartTask(end);
-  };
-
-  const onResetFiltering = () => {
-    resetParams(sortDate, sortName, !!0);
-    setFilterCategory(0);
-    dispatch(
-      getTasksThunk({
-        isCompletedTasks,
-        sortDate,
-        sortName,
-        filterCategory: 0,
-        start,
-        end,
-      })
-    );
-    setStartTask(end);
-  };
-
-  const getMoreTasks = () => {
-    dispatch(
-      getTasksThunk({
-        isCompletedTasks,
-        sortDate,
-        sortName,
-        filterCategory,
-        start: startTask,
-        end: startTask + end,
-      })
-    );
-    setStartTask((prevStart) => prevStart + end);
-  };
-
   useEffect(() => {
-    if (firstLoading) {
-      setFirstLoading(false);
-      dispatch(
-        getTasksThunk({
-          isCompletedTasks,
-          sortDate: date,
-          sortName: name,
-          filterCategory: categoryId,
-          start,
-          end,
-        })
-      );
-      dispatch(getCategoriesThunk());
-    }
-  }, [
-    dispatch,
-    isCompletedTasks,
-    date,
-    name,
-    categoryId,
-    start,
-    end,
-    firstLoading,
-  ]);
+    dispatch(getCategoriesThunk());
+  }, [dispatch]);
 
   return {
     sortDate,
@@ -200,14 +111,9 @@ const useTaskPageHook = (isCompletedTasks) => {
     setSortName,
     filterCategory,
     setFilterCategory,
-    onApply,
-    onResetSorting,
-    onResetFiltering,
-    start,
-    end,
-    setStartTask,
-    getMoreTasks,
+    setParams,
+    resetParams,
   };
 };
 
-export default useTaskPageHook;
+export default useQueryParams;

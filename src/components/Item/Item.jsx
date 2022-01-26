@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import ClearIcon from "@mui/icons-material/Clear";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   deleteTaskThunk,
   changeTitleThunk,
   changeCompletedThunk,
   changeFavoriteThunk,
 } from "../../store/tasks/reducer";
+import { getPaginationLimit } from "../../store/tasks/selectors";
 import StyledCheckbox from "../ui-kit/StyledCheckbox";
 import StyledListItem from "../ui-kit/StyledListItem";
 import StyledIconButton from "../ui-kit/StyledIconButton";
@@ -30,8 +31,7 @@ const Item = ({
   const [starSign, setStarSign] = useState(isFavorite ? "star" : "star_border");
   const [taskTitle, setTaskTitle] = useState(title);
   const isError = taskTitle.trim().length < 1 || taskTitle.trim().length > 50;
-
-  const paginationLimit = Number(process.env.REACT_APP_PAGINATION_LIMIT);
+  const paginationLimit = useSelector(getPaginationLimit);
 
   const onChangeTitle = (payload) => {
     dispatch(changeTitleThunk(payload));

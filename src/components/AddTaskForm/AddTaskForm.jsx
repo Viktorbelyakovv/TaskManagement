@@ -93,12 +93,12 @@ const AddTaskForm = ({
   };
 
   useEffect(() => {
-    setCategoryId(defaultCategory?.id);
+    if (defaultCategory) setCategoryId(defaultCategory.id);
   }, [defaultCategory]);
 
   if (error) return <Error message={"Error downloading"} />;
 
-  if (loading === "pending" || !categoryId) return <Loader />;
+  if (loading === "pending" || !defaultCategory) return <Loader />;
 
   return (
     <>

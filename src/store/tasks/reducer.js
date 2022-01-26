@@ -93,30 +93,21 @@ export const tasksReducer = createSlice({
     loading: "idle",
     error: null,
     hasMore: true,
+    paginationLimit: Number(process.env.REACT_APP_PAGINATION_LIMIT),
   },
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(
-        getTasksThunk.pending,
-        (
-          state,
-          {
-            meta: {
-              arg: { start },
-            },
-          }
-        ) => {
-          if (state.loading === "idle" && start === 0) {
-            state.loading = "firstPending";
-          }
-
-          if (state.hasMore == false) {
-            state.hasMore = true;
-            state.tasks = [];
-          }
+      .addCase(getTasksThunk.pending, (state) => {
+        if (state.loading === "idle") {
+          state.loading = "pending";
         }
-      )
+
+        if (state.hasMore == false) {
+          state.hasMore = true;
+          state.tasks = [];
+        }
+      })
       .addCase(
         getTasksThunk.fulfilled,
         (
@@ -130,7 +121,7 @@ export const tasksReducer = createSlice({
         ) => {
           state.error = null;
 
-          if (payload.length < Number(process.env.REACT_APP_PAGINATION_LIMIT)) {
+          if (payload.length < state.paginationLimit) {
             state.hasMore = false;
           }
 
@@ -142,7 +133,7 @@ export const tasksReducer = createSlice({
             }
           }
 
-          if (state.loading === "firstPending") {
+          if (state.loading === "pending") {
             state.loading = "idle";
           }
         }
