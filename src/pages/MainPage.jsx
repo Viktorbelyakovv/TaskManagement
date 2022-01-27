@@ -16,7 +16,6 @@ import useQueryParams, {
 const MainPage = () => {
   const isCompletedTasks = false;
   const dispatch = useDispatch();
-  const start = 0;
   const paginationLimit = useSelector(getPaginationLimit);
   const [startTask, setStartTask] = useState(paginationLimit);
 
@@ -36,7 +35,7 @@ const MainPage = () => {
         sortDate,
         sortName,
         categoryId,
-        start,
+        start: 0,
       })
     );
     setStartTask(paginationLimit);
@@ -52,7 +51,7 @@ const MainPage = () => {
         sortDate: false,
         sortName: false,
         categoryId,
-        start,
+        start: 0,
       })
     );
     setStartTask(paginationLimit);
@@ -67,7 +66,7 @@ const MainPage = () => {
         sortDate,
         sortName,
         categoryId: 0,
-        start,
+        start: 0,
       })
     );
     setStartTask(paginationLimit);
@@ -84,7 +83,6 @@ const MainPage = () => {
         <AddTaskForm
           isCompletedTasks={isCompletedTasks}
           queryParams={queryParams}
-          start={start}
           paginationLimit={paginationLimit}
           setStartTask={setStartTask}
         />
@@ -103,7 +101,6 @@ const MainPage = () => {
         <ListTasks
           isCompletedTasks={isCompletedTasks}
           queryParams={queryParams}
-          start={start}
           startTask={startTask}
           setStartTask={setStartTask}
         />

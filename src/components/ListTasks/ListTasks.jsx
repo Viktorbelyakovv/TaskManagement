@@ -18,7 +18,6 @@ import "./ListTasks.css";
 const ListTasks = ({
   isCompletedTasks,
   queryParams: { sortDate, sortName, categoryId },
-  start,
   paginationLimit,
   startTask,
   setStartTask,
@@ -49,7 +48,7 @@ const ListTasks = ({
         sortDate,
         sortName,
         categoryId,
-        start,
+        start: 0,
       })
     );
   }, []);
@@ -79,7 +78,7 @@ const ListTasks = ({
                   sortDate,
                   sortName,
                   categoryId,
-                  start,
+                  start: 0,
                 }}
                 setStartTask={setStartTask}
               />
@@ -97,7 +96,6 @@ ListTasks.propTypes = {
     sortName: PropTypes.bool,
     categoryId: PropTypes.number,
   }),
-  start: PropTypes.number,
   paginationLimit: PropTypes.number,
   startTask: PropTypes.number,
   setStartTask: PropTypes.func,

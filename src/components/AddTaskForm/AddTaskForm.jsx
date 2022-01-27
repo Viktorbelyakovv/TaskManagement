@@ -21,7 +21,6 @@ import "./AddTaskForm.css";
 const AddTaskForm = ({
   isCompletedTasks,
   queryParams: { sortDate, sortName, categoryId },
-  start,
   paginationLimit,
   setStartTask,
 }) => {
@@ -58,7 +57,7 @@ const AddTaskForm = ({
             sortDate,
             sortName,
             categoryId,
-            start,
+            start: 0,
           },
         })
       );
@@ -147,7 +146,6 @@ AddTaskForm.propTypes = {
     sortName: PropTypes.bool,
     categoryId: PropTypes.number,
   }),
-  start: PropTypes.number,
   paginationLimit: PropTypes.number,
   setStartTask: PropTypes.func,
 };
