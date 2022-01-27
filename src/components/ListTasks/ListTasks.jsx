@@ -17,7 +17,7 @@ import "./ListTasks.css";
 
 const ListTasks = ({
   isCompletedTasks,
-  queryParams: { sortDate, sortName, categoryId },
+  queryParams,
   paginationLimit,
   startTask,
   setStartTask,
@@ -32,9 +32,7 @@ const ListTasks = ({
     dispatch(
       getTasksThunk({
         isCompletedTasks,
-        sortDate,
-        sortName,
-        categoryId,
+        queryParams,
         start: startTask,
       })
     );
@@ -45,9 +43,7 @@ const ListTasks = ({
     dispatch(
       getTasksThunk({
         isCompletedTasks,
-        sortDate,
-        sortName,
-        categoryId,
+        queryParams,
         start: 0,
       })
     );
@@ -75,9 +71,7 @@ const ListTasks = ({
                 key={item.id}
                 payload={{
                   isCompletedTasks,
-                  sortDate,
-                  sortName,
-                  categoryId,
+                  queryParams,
                   start: 0,
                 }}
                 setStartTask={setStartTask}

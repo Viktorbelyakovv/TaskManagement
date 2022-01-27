@@ -20,7 +20,7 @@ import "./AddTaskForm.css";
 
 const AddTaskForm = ({
   isCompletedTasks,
-  queryParams: { sortDate, sortName, categoryId },
+  queryParams /* : { sortDate, sortName, categoryId } */,
   paginationLimit,
   setStartTask,
 }) => {
@@ -54,9 +54,10 @@ const AddTaskForm = ({
           },
           sortFilterPayload: {
             isCompletedTasks,
-            sortDate,
+            /* sortDate,
             sortName,
-            categoryId,
+            categoryId, */
+            queryParams,
             start: 0,
           },
         })

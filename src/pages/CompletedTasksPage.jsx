@@ -32,9 +32,7 @@ const CompletedTasksPage = () => {
     dispatch(
       getTasksThunk({
         isCompletedTasks,
-        sortDate,
-        sortName,
-        categoryId,
+        queryParams,
         start,
       })
     );
@@ -48,9 +46,7 @@ const CompletedTasksPage = () => {
     dispatch(
       getTasksThunk({
         isCompletedTasks,
-        sortDate: false,
-        sortName: false,
-        categoryId,
+        queryParams: { sortDate: false, sortName: false, categoryId },
         start,
       })
     );
@@ -63,9 +59,7 @@ const CompletedTasksPage = () => {
     dispatch(
       getTasksThunk({
         isCompletedTasks,
-        sortDate,
-        sortName,
-        categoryId: 0,
+        queryParams: { sortDate, sortName, categoryId: 0 },
         start,
       })
     );

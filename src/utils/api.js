@@ -6,9 +6,7 @@ const api = axios.create({ baseURL });
 
 export const getTasks = ({
   isCompletedTasks,
-  sortDate,
-  sortName,
-  categoryId,
+  queryParams: { sortDate, sortName, categoryId },
   start,
 }) =>
   api.get(`/tasks`, {
