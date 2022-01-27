@@ -7,6 +7,7 @@ import {
   getCategoriesLoading,
   getDefaultCategory,
 } from "../../store/categories/selectors";
+import { getPaginationLimit } from "../../store/tasks/selectors";
 import { addTaskThunk } from "../../store/tasks/reducer";
 import { MenuItem } from "@mui/material";
 import { format } from "date-fns";
@@ -18,21 +19,15 @@ import StyledButton from "../ui-kit/StyledButton";
 import { getSvgIcon } from "../../helpers/getSvgIcon";
 import "./AddTaskForm.css";
 
-const AddTaskForm = ({
-  isCompletedTasks,
-  queryParams /* : { sortDate, sortName, categoryId } */,
-  paginationLimit,
-  setStartTask,
-}) => {
+const AddTaskForm = ({ isCompletedTasks, queryParams, setStartTask }) => {
   const [title, setTitle] = useState("");
   const [isEmpty, setEmpty] = useState(false);
   const [isTooLong, setTooLong] = useState(false);
   const dispatch = useDispatch();
   const categories = useSelector(getCategories);
   const defaultCategory = useSelector(getDefaultCategory);
-  const [selectedCategoryId, setSelectedCategoryId] = useState(
-    defaultCategory?.id || ""
-  );
+  const [categoryId, setCategoryId] = useState(defaultCategory?.id || "");
+  const paginationLimit = useSelector(getPaginationLimit);
   const loading = useSelector(getCategoriesLoading);
   const error = useSelector(getCategoriesError);
   const isError = isTooLong || isEmpty;
@@ -49,14 +44,11 @@ const AddTaskForm = ({
         addTaskThunk({
           addPayload: {
             title,
-            categoryId: selectedCategoryId,
+            categoryId,
             date: format(new Date(), "yyyy-MM-dd"),
           },
           sortFilterPayload: {
             isCompletedTasks,
-            /* sortDate,
-            sortName,
-            categoryId, */
             queryParams,
             start: 0,
           },
@@ -92,7 +84,7 @@ const AddTaskForm = ({
   };
 
   useEffect(() => {
-    if (defaultCategory) setSelectedCategoryId(defaultCategory.id);
+    if (defaultCategory) setCategoryId(defaultCategory.id);
   }, [defaultCategory]);
 
   if (error) return <Error message={"Error downloading"} />;
@@ -114,9 +106,9 @@ const AddTaskForm = ({
         />
         <StyledSelect
           width="10%"
-          value={selectedCategoryId}
+          value={categoryId}
           label="Category"
-          onChange={(e) => setSelectedCategoryId(e.target.value)}
+          onChange={(e) => setCategoryId(e.target.value)}
           displayEmpty
           renderValue={(selectedId) => renderIcon(selectedId)}
         >
@@ -147,7 +139,6 @@ AddTaskForm.propTypes = {
     sortName: PropTypes.bool,
     categoryId: PropTypes.number,
   }),
-  paginationLimit: PropTypes.number,
   setStartTask: PropTypes.func,
 };
 

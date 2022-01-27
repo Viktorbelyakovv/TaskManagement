@@ -15,7 +15,6 @@ import useQueryParams, {
 const CompletedTasksPage = () => {
   const isCompletedTasks = true;
   const dispatch = useDispatch();
-  const start = 0;
   const paginationLimit = useSelector(getPaginationLimit);
   const [startTask, setStartTask] = useState(paginationLimit);
 
@@ -33,7 +32,7 @@ const CompletedTasksPage = () => {
       getTasksThunk({
         isCompletedTasks,
         queryParams,
-        start,
+        start: 0,
       })
     );
     setStartTask(paginationLimit);
@@ -47,7 +46,7 @@ const CompletedTasksPage = () => {
       getTasksThunk({
         isCompletedTasks,
         queryParams: { sortDate: false, sortName: false, categoryId },
-        start,
+        start: 0,
       })
     );
     setStartTask(paginationLimit);
@@ -60,7 +59,7 @@ const CompletedTasksPage = () => {
       getTasksThunk({
         isCompletedTasks,
         queryParams: { sortDate, sortName, categoryId: 0 },
-        start,
+        start: 0,
       })
     );
     setStartTask(paginationLimit);
@@ -88,7 +87,6 @@ const CompletedTasksPage = () => {
       <ListTasks
         isCompletedTasks={isCompletedTasks}
         queryParams={queryParams}
-        start={start}
         startTask={startTask}
         setStartTask={setStartTask}
       />

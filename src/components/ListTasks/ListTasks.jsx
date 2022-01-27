@@ -4,13 +4,14 @@ import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { getTasksThunk } from "../../store/tasks/reducer";
 import {
+  getPaginationLimit,
   getTasks,
   getTasksError,
   getTasksHasMore,
   getTasksLoading,
 } from "../../store/tasks/selectors";
 import InfiniteScroll from "react-infinite-scroll-component";
-import Item from "../Item";
+import ItemTask from "../ItemTask";
 import Loader from "../Loader";
 import Error from "../Error";
 import "./ListTasks.css";
@@ -18,15 +19,15 @@ import "./ListTasks.css";
 const ListTasks = ({
   isCompletedTasks,
   queryParams,
-  paginationLimit,
   startTask,
   setStartTask,
 }) => {
+  const dispatch = useDispatch();
   const loading = useSelector(getTasksLoading);
   const error = useSelector(getTasksError);
   const hasMore = useSelector(getTasksHasMore);
   const listTasks = useSelector(getTasks);
-  const dispatch = useDispatch();
+  const paginationLimit = useSelector(getPaginationLimit);
 
   const getMoreTasks = () => {
     dispatch(
@@ -66,7 +67,7 @@ const ListTasks = ({
         >
           {listTasks.length &&
             listTasks.map((item) => (
-              <Item
+              <ItemTask
                 item={item}
                 key={item.id}
                 payload={{
@@ -90,7 +91,6 @@ ListTasks.propTypes = {
     sortName: PropTypes.bool,
     categoryId: PropTypes.number,
   }),
-  paginationLimit: PropTypes.number,
   startTask: PropTypes.number,
   setStartTask: PropTypes.func,
 };

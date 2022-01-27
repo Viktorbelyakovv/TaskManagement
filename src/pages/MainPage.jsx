@@ -78,7 +78,6 @@ const MainPage = () => {
         <AddTaskForm
           isCompletedTasks={isCompletedTasks}
           queryParams={queryParams}
-          paginationLimit={paginationLimit}
           setStartTask={setStartTask}
         />
         <Sorting

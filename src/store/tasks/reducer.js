@@ -120,7 +120,6 @@ export const tasksReducer = createSlice({
       )
       .addCase(getTasksThunk.fulfilled, (state, { payload }) => {
         state.error = null;
-
         state.tasks = state.tasks.concat(payload);
 
         if (payload.length < state.paginationLimit) {

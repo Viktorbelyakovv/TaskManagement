@@ -13,9 +13,9 @@ import StyledCheckbox from "../ui-kit/StyledCheckbox";
 import StyledListItem from "../ui-kit/StyledListItem";
 import StyledIconButton from "../ui-kit/StyledIconButton";
 import { getSvgIcon } from "../../helpers/getSvgIcon";
-import "./Item.css";
+import "./ItemTask.css";
 
-const Item = ({
+const ItemTask = ({
   item: {
     id,
     title,
@@ -105,7 +105,7 @@ const Item = ({
   );
 };
 
-Item.propTypes = {
+ItemTask.propTypes = {
   item: PropTypes.object,
   payload: PropTypes.shape({
     isCompletedTasks: PropTypes.bool,
@@ -118,4 +118,4 @@ Item.propTypes = {
   setStartTask: PropTypes.func,
 };
 
-export default Item;
+export default ItemTask;
