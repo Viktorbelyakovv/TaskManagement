@@ -28,7 +28,7 @@
       "title": "Get a subscription to a swimming pool",
       "categoryId": 9,
       "isCompleted": false,
-      "isFavorite": false,
+      "isFavorite": true,
       "date": "2022-01-10",
       "id": 5
     },
@@ -92,7 +92,7 @@
       "title": "Eat healthy",
       "categoryId": 8,
       "isCompleted": false,
-      "isFavorite": true,
+      "isFavorite": false,
       "date": "2022-01-21",
       "id": 14
     },

@@ -20,9 +20,7 @@ import "./AddTaskForm.css";
 
 const AddTaskForm = ({
   isCompletedTasks,
-  sortDate,
-  sortName,
-  filterCategory,
+  queryParams: { sortDate, sortName, categoryId },
   start,
   end,
   setStartTask,
@@ -33,7 +31,9 @@ const AddTaskForm = ({
   const dispatch = useDispatch();
   const categories = useSelector(getCategories);
   const defaultCategory = useSelector(getDefaultCategory);
-  const [categoryId, setCategoryId] = useState(defaultCategory?.id || "");
+  const [selectedCategoryId, setSelectedCategoryId] = useState(
+    defaultCategory?.id || ""
+  );
   const loading = useSelector(getCategoriesLoading);
   const error = useSelector(getCategoriesError);
   const isError = isTooLong || isEmpty;
@@ -50,14 +50,14 @@ const AddTaskForm = ({
         addTaskThunk({
           addPayload: {
             title,
-            categoryId,
+            categoryId: selectedCategoryId,
             date: format(new Date(), "yyyy-MM-dd"),
           },
           sortFilterPayload: {
             isCompletedTasks,
             sortDate,
             sortName,
-            filterCategory,
+            categoryId,
             start,
             end,
           },
@@ -93,7 +93,7 @@ const AddTaskForm = ({
   };
 
   useEffect(() => {
-    if (defaultCategory) setCategoryId(defaultCategory.id);
+    if (defaultCategory) setSelectedCategoryId(defaultCategory.id);
   }, [defaultCategory]);
 
   if (error) return <Error message={"Error downloading"} />;
@@ -115,9 +115,9 @@ const AddTaskForm = ({
         />
         <StyledSelect
           width="10%"
-          value={categoryId}
+          value={selectedCategoryId}
           label="Category"
-          onChange={(e) => setCategoryId(e.target.value)}
+          onChange={(e) => setSelectedCategoryId(e.target.value)}
           displayEmpty
           renderValue={(selectedId) => renderIcon(selectedId)}
         >
@@ -143,9 +143,11 @@ const AddTaskForm = ({
 
 AddTaskForm.propTypes = {
   isCompletedTasks: PropTypes.bool,
-  sortDate: PropTypes.bool,
-  sortName: PropTypes.bool,
-  filterCategory: PropTypes.number,
+  queryParams: PropTypes.shape({
+    sortDate: PropTypes.bool,
+    sortName: PropTypes.bool,
+    categoryId: PropTypes.number,
+  }),
   start: PropTypes.number,
   end: PropTypes.number,
   setStartTask: PropTypes.func,

@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getCategoriesThunk } from "../store/categories/reducer";
 import { getTasksThunk } from "../store/tasks/reducer";
 import { getPaginationLimit } from "../store/tasks/selectors";
 import Sorting from "../components/Sorting";
 import ListTasks from "../components/ListTasks";
 import Filtering from "../components/Filtering/Filtering";
-import useQueryParams from "../hooks/useQueryParams";
+import useQueryParams, {
+  updateCategoryIdAC,
+  updateSortDateAC,
+  updateSortNameAC,
+} from "../hooks/useQueryParams";
 
 const CompletedTasksPage = () => {
   const isCompletedTasks = true;
@@ -15,12 +20,9 @@ const CompletedTasksPage = () => {
   const [startTask, setStartTask] = useState(end);
 
   const {
-    sortDate,
-    setSortDate,
-    sortName,
-    setSortName,
-    filterCategory,
-    setFilterCategory,
+    queryParams,
+    queryParams: { sortDate, sortName, categoryId },
+    updateQueryParams,
     setParams,
     resetParams,
   } = useQueryParams();
@@ -32,7 +34,7 @@ const CompletedTasksPage = () => {
         isCompletedTasks,
         sortDate,
         sortName,
-        filterCategory,
+        categoryId,
         start,
         end,
       })
@@ -41,15 +43,15 @@ const CompletedTasksPage = () => {
   };
 
   const onResetSorting = () => {
-    resetParams(false, false, !!filterCategory);
-    setSortDate(false);
-    setSortName(false);
+    resetParams(false, false, !!categoryId);
+    updateQueryParams(updateSortDateAC(false));
+    updateQueryParams(updateSortNameAC(false));
     dispatch(
       getTasksThunk({
         isCompletedTasks,
         sortDate: false,
         sortName: false,
-        filterCategory,
+        categoryId,
         start,
         end,
       })
@@ -59,13 +61,13 @@ const CompletedTasksPage = () => {
 
   const onResetFiltering = () => {
     resetParams(sortDate, sortName, !!0);
-    setFilterCategory(0);
+    updateQueryParams(updateCategoryIdAC(0));
     dispatch(
       getTasksThunk({
         isCompletedTasks,
         sortDate,
         sortName,
-        filterCategory: 0,
+        categoryId: 0,
         start,
         end,
       })
@@ -73,28 +75,28 @@ const CompletedTasksPage = () => {
     setStartTask(end);
   };
 
+  useEffect(() => {
+    dispatch(getCategoriesThunk());
+  }, [dispatch]);
+
   return (
     <>
       <h1>COMPLETED TASKS</h1>
       <Sorting
-        sortDate={sortDate}
-        setSortDate={setSortDate}
-        sortName={sortName}
-        setSortName={setSortName}
+        queryParams={queryParams}
+        updateQueryParams={updateQueryParams}
         onApplySorting={onApply}
         onResetSorting={onResetSorting}
       />
       <Filtering
-        filterCategory={filterCategory}
-        setFilterCategory={setFilterCategory}
+        queryParams={queryParams}
+        updateQueryParams={updateQueryParams}
         onApplyFiltering={onApply}
         onResetFiltering={onResetFiltering}
       />
       <ListTasks
         isCompletedTasks={isCompletedTasks}
-        sortDate={sortDate}
-        sortName={sortName}
-        filterCategory={filterCategory}
+        queryParams={queryParams}
         start={start}
         end={end}
         startTask={startTask}

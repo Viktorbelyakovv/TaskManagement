@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useReducer } from "react";
 import { createSearchParams, useSearchParams } from "react-router-dom";
-import { getCategoriesThunk } from "../store/categories/reducer";
 
 const useQueryParams = () => {
-  const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams({});
 
   const parseSortString = (sortString) => {
@@ -32,32 +29,47 @@ const useQueryParams = () => {
       const {
         filter: { categoryId },
       } = JSON.parse(filterString);
-      if (typeof categoryId === "number") return { categoryId };
-      else return { categoryId: 0 };
+      if (typeof categoryId === "number") return { category: categoryId };
+      else return { category: 0 };
     } catch (e) {
-      return { categoryId: 0 };
+      return { category: 0 };
     }
   };
 
-  const { categoryId } = parseFilterString(
+  const { category } = parseFilterString(
     decodeURIComponent(searchParams.toString().slice(0, -1))
   );
 
-  const [sortDate, setSortDate] = useState(date);
-  const [sortName, setSortName] = useState(name);
-  const [filterCategory, setFilterCategory] = useState(categoryId);
+  const initialState = {
+    sortDate: false,
+    sortName: false,
+    categoryId: 0,
+  };
+
+  const init = () => ({
+    sortDate: date,
+    sortName: name,
+    categoryId: category,
+  });
+
+  const [queryParams, dispatch] = useReducer(reducer, initialState, init);
+  const { sortDate, sortName, categoryId } = queryParams;
+
+  const updateQueryParams = (payload) => {
+    dispatch(payload);
+  };
 
   const setParams = () => {
-    if ((sortDate || sortName) && filterCategory) {
+    if ((sortDate || sortName) && categoryId) {
       setSearchParams(
         JSON.stringify({
           sort: { date: sortDate, name: sortName },
-          filter: { categoryId: filterCategory },
+          filter: { categoryId: categoryId },
         })
       );
     }
 
-    if ((sortDate || sortName) && !filterCategory) {
+    if ((sortDate || sortName) && !categoryId) {
       setSearchParams(
         JSON.stringify({
           sort: { date: sortDate, name: sortName },
@@ -65,15 +77,15 @@ const useQueryParams = () => {
       );
     }
 
-    if (!(sortDate || sortName) && filterCategory) {
+    if (!(sortDate || sortName) && categoryId) {
       setSearchParams(
         JSON.stringify({
-          filter: { categoryId: filterCategory },
+          filter: { categoryId: categoryId },
         })
       );
     }
 
-    if (!(sortDate || sortName) && !filterCategory) {
+    if (!(sortDate || sortName) && !categoryId) {
       setSearchParams(createSearchParams());
     }
   };
@@ -94,26 +106,42 @@ const useQueryParams = () => {
     if (!(date || name) && category) {
       setSearchParams(
         JSON.stringify({
-          filter: { categoryId: filterCategory },
+          filter: { categoryId: categoryId },
         })
       );
     }
   };
 
-  useEffect(() => {
-    dispatch(getCategoriesThunk());
-  }, [dispatch]);
-
-  return {
-    sortDate,
-    setSortDate,
-    sortName,
-    setSortName,
-    filterCategory,
-    setFilterCategory,
-    setParams,
-    resetParams,
-  };
+  return { queryParams, updateQueryParams, setParams, resetParams };
 };
+
+export const updateSortNameAC = (payload) => ({
+  type: "CHANGE_SORT_NAME",
+  payload,
+});
+
+export const updateSortDateAC = (payload) => ({
+  type: "CHANGE_SORT_DATE",
+  payload,
+});
+
+export const updateCategoryIdAC = (payload) => ({
+  type: "CHANGE_CATEGORY_ID",
+  payload,
+});
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "CHANGE_SORT_NAME": {
+      return { ...state, sortName: action.payload };
+    }
+    case "CHANGE_SORT_DATE": {
+      return { ...state, sortDate: action.payload };
+    }
+    case "CHANGE_CATEGORY_ID": {
+      return { ...state, categoryId: action.payload };
+    }
+  }
+}
 
 export default useQueryParams;

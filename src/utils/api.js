@@ -8,14 +8,14 @@ export const getTasks = ({
   isCompletedTasks,
   sortDate,
   sortName,
-  filterCategory,
+  categoryId,
   start,
   end,
 }) =>
   api.get(`/tasks`, {
     params: {
       isCompleted: isCompletedTasks,
-      categoryId_like: filterCategory ? `${filterCategory}` : "",
+      categoryId_like: categoryId ? `${categoryId}` : "",
       _expand: "category",
       _sort: `isFavorite${sortDate ? ",date" : ""}${sortName ? ",title" : ""}`,
       _order: `desc${sortDate ? ",desc" : ""}${sortName ? ",asc" : ""}`,

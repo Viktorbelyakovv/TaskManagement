@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { getTasksThunk } from "../../store/tasks/reducer";
@@ -16,9 +17,7 @@ import "./ListTasks.css";
 
 const ListTasks = ({
   isCompletedTasks,
-  sortDate,
-  sortName,
-  filterCategory,
+  queryParams: { sortDate, sortName, categoryId },
   start,
   end,
   startTask,
@@ -36,7 +35,7 @@ const ListTasks = ({
         isCompletedTasks,
         sortDate,
         sortName,
-        filterCategory,
+        categoryId,
         start: startTask,
         end: startTask + end,
       })
@@ -44,35 +43,18 @@ const ListTasks = ({
     setStartTask((prevStart) => prevStart + end);
   };
 
-  const [first, setFirst] = useState(true);
-
   useEffect(() => {
-    if (/* !listTasks.length */ first) {
-      {
-        setFirst(false);
-        dispatch(
-          getTasksThunk({
-            isCompletedTasks,
-            sortDate,
-            sortName,
-            filterCategory,
-            start,
-            end,
-          })
-        );
-      }
-    }
-  }, [
-    dispatch,
-    isCompletedTasks,
-    sortDate,
-    sortName,
-    filterCategory,
-    start,
-    end,
-    first,
-    /* listTasks.length, */
-  ]);
+    dispatch(
+      getTasksThunk({
+        isCompletedTasks,
+        sortDate,
+        sortName,
+        categoryId,
+        start,
+        end,
+      })
+    );
+  }, []);
 
   if (error) return <Error message={"Error downloading tasks"} />;
 
@@ -98,7 +80,7 @@ const ListTasks = ({
                   isCompletedTasks,
                   sortDate,
                   sortName,
-                  filterCategory,
+                  categoryId,
                   start,
                   end,
                 }}
@@ -113,9 +95,11 @@ const ListTasks = ({
 
 ListTasks.propTypes = {
   isCompletedTasks: PropTypes.bool,
-  sortDate: PropTypes.bool,
-  sortName: PropTypes.bool,
-  filterCategory: PropTypes.number,
+  queryParams: PropTypes.shape({
+    sortDate: PropTypes.bool,
+    sortName: PropTypes.bool,
+    categoryId: PropTypes.number,
+  }),
   start: PropTypes.number,
   end: PropTypes.number,
   startTask: PropTypes.number,
