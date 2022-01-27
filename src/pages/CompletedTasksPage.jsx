@@ -16,8 +16,8 @@ const CompletedTasksPage = () => {
   const isCompletedTasks = true;
   const dispatch = useDispatch();
   const start = 0;
-  const end = useSelector(getPaginationLimit);
-  const [startTask, setStartTask] = useState(end);
+  const paginationLimit = useSelector(getPaginationLimit);
+  const [startTask, setStartTask] = useState(paginationLimit);
 
   const {
     queryParams,
@@ -36,10 +36,9 @@ const CompletedTasksPage = () => {
         sortName,
         categoryId,
         start,
-        end,
       })
     );
-    setStartTask(end);
+    setStartTask(paginationLimit);
   };
 
   const onResetSorting = () => {
@@ -53,10 +52,9 @@ const CompletedTasksPage = () => {
         sortName: false,
         categoryId,
         start,
-        end,
       })
     );
-    setStartTask(end);
+    setStartTask(paginationLimit);
   };
 
   const onResetFiltering = () => {
@@ -69,10 +67,9 @@ const CompletedTasksPage = () => {
         sortName,
         categoryId: 0,
         start,
-        end,
       })
     );
-    setStartTask(end);
+    setStartTask(paginationLimit);
   };
 
   useEffect(() => {
@@ -98,7 +95,6 @@ const CompletedTasksPage = () => {
         isCompletedTasks={isCompletedTasks}
         queryParams={queryParams}
         start={start}
-        end={end}
         startTask={startTask}
         setStartTask={setStartTask}
       />

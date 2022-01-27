@@ -10,7 +10,6 @@ export const getTasks = ({
   sortName,
   categoryId,
   start,
-  end,
 }) =>
   api.get(`/tasks`, {
     params: {
@@ -20,7 +19,7 @@ export const getTasks = ({
       _sort: `isFavorite${sortDate ? ",date" : ""}${sortName ? ",title" : ""}`,
       _order: `desc${sortDate ? ",desc" : ""}${sortName ? ",asc" : ""}`,
       _start: start,
-      _end: end,
+      _end: start + Number(process.env.REACT_APP_PAGINATION_LIMIT),
     },
   });
 

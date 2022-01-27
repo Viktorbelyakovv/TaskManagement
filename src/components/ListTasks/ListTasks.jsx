@@ -19,7 +19,7 @@ const ListTasks = ({
   isCompletedTasks,
   queryParams: { sortDate, sortName, categoryId },
   start,
-  end,
+  paginationLimit,
   startTask,
   setStartTask,
 }) => {
@@ -37,10 +37,9 @@ const ListTasks = ({
         sortName,
         categoryId,
         start: startTask,
-        end: startTask + end,
       })
     );
-    setStartTask((prevStart) => prevStart + end);
+    setStartTask((prevStart) => prevStart + paginationLimit);
   };
 
   useEffect(() => {
@@ -51,7 +50,6 @@ const ListTasks = ({
         sortName,
         categoryId,
         start,
-        end,
       })
     );
   }, []);
@@ -82,7 +80,6 @@ const ListTasks = ({
                   sortName,
                   categoryId,
                   start,
-                  end,
                 }}
                 setStartTask={setStartTask}
               />
@@ -101,7 +98,7 @@ ListTasks.propTypes = {
     categoryId: PropTypes.number,
   }),
   start: PropTypes.number,
-  end: PropTypes.number,
+  paginationLimit: PropTypes.number,
   startTask: PropTypes.number,
   setStartTask: PropTypes.func,
 };

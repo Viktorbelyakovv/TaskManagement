@@ -22,7 +22,7 @@ const AddTaskForm = ({
   isCompletedTasks,
   queryParams: { sortDate, sortName, categoryId },
   start,
-  end,
+  paginationLimit,
   setStartTask,
 }) => {
   const [title, setTitle] = useState("");
@@ -59,11 +59,10 @@ const AddTaskForm = ({
             sortName,
             categoryId,
             start,
-            end,
           },
         })
       );
-      setStartTask(end);
+      setStartTask(paginationLimit);
       setTitle("");
     } else {
       setEmpty(true);
@@ -149,7 +148,7 @@ AddTaskForm.propTypes = {
     categoryId: PropTypes.number,
   }),
   start: PropTypes.number,
-  end: PropTypes.number,
+  paginationLimit: PropTypes.number,
   setStartTask: PropTypes.func,
 };
 
