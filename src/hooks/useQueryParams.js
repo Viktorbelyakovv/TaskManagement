@@ -60,56 +60,38 @@ const useQueryParams = () => {
   };
 
   const setParams = () => {
+    let params = createSearchParams();
+
     if ((sortDate || sortName) && categoryId) {
-      setSearchParams(
-        JSON.stringify({
-          sort: { date: sortDate, name: sortName },
-          filter: { categoryId: categoryId },
-        })
-      );
+      params = JSON.stringify({
+        sort: { date: sortDate, name: sortName },
+        filter: { categoryId },
+      });
+    } else if ((sortDate || sortName) && !categoryId) {
+      params = JSON.stringify({
+        sort: { date: sortDate, name: sortName },
+      });
+    } else if (!(sortDate || sortName) && categoryId) {
+      params = JSON.stringify({
+        filter: { categoryId },
+      });
     }
-
-    if ((sortDate || sortName) && !categoryId) {
-      setSearchParams(
-        JSON.stringify({
-          sort: { date: sortDate, name: sortName },
-        })
-      );
-    }
-
-    if (!(sortDate || sortName) && categoryId) {
-      setSearchParams(
-        JSON.stringify({
-          filter: { categoryId: categoryId },
-        })
-      );
-    }
-
-    if (!(sortDate || sortName) && !categoryId) {
-      setSearchParams(createSearchParams());
-    }
+    setSearchParams(params);
   };
 
   const resetParams = (date, name, category) => {
-    if (!(date || name || category)) {
-      setSearchParams(createSearchParams());
-    }
+    let params = createSearchParams();
 
     if ((date || name) && !category) {
-      setSearchParams(
-        JSON.stringify({
-          sort: { date: sortDate, name: sortName },
-        })
-      );
+      params = JSON.stringify({
+        sort: { date: sortDate, name: sortName },
+      });
+    } else if (!(date || name) && category) {
+      params = JSON.stringify({
+        filter: { categoryId },
+      });
     }
-
-    if (!(date || name) && category) {
-      setSearchParams(
-        JSON.stringify({
-          filter: { categoryId: categoryId },
-        })
-      );
-    }
+    setSearchParams(params);
   };
 
   return { queryParams, updateQueryParams, setParams, resetParams };
