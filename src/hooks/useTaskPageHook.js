@@ -49,56 +49,38 @@ const useTaskPageHook = (isCompletedTasks) => {
   const [filterCategory, setFilterCategory] = useState(categoryId);
 
   const setParams = () => {
+    let params = createSearchParams();
+
     if ((sortDate || sortName) && filterCategory) {
-      setSearchParams(
-        JSON.stringify({
-          sort: { date: sortDate, name: sortName },
-          filter: { categoryId: filterCategory },
-        })
-      );
+      params = JSON.stringify({
+        sort: { date: sortDate, name: sortName },
+        filter: { categoryId: filterCategory },
+      });
+    } else if ((sortDate || sortName) && !filterCategory) {
+      params = JSON.stringify({
+        sort: { date: sortDate, name: sortName },
+      });
+    } else if (!(sortDate || sortName) && filterCategory) {
+      params = JSON.stringify({
+        filter: { categoryId: filterCategory },
+      });
     }
-
-    if ((sortDate || sortName) && !filterCategory) {
-      setSearchParams(
-        JSON.stringify({
-          sort: { date: sortDate, name: sortName },
-        })
-      );
-    }
-
-    if (!(sortDate || sortName) && filterCategory) {
-      setSearchParams(
-        JSON.stringify({
-          filter: { categoryId: filterCategory },
-        })
-      );
-    }
-
-    if (!(sortDate || sortName) && !filterCategory) {
-      setSearchParams(createSearchParams());
-    }
+    setSearchParams(params);
   };
 
   const resetParams = (date, name, category) => {
-    if (!(date || name || category)) {
-      setSearchParams(createSearchParams());
-    }
+    let params = createSearchParams();
 
     if ((date || name) && !category) {
-      setSearchParams(
-        JSON.stringify({
-          sort: { date: sortDate, name: sortName },
-        })
-      );
+      params = JSON.stringify({
+        sort: { date: sortDate, name: sortName },
+      });
+    } else if (!(date || name) && category) {
+      params = JSON.stringify({
+        filter: { categoryId: filterCategory },
+      });
     }
-
-    if (!(date || name) && category) {
-      setSearchParams(
-        JSON.stringify({
-          filter: { categoryId: filterCategory },
-        })
-      );
-    }
+    setSearchParams(params);
   };
 
   const onApply = () => {
