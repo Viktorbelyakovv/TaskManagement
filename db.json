@@ -3,8 +3,8 @@
     {
       "title": "Buy fruits",
       "categoryId": 11,
-      "isCompleted": false,
-      "isFavorite": true,
+      "isCompleted": true,
+      "isFavorite": false,
       "date": "2022-01-11",
       "id": 1
     },
@@ -25,18 +25,10 @@
       "id": 3
     },
     {
-      "title": "Play volleyball",
-      "categoryId": 4,
-      "isCompleted": true,
-      "isFavorite": false,
-      "date": "2022-01-08",
-      "id": 4
-    },
-    {
       "title": "Get a subscription to a swimming pool",
       "categoryId": 9,
       "isCompleted": false,
-      "isFavorite": false,
+      "isFavorite": true,
       "date": "2022-01-10",
       "id": 5
     },
@@ -59,8 +51,8 @@
     {
       "title": "Call to uncle",
       "categoryId": 6,
-      "isCompleted": false,
-      "isFavorite": true,
+      "isCompleted": true,
+      "isFavorite": false,
       "date": "2022-01-12",
       "id": 8
     },
@@ -73,17 +65,9 @@
       "id": 9
     },
     {
-      "title": "Finish the pumpkin",
-      "categoryId": 8,
-      "isCompleted": false,
-      "isFavorite": true,
-      "date": "2022-01-10",
-      "id": 10
-    },
-    {
       "title": "Make an appoinment with a hairdresser (13:00)",
       "categoryId": 6,
-      "isCompleted": true,
+      "isCompleted": false,
       "isFavorite": false,
       "date": "2022-01-13",
       "id": 11
@@ -99,10 +83,90 @@
     {
       "title": "Make a salad",
       "categoryId": 8,
-      "isCompleted": false,
+      "isCompleted": true,
       "isFavorite": false,
       "date": "2022-01-19",
       "id": 13
+    },
+    {
+      "title": "Eat healthy",
+      "categoryId": 8,
+      "isCompleted": false,
+      "isFavorite": false,
+      "date": "2022-01-21",
+      "id": 14
+    },
+    {
+      "title": "Rent an apartment",
+      "categoryId": 12,
+      "isCompleted": false,
+      "isFavorite": false,
+      "date": "2022-01-21",
+      "id": 16
+    },
+    {
+      "title": "Pay the taxes",
+      "categoryId": 10,
+      "isCompleted": true,
+      "isFavorite": false,
+      "date": "2022-01-21",
+      "id": 17
+    },
+    {
+      "title": "Pay for the utilities",
+      "categoryId": 10,
+      "isCompleted": false,
+      "isFavorite": false,
+      "date": "2022-01-21",
+      "id": 18
+    },
+    {
+      "title": "Pay for parents' utilities",
+      "categoryId": 10,
+      "isCompleted": false,
+      "isFavorite": false,
+      "date": "2022-01-21",
+      "id": 19
+    },
+    {
+      "title": "Visit grandparents",
+      "categoryId": 6,
+      "isCompleted": true,
+      "isFavorite": false,
+      "date": "2022-01-21",
+      "id": 20
+    },
+    {
+      "title": "Visit the dentist",
+      "categoryId": 5,
+      "isCompleted": false,
+      "isFavorite": true,
+      "date": "2022-01-21",
+      "id": 21
+    },
+    {
+      "title": "Go to the village",
+      "categoryId": 6,
+      "isCompleted": false,
+      "isFavorite": false,
+      "date": "2022-01-21",
+      "id": 22
+    },
+    {
+      "title": "Get the visa",
+      "categoryId": 10,
+      "isCompleted": false,
+      "isFavorite": false,
+      "date": "2022-01-21",
+      "id": 23
+    },
+    {
+      "title": "Play volleyball",
+      "categoryId": 4,
+      "isCompleted": true,
+      "isFavorite": false,
+      "date": "2022-01-24",
+      "id": 24
     }
   ],
   "categories": [
@@ -132,7 +196,7 @@
       "colorId": 1,
       "iconId": 3,
       "id": 7,
-      "isDefault": true
+      "isDefault": false
     },
     {
       "title": "green food",
@@ -145,7 +209,7 @@
       "title": "blue sport",
       "colorId": 2,
       "iconId": 4,
-      "isDefault": false,
+      "isDefault": true,
       "id": 9
     },
     {

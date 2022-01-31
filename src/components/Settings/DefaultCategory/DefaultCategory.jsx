@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import MenuItem from "@mui/material/MenuItem";
 import { changeDefaultCategoryThunk } from "../../../store/categories/reducer";
@@ -30,9 +30,13 @@ const DefaultCategory = () => {
     );
   };
 
+  useEffect(() => {
+    setCategoryId(defaultCategory?.id);
+  }, [defaultCategory]);
+
   if (error) return <Error message={"Error downloading"} />;
 
-  if (loading === "pending" || !categories.length) return <Loader />;
+  if (loading === "pending" || !categoryId) return <Loader />;
 
   return (
     <>

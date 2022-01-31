@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -18,7 +18,12 @@ import StyledButton from "../ui-kit/StyledButton";
 import { getSvgIcon } from "../../helpers/getSvgIcon";
 import "./AddTaskForm.css";
 
-const AddTaskForm = ({ isCompletedTasks, sortDate, sortName }) => {
+const AddTaskForm = ({
+  isCompletedTasks,
+  sortDate,
+  sortName,
+  filterCategory,
+}) => {
   const [title, setTitle] = useState("");
   const [isEmpty, setEmpty] = useState(false);
   const [isTooLong, setTooLong] = useState(false);
@@ -46,10 +51,11 @@ const AddTaskForm = ({ isCompletedTasks, sortDate, sortName }) => {
             categoryId,
             date: format(new Date(), "yyyy-MM-dd"),
           },
-          sortPayload: {
+          sortFilterPayload: {
             isCompletedTasks,
             sortDate,
             sortName,
+            filterCategory,
           },
         })
       );
@@ -81,9 +87,13 @@ const AddTaskForm = ({ isCompletedTasks, sortDate, sortName }) => {
     );
   };
 
+  useEffect(() => {
+    setCategoryId(defaultCategory?.id);
+  }, [defaultCategory]);
+
   if (error) return <Error message={"Error downloading"} />;
 
-  if (loading === "pending" || !categories.length) return <Loader />;
+  if (loading === "pending" || !categoryId) return <Loader />;
 
   return (
     <>
@@ -130,6 +140,7 @@ AddTaskForm.propTypes = {
   isCompletedTasks: PropTypes.bool,
   sortDate: PropTypes.bool,
   sortName: PropTypes.bool,
+  filterCategory: PropTypes.number,
 };
 
 export default AddTaskForm;

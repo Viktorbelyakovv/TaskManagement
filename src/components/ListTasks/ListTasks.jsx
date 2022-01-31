@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { useSelector, useDispatch } from "react-redux";
-import { getTasksThunk } from "../../store/tasks/reducer";
+import { useSelector } from "react-redux";
 import {
   getTasks,
   getTasksLoading,
@@ -12,17 +11,15 @@ import Loader from "../Loader";
 import Error from "../Error";
 import "./ListTasks.css";
 
-const ListTasks = ({ isCompletedTasks, sortDate, sortName }) => {
+const ListTasks = ({
+  isCompletedTasks,
+  sortDate,
+  sortName,
+  filterCategory,
+}) => {
   const tasksList = useSelector(getTasks);
   const loading = useSelector(getTasksLoading);
   const error = useSelector(getTasksError);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(
-      getTasksThunk({ isCompletedTasks, sortDate: false, sortName: false })
-    );
-  }, [dispatch, isCompletedTasks]);
 
   if (error) return <Error message={"Error downloading tasks"} />;
 
@@ -36,7 +33,7 @@ const ListTasks = ({ isCompletedTasks, sortDate, sortName }) => {
         <Item
           item={item}
           key={item.id}
-          payload={{ isCompletedTasks, sortDate, sortName }}
+          payload={{ isCompletedTasks, sortDate, sortName, filterCategory }}
         />
       ))}
     </div>
@@ -47,6 +44,7 @@ ListTasks.propTypes = {
   isCompletedTasks: PropTypes.bool,
   sortDate: PropTypes.bool,
   sortName: PropTypes.bool,
+  filterCategory: PropTypes.number,
 };
 
 export default ListTasks;

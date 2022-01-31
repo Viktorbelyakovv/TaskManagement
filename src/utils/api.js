@@ -4,10 +4,16 @@ const baseURL = process.env.REACT_APP_API_LINK;
 
 const api = axios.create({ baseURL });
 
-export const getTasks = ({ isCompletedTasks, sortDate, sortName }) =>
+export const getTasks = ({
+  isCompletedTasks,
+  sortDate,
+  sortName,
+  filterCategory,
+}) =>
   api.get(`/tasks`, {
     params: {
       isCompleted: isCompletedTasks,
+      categoryId_like: `${filterCategory ? filterCategory : ""}`,
       _expand: "category",
       _sort: `isFavorite${sortDate ? ",date" : ""}${sortName ? ",title" : ""}`,
       _order: `desc${sortDate ? ",desc" : ""}${sortName ? ",asc" : ""}`,
@@ -23,13 +29,13 @@ export const addTask = ({ title, categoryId, date }) =>
       isFavorite: false,
       date,
     })
-    .then((response) => {
-      return api.get(`/tasks/${response.data.id}`, {
+    .then((response) =>
+      api.get(`/tasks/${response.data.id}`, {
         params: {
           _expand: "category",
         },
-      });
-    });
+      })
+    );
 
 export const deleteTask = (id) => api.delete(`/tasks/${id}`);
 

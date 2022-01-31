@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getCategoriesThunk } from "../store/categories/reducer";
+import React from "react";
 import AddTaskForm from "../components/AddTaskForm";
 import Sorting from "../components/Sorting";
 import ListTasks from "../components/ListTasks";
+import Filtering from "../components/Filtering/Filtering";
+import useTaskPageHook from "../hooks/useTaskPageHook";
 
 const MainPage = () => {
-  const [sortDate, setSortDate] = useState(false);
-  const [sortName, setSortName] = useState(false);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getCategoriesThunk());
-  }, [dispatch]);
+  const {
+    sortDate,
+    setSortDate,
+    sortName,
+    setSortName,
+    filterCategory,
+    setFilterCategory,
+    onApply,
+    onResetSorting,
+    onResetFiltering,
+  } = useTaskPageHook(false);
 
   return (
     <>
@@ -22,18 +26,27 @@ const MainPage = () => {
           isCompletedTasks={false}
           sortDate={sortDate}
           sortName={sortName}
+          filterCategory={filterCategory}
         />
         <Sorting
-          isCompletedTasks={false}
           sortDate={sortDate}
           setSortDate={setSortDate}
           sortName={sortName}
           setSortName={setSortName}
+          onApplySorting={onApply}
+          onResetSorting={onResetSorting}
+        />
+        <Filtering
+          filterCategory={filterCategory}
+          setFilterCategory={setFilterCategory}
+          onApplyFiltering={onApply}
+          onResetFiltering={onResetFiltering}
         />
         <ListTasks
           isCompletedTasks={false}
           sortDate={sortDate}
           sortName={sortName}
+          filterCategory={filterCategory}
         />
       </div>
     </>
