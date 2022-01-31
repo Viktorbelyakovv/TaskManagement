@@ -1,13 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FormControlLabel, Switch } from "@mui/material";
+import { updateSortDateAC, updateSortNameAC } from "../../hooks/useQueryParams";
 import StyledButton from "../ui-kit/StyledButton";
 
 const Sorting = ({
-  sortDate,
-  setSortDate,
-  sortName,
-  setSortName,
+  queryParams: { sortDate, sortName },
+  updateQueryParams,
   onApplySorting,
   onResetSorting,
 }) => {
@@ -20,7 +19,7 @@ const Sorting = ({
             <Switch
               checked={sortDate}
               onChange={(e) => {
-                setSortDate(e.target.checked);
+                updateQueryParams(updateSortDateAC(e.target.checked));
               }}
             />
           }
@@ -31,7 +30,7 @@ const Sorting = ({
             <Switch
               checked={sortName}
               onChange={(e) => {
-                setSortName(e.target.checked);
+                updateQueryParams(updateSortNameAC(e.target.checked));
               }}
             />
           }
@@ -49,10 +48,11 @@ const Sorting = ({
 };
 
 Sorting.propTypes = {
-  sortDate: PropTypes.bool,
-  setSortDate: PropTypes.func,
-  sortName: PropTypes.bool,
-  setSortName: PropTypes.func,
+  queryParams: PropTypes.shape({
+    sortDate: PropTypes.bool,
+    sortName: PropTypes.bool,
+  }),
+  updateQueryParams: PropTypes.func,
   onApplySorting: PropTypes.func,
   onResetSorting: PropTypes.func,
 };

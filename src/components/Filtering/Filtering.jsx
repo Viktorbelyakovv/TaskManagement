@@ -10,13 +10,14 @@ import { MenuItem } from "@mui/material";
 import { getSvgIcon } from "../../helpers/getSvgIcon";
 import Error from "../Error";
 import Loader from "../Loader";
+import { updateCategoryIdAC } from "../../hooks/useQueryParams";
 import StyledButton from "../ui-kit/StyledButton";
 import StyledSelect from "../ui-kit/StyledSelect";
 import "./Filtering.css";
 
 const Filtering = ({
-  filterCategory,
-  setFilterCategory,
+  queryParams: { categoryId },
+  updateQueryParams,
   onApplyFiltering,
   onResetFiltering,
 }) => {
@@ -34,9 +35,11 @@ const Filtering = ({
       <div className="Sorting">
         <StyledSelect
           width="40%"
-          value={filterCategory}
+          value={categoryId}
           label="Category"
-          onChange={(e) => setFilterCategory(e.target.value)}
+          onChange={(e) =>
+            updateQueryParams(updateCategoryIdAC(e.target.value))
+          }
           displayEmpty
         >
           <MenuItem value={0} key={0}>
@@ -61,8 +64,10 @@ const Filtering = ({
 };
 
 Filtering.propTypes = {
-  filterCategory: PropTypes.number,
-  setFilterCategory: PropTypes.func,
+  queryParams: PropTypes.shape({
+    categoryId: PropTypes.number,
+  }),
+  updateQueryParams: PropTypes.func,
   onApplyFiltering: PropTypes.func,
   onResetFiltering: PropTypes.func,
 };

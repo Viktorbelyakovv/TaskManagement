@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import ClearIcon from "@mui/icons-material/Clear";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   deleteTaskThunk,
   changeTitleThunk,
   changeCompletedThunk,
   changeFavoriteThunk,
 } from "../../store/tasks/reducer";
+import { getPaginationLimit } from "../../store/tasks/selectors";
 import StyledCheckbox from "../ui-kit/StyledCheckbox";
 import StyledListItem from "../ui-kit/StyledListItem";
 import StyledIconButton from "../ui-kit/StyledIconButton";
 import { getSvgIcon } from "../../helpers/getSvgIcon";
-import "./Item.css";
+import "./ItemTask.css";
 
-const Item = ({
+const ItemTask = ({
   item: {
     id,
     title,
@@ -24,14 +25,17 @@ const Item = ({
     category: { colorId, iconId },
   },
   payload,
+  setStartTask,
 }) => {
   const dispatch = useDispatch();
   const [starSign, setStarSign] = useState(isFavorite ? "star" : "star_border");
   const [taskTitle, setTaskTitle] = useState(title);
   const isError = taskTitle.trim().length < 1 || taskTitle.trim().length > 50;
+  const paginationLimit = useSelector(getPaginationLimit);
 
   const onChangeTitle = (payload) => {
     dispatch(changeTitleThunk(payload));
+    setStartTask(paginationLimit);
   };
 
   const onChangeCompleted = () => {
@@ -56,8 +60,12 @@ const Item = ({
         payload,
       })
     );
-    setStarSign(isFavorite ? "star_border" : "star");
+    setStartTask(paginationLimit);
   };
+
+  useEffect(() => {
+    setStarSign(isFavorite ? "star" : "star_border");
+  }, [isFavorite]);
 
   return (
     <div className="Item">
@@ -97,14 +105,17 @@ const Item = ({
   );
 };
 
-Item.propTypes = {
+ItemTask.propTypes = {
   item: PropTypes.object,
   payload: PropTypes.shape({
     isCompletedTasks: PropTypes.bool,
     sortDate: PropTypes.bool,
     sortName: PropTypes.bool,
     filterCategory: PropTypes.number,
+    start: PropTypes.number,
+    end: PropTypes.number,
   }),
+  setStartTask: PropTypes.func,
 };
 
-export default Item;
+export default ItemTask;

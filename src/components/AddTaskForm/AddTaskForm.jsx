@@ -7,6 +7,7 @@ import {
   getCategoriesLoading,
   getDefaultCategory,
 } from "../../store/categories/selectors";
+import { getPaginationLimit } from "../../store/tasks/selectors";
 import { addTaskThunk } from "../../store/tasks/reducer";
 import { MenuItem } from "@mui/material";
 import { format } from "date-fns";
@@ -18,12 +19,7 @@ import StyledButton from "../ui-kit/StyledButton";
 import { getSvgIcon } from "../../helpers/getSvgIcon";
 import "./AddTaskForm.css";
 
-const AddTaskForm = ({
-  isCompletedTasks,
-  sortDate,
-  sortName,
-  filterCategory,
-}) => {
+const AddTaskForm = ({ isCompletedTasks, queryParams, setStartTask }) => {
   const [title, setTitle] = useState("");
   const [isEmpty, setEmpty] = useState(false);
   const [isTooLong, setTooLong] = useState(false);
@@ -31,9 +27,9 @@ const AddTaskForm = ({
   const categories = useSelector(getCategories);
   const defaultCategory = useSelector(getDefaultCategory);
   const [categoryId, setCategoryId] = useState(defaultCategory?.id || "");
+  const paginationLimit = useSelector(getPaginationLimit);
   const loading = useSelector(getCategoriesLoading);
   const error = useSelector(getCategoriesError);
-
   const isError = isTooLong || isEmpty;
 
   const helperText = isTooLong
@@ -53,12 +49,12 @@ const AddTaskForm = ({
           },
           sortFilterPayload: {
             isCompletedTasks,
-            sortDate,
-            sortName,
-            filterCategory,
+            queryParams,
+            start: 0,
           },
         })
       );
+      setStartTask(paginationLimit);
       setTitle("");
     } else {
       setEmpty(true);
@@ -88,12 +84,12 @@ const AddTaskForm = ({
   };
 
   useEffect(() => {
-    setCategoryId(defaultCategory?.id);
+    if (defaultCategory) setCategoryId(defaultCategory.id);
   }, [defaultCategory]);
 
   if (error) return <Error message={"Error downloading"} />;
 
-  if (loading === "pending" || !categoryId) return <Loader />;
+  if (loading === "pending" || !defaultCategory) return <Loader />;
 
   return (
     <>
@@ -138,9 +134,12 @@ const AddTaskForm = ({
 
 AddTaskForm.propTypes = {
   isCompletedTasks: PropTypes.bool,
-  sortDate: PropTypes.bool,
-  sortName: PropTypes.bool,
-  filterCategory: PropTypes.number,
+  queryParams: PropTypes.shape({
+    sortDate: PropTypes.bool,
+    sortName: PropTypes.bool,
+    categoryId: PropTypes.number,
+  }),
+  setStartTask: PropTypes.func,
 };
 
 export default AddTaskForm;

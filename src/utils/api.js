@@ -6,17 +6,18 @@ const api = axios.create({ baseURL });
 
 export const getTasks = ({
   isCompletedTasks,
-  sortDate,
-  sortName,
-  filterCategory,
+  queryParams: { sortDate, sortName, categoryId },
+  start,
 }) =>
   api.get(`/tasks`, {
     params: {
       isCompleted: isCompletedTasks,
-      categoryId_like: `${filterCategory ? filterCategory : ""}`,
+      categoryId_like: categoryId ? `${categoryId}` : "",
       _expand: "category",
       _sort: `isFavorite${sortDate ? ",date" : ""}${sortName ? ",title" : ""}`,
       _order: `desc${sortDate ? ",desc" : ""}${sortName ? ",asc" : ""}`,
+      _start: start,
+      _end: start + Number(process.env.REACT_APP_PAGINATION_LIMIT),
     },
   });
 

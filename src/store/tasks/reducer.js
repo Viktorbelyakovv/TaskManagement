@@ -92,18 +92,40 @@ export const tasksReducer = createSlice({
     tasks: [],
     loading: "idle",
     error: null,
+    hasMore: true,
+    paginationLimit: Number(process.env.REACT_APP_PAGINATION_LIMIT),
   },
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(getTasksThunk.pending, (state) => {
-        if (state.loading === "idle") {
-          state.loading = "pending";
+      .addCase(
+        getTasksThunk.pending,
+        (
+          state,
+          {
+            meta: {
+              arg: { start },
+            },
+          }
+        ) => {
+          if (state.loading === "idle") {
+            state.loading = "pending";
+          }
+
+          if (start === 0) {
+            state.hasMore = true;
+            state.tasks = [];
+          }
         }
-      })
+      )
       .addCase(getTasksThunk.fulfilled, (state, { payload }) => {
         state.error = null;
-        state.tasks = payload;
+        state.tasks = state.tasks.concat(payload);
+
+        if (payload.length < state.paginationLimit) {
+          state.hasMore = false;
+        }
+
         if (state.loading === "pending") {
           state.loading = "idle";
         }
@@ -118,6 +140,7 @@ export const tasksReducer = createSlice({
 
     builder
       .addCase(addTaskThunk.fulfilled, (state, { payload }) => {
+        state.hasMore = true;
         state.error = null;
         state.tasks = payload;
       })
@@ -144,6 +167,7 @@ export const tasksReducer = createSlice({
 
     builder
       .addCase(changeTitleThunk.fulfilled, (state, { payload }) => {
+        state.hasMore = true;
         state.error = null;
         state.tasks = payload;
       })
@@ -170,6 +194,7 @@ export const tasksReducer = createSlice({
 
     builder
       .addCase(changeFavoriteThunk.fulfilled, (state, { payload }) => {
+        state.hasMore = true;
         state.error = null;
         state.tasks = payload;
       })

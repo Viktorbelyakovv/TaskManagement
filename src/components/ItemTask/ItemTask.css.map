@@ -2,8 +2,8 @@
     "version": 3,
     "mappings": "AAAA,AAAA,KAAK,CAAC;EACJ,OAAO,EAAE,IAAI;EACb,eAAe,EAAE,MAAM;EACvB,WAAW,EAAE,MAAM;CACpB",
     "sources": [
-        "Item.scss"
+        "ItemTask.scss"
     ],
     "names": [],
-    "file": "Item.css"
+    "file": "ItemTask.css"
 }
