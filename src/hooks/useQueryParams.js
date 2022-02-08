@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { createSearchParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const useQueryParams = () => {
   const [searchParams, setSearchParams] = useSearchParams({});
@@ -41,60 +41,58 @@ const useQueryParams = () => {
   );
 
   const initialState = {
-    sortDate: false,
-    sortName: false,
-    categoryId: 0,
-  };
-
-  const init = () => ({
     sortDate: date,
     sortName: name,
     categoryId: category,
-  });
+  };
 
-  const [queryParams, dispatch] = useReducer(reducer, initialState, init);
+  const [queryParams, dispatch] = useReducer(reducer, initialState);
   const { sortDate, sortName, categoryId } = queryParams;
 
-  const updateQueryParams = (payload) => {
-    dispatch(payload);
+  const updateQueryParams = (action) => {
+    dispatch(action);
   };
 
-  const setParams = () => {
-    let params = createSearchParams();
+  const updateURLParams = (resetStr) => {
+    let params = undefined;
 
-    if ((sortDate || sortName) && categoryId) {
-      params = JSON.stringify({
-        sort: { date: sortDate, name: sortName },
-        filter: { categoryId },
-      });
-    } else if ((sortDate || sortName) && !categoryId) {
-      params = JSON.stringify({
-        sort: { date: sortDate, name: sortName },
-      });
-    } else if (!(sortDate || sortName) && categoryId) {
-      params = JSON.stringify({
-        filter: { categoryId },
-      });
+    if (!resetStr) {
+      if (sortDate || sortName) {
+        params = {
+          sort: { date: sortDate, name: sortName },
+        };
+      }
+
+      if (categoryId) {
+        params = {
+          ...params,
+          filter: { categoryId },
+        };
+      }
     }
-    setSearchParams(params);
-  };
 
-  const resetParams = (date, name, category) => {
-    let params = createSearchParams();
-
-    if ((date || name) && !category) {
-      params = JSON.stringify({
-        sort: { date: sortDate, name: sortName },
-      });
-    } else if (!(date || name) && category) {
-      params = JSON.stringify({
-        filter: { categoryId },
-      });
+    if (resetStr === "resetSorting") {
+      updateQueryParams(updateSortDateAC(false));
+      updateQueryParams(updateSortNameAC(false));
+      if (categoryId) {
+        params = {
+          filter: { categoryId },
+        };
+      }
     }
-    setSearchParams(params);
+    if (resetStr === "resetFiltering") {
+      updateQueryParams(updateCategoryIdAC(0));
+      if (sortDate || sortName) {
+        params = {
+          sort: { date: sortDate, name: sortName },
+        };
+      }
+    }
+
+    setSearchParams(JSON.stringify(params));
   };
 
-  return { queryParams, updateQueryParams, setParams, resetParams };
+  return { queryParams, updateQueryParams, updateURLParams };
 };
 
 export const updateSortNameAC = (payload) => ({

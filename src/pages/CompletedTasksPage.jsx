@@ -6,11 +6,7 @@ import { getPaginationLimit } from "../store/tasks/selectors";
 import Sorting from "../components/Sorting";
 import ListTasks from "../components/ListTasks";
 import Filtering from "../components/Filtering/Filtering";
-import useQueryParams, {
-  updateCategoryIdAC,
-  updateSortDateAC,
-  updateSortNameAC,
-} from "../hooks/useQueryParams";
+import useQueryParams from "../hooks/useQueryParams";
 
 const CompletedTasksPage = () => {
   const isCompletedTasks = true;
@@ -22,12 +18,11 @@ const CompletedTasksPage = () => {
     queryParams,
     queryParams: { sortDate, sortName, categoryId },
     updateQueryParams,
-    setParams,
-    resetParams,
+    updateURLParams,
   } = useQueryParams();
 
   const onApply = () => {
-    setParams();
+    updateURLParams();
     dispatch(
       getTasksThunk({
         isCompletedTasks,
@@ -39,9 +34,7 @@ const CompletedTasksPage = () => {
   };
 
   const onResetSorting = () => {
-    resetParams(false, false, !!categoryId);
-    updateQueryParams(updateSortDateAC(false));
-    updateQueryParams(updateSortNameAC(false));
+    updateURLParams("resetSorting");
     dispatch(
       getTasksThunk({
         isCompletedTasks,
@@ -53,8 +46,7 @@ const CompletedTasksPage = () => {
   };
 
   const onResetFiltering = () => {
-    resetParams(sortDate, sortName, !!0);
-    updateQueryParams(updateCategoryIdAC(0));
+    updateURLParams("resetFiltering");
     dispatch(
       getTasksThunk({
         isCompletedTasks,
