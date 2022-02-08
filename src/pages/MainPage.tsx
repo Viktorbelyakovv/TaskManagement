@@ -23,38 +23,38 @@ const MainPage = () => {
   } = useQueryParams();
 
   const onApply = () => {
-    updateURLParams();
-    dispatch(
+    updateURLParams("");
+    /* dispatch(
       getTasksThunk({
         isCompletedTasks,
         queryParams,
         start: 0,
       })
-    );
+    ); */
     setStartTask(paginationLimit);
   };
 
   const onResetSorting = () => {
     updateURLParams("resetSorting");
-    dispatch(
+    /* dispatch(
       getTasksThunk({
         isCompletedTasks,
         queryParams: { sortDate: false, sortName: false, categoryId },
         start: 0,
       })
-    );
+    ); */
     setStartTask(paginationLimit);
   };
 
   const onResetFiltering = () => {
     updateURLParams("resetFiltering");
-    dispatch(
+    /* dispatch(
       getTasksThunk({
         isCompletedTasks,
         queryParams: { sortDate, sortName, categoryId: 0 },
         start: 0,
       })
-    );
+    ); */
     setStartTask(paginationLimit);
   };
 

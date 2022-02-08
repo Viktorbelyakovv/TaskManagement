@@ -1,10 +1,11 @@
 import { useReducer } from "react";
 import { useSearchParams } from "react-router-dom";
+import { QueryParamsActionType } from "../types/types";
 
 const useQueryParams = () => {
   const [searchParams, setSearchParams] = useSearchParams({});
 
-  const parseSortString = (sortString) => {
+  const parseSortString = (sortString: string) => {
     try {
       const {
         sort: { date, name },
@@ -24,7 +25,7 @@ const useQueryParams = () => {
     decodeURIComponent(searchParams.toString().slice(0, -1))
   );
 
-  const parseFilterString = (filterString) => {
+  const parseFilterString = (filterString: string) => {
     try {
       const {
         filter: { categoryId },
@@ -49,11 +50,11 @@ const useQueryParams = () => {
   const [queryParams, dispatch] = useReducer(reducer, initialState);
   const { sortDate, sortName, categoryId } = queryParams;
 
-  const updateQueryParams = (action) => {
+  const updateQueryParams = (action: QueryParamsActionType) => {
     dispatch(action);
   };
 
-  const updateURLParams = (resetStr) => {
+  const updateURLParams = (resetStr: string) => {
     let params = undefined;
 
     if (!resetStr) {
@@ -95,22 +96,22 @@ const useQueryParams = () => {
   return { queryParams, updateQueryParams, updateURLParams };
 };
 
-export const updateSortNameAC = (payload) => ({
+export const updateSortNameAC = (payload: boolean) => ({
   type: "CHANGE_SORT_NAME",
   payload,
 });
 
-export const updateSortDateAC = (payload) => ({
+export const updateSortDateAC = (payload: boolean) => ({
   type: "CHANGE_SORT_DATE",
   payload,
 });
 
-export const updateCategoryIdAC = (payload) => ({
+export const updateCategoryIdAC = (payload: number) => ({
   type: "CHANGE_CATEGORY_ID",
   payload,
 });
 
-function reducer(state, action) {
+function reducer(state: any, action: QueryParamsActionType) {
   switch (action.type) {
     case "CHANGE_SORT_NAME": {
       return { ...state, sortName: action.payload };

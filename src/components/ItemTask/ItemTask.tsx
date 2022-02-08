@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import React, { FC, useEffect, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,8 +13,26 @@ import StyledListItem from "../ui-kit/StyledListItem";
 import StyledIconButton from "../ui-kit/StyledIconButton";
 import { getSvgIcon } from "../../helpers/getSvgIcon";
 import "./ItemTask.css";
+import { QueryParamsType } from "../../types/types";
 
-const ItemTask = ({
+interface ItemTaskProps {
+  item: {
+    id: number;
+    title: string;
+    isCompleted: boolean;
+    isFavorite: boolean;
+    date: string;
+    category: { colorId: number; iconId: number };
+  };
+  payload: {
+    isCompletedTasks: boolean;
+    queryParams: QueryParamsType;
+    start: number;
+  };
+  setStartTask: any;
+}
+
+const ItemTask: FC<ItemTaskProps> = ({
   item: {
     id,
     title,
@@ -33,13 +50,13 @@ const ItemTask = ({
   const isError = taskTitle.trim().length < 1 || taskTitle.trim().length > 50;
   const paginationLimit = useSelector(getPaginationLimit);
 
-  const onChangeTitle = (payload) => {
-    dispatch(changeTitleThunk(payload));
-    setStartTask(paginationLimit);
+  const onChangeTitle = (/* payload */) => {
+    /* dispatch(changeTitleThunk(payload));
+    setStartTask(paginationLimit); */
   };
 
   const onChangeCompleted = () => {
-    dispatch(changeCompletedThunk({ id, isCompleted: !isCompleted }));
+    /* dispatch(changeCompletedThunk({ id, isCompleted: !isCompleted }));
 
     if (isFavorite) {
       dispatch(
@@ -49,17 +66,17 @@ const ItemTask = ({
           payload,
         })
       );
-    }
+    } */
   };
 
   const onChangeStar = () => {
-    dispatch(
+    /* dispatch(
       changeFavoriteThunk({
         id,
         isFavorite: !isFavorite,
         payload,
       })
-    );
+    ); */
     setStartTask(paginationLimit);
   };
 
@@ -78,7 +95,8 @@ const ItemTask = ({
         value={taskTitle}
         onChange={(e) => setTaskTitle(e.target.value)}
         onBlur={(e) =>
-          !isError && onChangeTitle({ id, title: e.target.value, payload })
+          !isError &&
+          onChangeTitle(/* { id, title: e.target.value, payload } */)
         }
         error={isError}
         helperText={
@@ -98,24 +116,11 @@ const ItemTask = ({
           {starSign}
         </span>
       )}
-      <StyledIconButton onClick={() => dispatch(deleteTaskThunk(id))}>
+      <StyledIconButton onClick={() => dispatch(deleteTaskThunk(/* id */))}>
         <ClearIcon />
       </StyledIconButton>
     </div>
   );
-};
-
-ItemTask.propTypes = {
-  item: PropTypes.object,
-  payload: PropTypes.shape({
-    isCompletedTasks: PropTypes.bool,
-    sortDate: PropTypes.bool,
-    sortName: PropTypes.bool,
-    filterCategory: PropTypes.number,
-    start: PropTypes.number,
-    end: PropTypes.number,
-  }),
-  setStartTask: PropTypes.func,
 };
 
 export default ItemTask;

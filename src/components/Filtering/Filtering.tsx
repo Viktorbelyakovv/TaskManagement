@@ -43,9 +43,9 @@ const Filtering: FC<FilteringProps> = ({
           width="40%"
           value={categoryId}
           label="Category"
-          onChange={(e) =>
+          /* onChange={(e) =>
             updateQueryParams(updateCategoryIdAC(e.target.value))
-          }
+          } */
           displayEmpty
         >
           <MenuItem value={0} key={0}>

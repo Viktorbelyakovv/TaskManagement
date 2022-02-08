@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
+import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTasksThunk } from "../../store/tasks/reducer";
 import {
@@ -15,8 +14,16 @@ import ItemTask from "../ItemTask";
 import Loader from "../Loader";
 import Error from "../Error";
 import "./ListTasks.css";
+import { ListItemType } from "../../types/types";
 
-const ListTasks = ({
+interface ListTasksProps {
+  isCompletedTasks: boolean;
+  queryParams: { sortDate: boolean; sortName: boolean; categoryId: number };
+  startTask: number;
+  setStartTask: any;
+}
+
+const ListTasks: FC<ListTasksProps> = ({
   isCompletedTasks,
   queryParams,
   startTask,
@@ -30,24 +37,24 @@ const ListTasks = ({
   const paginationLimit = useSelector(getPaginationLimit);
 
   const getMoreTasks = () => {
-    dispatch(
+    /* dispatch(
       getTasksThunk({
         isCompletedTasks,
         queryParams,
         start: startTask,
       })
-    );
-    setStartTask((prevStart) => prevStart + paginationLimit);
+    ); */
+    setStartTask((prevStart: number) => prevStart + paginationLimit);
   };
 
   useEffect(() => {
-    dispatch(
+    /* dispatch(
       getTasksThunk({
         isCompletedTasks,
         queryParams,
         start: 0,
       })
-    );
+    ); */
   }, []);
 
   if (error) return <Error message={"Error downloading tasks"} />;
@@ -66,7 +73,7 @@ const ListTasks = ({
           loader={<Loader />}
         >
           {listTasks.length &&
-            listTasks.map((item) => (
+            listTasks.map((item: ListItemType) => (
               <ItemTask
                 item={item}
                 key={item.id}
@@ -82,17 +89,6 @@ const ListTasks = ({
       }
     </div>
   );
-};
-
-ListTasks.propTypes = {
-  isCompletedTasks: PropTypes.bool,
-  queryParams: PropTypes.shape({
-    sortDate: PropTypes.bool,
-    sortName: PropTypes.bool,
-    categoryId: PropTypes.number,
-  }),
-  startTask: PropTypes.number,
-  setStartTask: PropTypes.func,
 };
 
 export default ListTasks;
