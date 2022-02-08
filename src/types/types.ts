@@ -13,7 +13,7 @@ export type CategoryItemType = {
   title: string;
   colorId: number;
   iconId: number;
-  isDefault: boolean;
+  isDefault?: boolean;
 };
 
 export type QueryParamsType = {

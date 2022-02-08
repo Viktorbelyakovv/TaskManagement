@@ -6,13 +6,14 @@ import {
   getCategoriesLoading,
 } from "../../store/categories/selectors";
 import { MenuItem } from "@mui/material";
-/* import { getSvgIcon } from "../../helpers/getSvgIcon"; */
+import { getSvgIcon } from "../../helpers/getSvgIcon";
 import Error from "../Error";
 import Loader from "../Loader";
 import { updateCategoryIdAC } from "../../hooks/useQueryParams";
 import StyledButton from "../ui-kit/StyledButton";
 import StyledSelect from "../ui-kit/StyledSelect";
 import "./Filtering.css";
+import { CategoryItemType } from "../../types/types";
 
 interface FilteringProps {
   queryParams: { categoryId: number };
@@ -43,20 +44,22 @@ const Filtering: FC<FilteringProps> = ({
           width="40%"
           value={categoryId}
           label="Category"
-          /* onChange={(e) =>
-            updateQueryParams(updateCategoryIdAC(e.target.value))
-          } */
+          onChange={(e) =>
+            updateQueryParams(updateCategoryIdAC(e.target.value as number))
+          }
           displayEmpty
         >
           <MenuItem value={0} key={0}>
             {"No filter"}
           </MenuItem>
-          {/* {categories.map(({ id, title, colorId, iconId }) => (
-            <MenuItem value={id} key={id}>
-              {getSvgIcon({ iconId, colorId, size: "30px" })}
-              {title}
-            </MenuItem>
-          ))} */}
+          {categories.map(
+            ({ id, title, colorId, iconId }: CategoryItemType) => (
+              <MenuItem value={id} key={id}>
+                {getSvgIcon({ iconId, colorId, size: "30px" })}
+                {title}
+              </MenuItem>
+            )
+          )}
         </StyledSelect>
         <StyledButton width="15%" variant="outlined" onClick={onApplyFiltering}>
           Apply

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import MenuItem from "@mui/material/MenuItem";
 import { changeDefaultCategoryThunk } from "../../../store/categories/reducer";
@@ -12,7 +12,7 @@ import Error from "../../Error";
 import Loader from "../../Loader";
 import StyledSelect from "../../ui-kit/StyledSelect";
 
-const DefaultCategory = () => {
+const DefaultCategory: FC = () => {
   const dispatch = useDispatch();
   const categories = useSelector(getCategories);
   const defaultCategory = useSelector(getDefaultCategory);

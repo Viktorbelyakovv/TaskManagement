@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import MenuItem from "@mui/material/MenuItem";
 import { getCategories } from "../../../store/categories/selectors";
@@ -12,7 +12,7 @@ import StyledSelect from "../../ui-kit/StyledSelect";
 import "./AddCategoryForm.css";
 import { CategoryItemType } from "../../../types/types";
 
-const AddCategoryForm = () => {
+const AddCategoryForm: FC = () => {
   const dispatch = useDispatch();
   const categories = useSelector(getCategories);
 
@@ -40,18 +40,18 @@ const AddCategoryForm = () => {
     : "";
 
   const onAddCategory = () => {
-    /* if (title.trim()) {
-      dispatch(
+    if (title.trim()) {
+      /* dispatch(
         addCategoryThunk({
           title,
           colorId,
           iconId,
         })
-      );
+      ); */
       setTitle("");
     } else {
       setEmpty(true);
-    } */
+    }
   };
 
   const handleTitleChange = (value: string) => {
@@ -78,7 +78,7 @@ const AddCategoryForm = () => {
           width="12%"
           value={colorId}
           variant="outlined"
-          /*  onChange={(e) => setСolorId(e.target.value)} */
+          onChange={(e) => setСolorId(e.target.value as number)}
         >
           {colors.map(({ id, colorName }) => (
             <MenuItem value={id} key={id}>
@@ -90,7 +90,7 @@ const AddCategoryForm = () => {
         <StyledSelect
           width="15%"
           value={iconId}
-          /* onChange={(e) => setIconId(e.target.value)} */
+          onChange={(e) => setIconId(e.target.value as number)}
         >
           {icons.map(({ id }) => (
             <MenuItem value={id} key={id}>

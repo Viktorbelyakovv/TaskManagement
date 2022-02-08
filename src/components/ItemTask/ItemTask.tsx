@@ -32,6 +32,16 @@ interface ItemTaskProps {
   setStartTask: any;
 }
 
+export type ChangeTitleType = {
+  id: number;
+  title: string;
+  payload: {
+    isCompletedTasks: boolean;
+    queryParams: QueryParamsType;
+    start: number;
+  };
+};
+
 const ItemTask: FC<ItemTaskProps> = ({
   item: {
     id,
@@ -50,7 +60,7 @@ const ItemTask: FC<ItemTaskProps> = ({
   const isError = taskTitle.trim().length < 1 || taskTitle.trim().length > 50;
   const paginationLimit = useSelector(getPaginationLimit);
 
-  const onChangeTitle = (/* payload */) => {
+  const onChangeTitle = (payload: ChangeTitleType) => {
     /* dispatch(changeTitleThunk(payload));
     setStartTask(paginationLimit); */
   };
@@ -95,8 +105,7 @@ const ItemTask: FC<ItemTaskProps> = ({
         value={taskTitle}
         onChange={(e) => setTaskTitle(e.target.value)}
         onBlur={(e) =>
-          !isError &&
-          onChangeTitle(/* { id, title: e.target.value, payload } */)
+          !isError && onChangeTitle({ id, title: e.target.value, payload })
         }
         error={isError}
         helperText={

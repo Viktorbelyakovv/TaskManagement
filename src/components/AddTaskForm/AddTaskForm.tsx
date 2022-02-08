@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import React, { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCategories,
@@ -18,8 +17,19 @@ import StyledSelect from "../ui-kit/StyledSelect";
 import StyledButton from "../ui-kit/StyledButton";
 import { getSvgIcon } from "../../helpers/getSvgIcon";
 import "./AddTaskForm.css";
+import { CategoryItemType, QueryParamsType } from "../../types/types";
 
-const AddTaskForm = ({ isCompletedTasks, queryParams, setStartTask }) => {
+interface AddTaskFormProps {
+  isCompletedTasks: boolean;
+  queryParams: QueryParamsType;
+  setStartTask: any;
+}
+
+const AddTaskForm: FC<AddTaskFormProps> = ({
+  isCompletedTasks,
+  queryParams,
+  setStartTask,
+}) => {
   const [title, setTitle] = useState("");
   const [isEmpty, setEmpty] = useState(false);
   const [isTooLong, setTooLong] = useState(false);
@@ -39,7 +49,7 @@ const AddTaskForm = ({ isCompletedTasks, queryParams, setStartTask }) => {
     : "";
 
   const onAddTask = () => {
-    if (title.trim()) {
+    /* if (title.trim()) {
       dispatch(
         addTaskThunk({
           addPayload: {
@@ -58,17 +68,17 @@ const AddTaskForm = ({ isCompletedTasks, queryParams, setStartTask }) => {
       setTitle("");
     } else {
       setEmpty(true);
-    }
+    } */
   };
 
-  const handleTitleChange = (value) => {
+  const handleTitleChange = (value: string) => {
     setTitle(value);
     setEmpty(value.trim().length === 0);
     setTooLong(value.trim().length > 50);
   };
 
-  const renderIcon = (selectedId) => {
-    const { iconId, colorId } = selectedId
+  const renderIcon = (selectedId: number) => {
+    /* const { iconId, colorId } = selectedId
       ? categories.find(({ id }) => id === selectedId)
       : defaultCategory;
 
@@ -80,7 +90,7 @@ const AddTaskForm = ({ isCompletedTasks, queryParams, setStartTask }) => {
           size: "30px",
         })}
       </>
-    );
+    ); */
   };
 
   useEffect(() => {
@@ -95,7 +105,7 @@ const AddTaskForm = ({ isCompletedTasks, queryParams, setStartTask }) => {
     <>
       <h2>Add new task</h2>
       <div className="AddTaskForm">
-        <StyledTextField
+        {/* <StyledTextField
           width="60%"
           value={title}
           onChange={(e) => handleTitleChange(e.target.value)}
@@ -103,21 +113,23 @@ const AddTaskForm = ({ isCompletedTasks, queryParams, setStartTask }) => {
           error={isError}
           helperText={helperText}
           required
-        />
+        /> */}
         <StyledSelect
           width="10%"
           value={categoryId}
           label="Category"
           onChange={(e) => setCategoryId(e.target.value)}
           displayEmpty
-          renderValue={(selectedId) => renderIcon(selectedId)}
+          /* renderValue={(selectedId) => renderIcon(selectedId)} */
         >
-          {categories.map(({ id, title, colorId, iconId }) => (
-            <MenuItem value={id} key={id}>
-              {getSvgIcon({ iconId, colorId, size: "30px" })}
-              {title}
-            </MenuItem>
-          ))}
+          {categories.map(
+            ({ id, title, colorId, iconId }: CategoryItemType) => (
+              <MenuItem value={id} key={id}>
+                {getSvgIcon({ iconId, colorId, size: "30px" })}
+                {title}
+              </MenuItem>
+            )
+          )}
         </StyledSelect>
         <StyledButton
           width="15%"
@@ -130,16 +142,6 @@ const AddTaskForm = ({ isCompletedTasks, queryParams, setStartTask }) => {
       </div>
     </>
   );
-};
-
-AddTaskForm.propTypes = {
-  isCompletedTasks: PropTypes.bool,
-  queryParams: PropTypes.shape({
-    sortDate: PropTypes.bool,
-    sortName: PropTypes.bool,
-    categoryId: PropTypes.number,
-  }),
-  setStartTask: PropTypes.func,
 };
 
 export default AddTaskForm;

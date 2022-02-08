@@ -1,8 +1,8 @@
-import React from "react";
+import React, { FC } from "react";
 import { Outlet } from "react-router-dom";
 import "./Container.css";
 
-const Container = () => (
+const Container: FC = () => (
   <div className="Container">
     <Outlet />
   </div>

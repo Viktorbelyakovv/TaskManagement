@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navigation from "../Navigation";
 import Container from "../Container";
@@ -8,7 +8,7 @@ import SettingsPage from "../../pages/SettingsPage";
 import NotFound from "../../pages/NotFound";
 import "./App.css";
 
-const App = () => (
+const App: FC = () => (
   <div className="App">
     <BrowserRouter>
       <Navigation />

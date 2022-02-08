@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import {
   getCategories,
@@ -10,7 +10,7 @@ import Loader from "../../Loader";
 import Error from "../../Error";
 import { CategoryItemType } from "../../../types/types";
 
-const ListCategories = () => {
+const ListCategories: FC = () => {
   const categories = useSelector(getCategories);
   const loading = useSelector(getCategoriesLoading);
   const error = useSelector(getCategoriesError);
