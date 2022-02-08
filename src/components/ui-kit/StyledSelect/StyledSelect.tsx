@@ -1,7 +1,11 @@
 import Select from "@mui/material/Select";
 import { styled } from "@mui/material/styles";
 
-const StyledSelect = styled(Select)(({ width }) => ({
+interface StyledSelectProps {
+  width: string;
+}
+
+const StyledSelect = styled(Select)<StyledSelectProps>(({ width }) => ({
   height: "56px",
   width: width,
   margin: "10px",
