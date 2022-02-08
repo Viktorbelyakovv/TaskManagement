@@ -8,6 +8,14 @@ export type ListItemType = {
   category: { iconId: number; colorId: number };
 };
 
+export type CategoryItemType = {
+  id: number;
+  title: string;
+  colorId: number;
+  iconId: number;
+  isDefault: boolean;
+};
+
 export type QueryParamsType = {
   sortDate: boolean;
   sortName: boolean;

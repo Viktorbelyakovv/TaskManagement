@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { FC, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   changeCategoryTitleThunk,
@@ -10,20 +9,32 @@ import StyledListItem from "../../ui-kit/StyledListItem";
 import StyledIconButton from "../../ui-kit/StyledIconButton";
 import { getSvgIcon } from "../../../helpers/getSvgIcon";
 import "./ItemCategory.css";
+import { CategoryItemType } from "../../../types/types";
 
-const ItemCategory = ({ item: { id, title, colorId, iconId, isDefault } }) => {
+interface ItemCategoryProps {
+  item: CategoryItemType;
+}
+
+type TitlePayloadType = {
+  id: number;
+  title: string;
+};
+
+const ItemCategory: FC<ItemCategoryProps> = ({
+  item: { id, title, colorId, iconId, isDefault },
+}) => {
   const dispatch = useDispatch();
 
   const [categoryTitle, setCategoryTitle] = useState(title);
   const isError =
     categoryTitle.trim().length < 1 || categoryTitle.trim().length > 15;
 
-  const onChangeTitle = (payload) => {
-    dispatch(changeCategoryTitleThunk(payload));
+  const onChangeTitle = (payload: TitlePayloadType) => {
+    /* dispatch(changeCategoryTitleThunk(payload)); */
   };
 
   const onDeleteCategory = () => {
-    !isDefault && dispatch(deleteCategoryThunk(id));
+    /* !isDefault && dispatch(deleteCategoryThunk(id)); */
   };
 
   return (
@@ -46,11 +57,6 @@ const ItemCategory = ({ item: { id, title, colorId, iconId, isDefault } }) => {
       </StyledIconButton>
     </div>
   );
-};
-
-ItemCategory.propTypes = {
-  item: PropTypes.object,
-  getSvgIcon: PropTypes.func,
 };
 
 export default ItemCategory;

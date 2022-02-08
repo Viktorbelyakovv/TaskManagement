@@ -8,6 +8,7 @@ import {
 import ItemCategory from "../ItemCategory";
 import Loader from "../../Loader";
 import Error from "../../Error";
+import { CategoryItemType } from "../../../types/types";
 
 const ListCategories = () => {
   const categories = useSelector(getCategories);
@@ -22,7 +23,7 @@ const ListCategories = () => {
 
   return (
     <div className="ListTasks">
-      {categories.map((item) => (
+      {categories.map((item: CategoryItemType) => (
         <ItemCategory item={item} key={item.id} />
       ))}
     </div>

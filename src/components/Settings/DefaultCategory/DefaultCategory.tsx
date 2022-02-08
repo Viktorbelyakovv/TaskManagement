@@ -21,13 +21,13 @@ const DefaultCategory = () => {
 
   const [categoryId, setCategoryId] = useState(defaultCategory?.id || "");
 
-  const onChangeCategory = (e) => {
-    dispatch(
+  const onChangeCategory = (value: string) => {
+    /* dispatch(
       changeDefaultCategoryThunk({
         oldId: defaultCategory.id,
-        newId: e.target.value,
+        newId: value,
       })
-    );
+    ); */
   };
 
   useEffect(() => {
@@ -46,9 +46,9 @@ const DefaultCategory = () => {
         value={categoryId}
         label="Category"
         onChange={(e) => setCategoryId(e.target.value)}
-        onBlur={(e) => onChangeCategory(e)}
+        onBlur={(e) => onChangeCategory(e.target.value)}
       >
-        {categories.map(({ id, title }) => (
+        {categories.map(({ id, title }: { id: number; title: string }) => (
           <MenuItem value={id} key={id}>
             {title}
           </MenuItem>
