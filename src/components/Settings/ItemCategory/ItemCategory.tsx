@@ -4,12 +4,12 @@ import {
   changeCategoryTitleThunk,
   deleteCategoryThunk,
 } from "../../../store/categories/reducer";
+import { CategoryItemType } from "../../../types/types";
 import ClearIcon from "@mui/icons-material/Clear";
 import StyledListItem from "../../ui-kit/StyledListItem";
 import StyledIconButton from "../../ui-kit/StyledIconButton";
 import { getSvgIcon } from "../../../helpers/getSvgIcon";
 import "./ItemCategory.css";
-import { CategoryItemType } from "../../../types/types";
 
 interface ItemCategoryProps {
   item: CategoryItemType;

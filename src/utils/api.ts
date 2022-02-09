@@ -1,4 +1,5 @@
 import axios from "axios";
+import { QueryParamsType } from "../types/types";
 
 const baseURL = process.env.REACT_APP_API_LINK;
 
@@ -8,6 +9,10 @@ export const getTasks = ({
   isCompletedTasks,
   queryParams: { sortDate, sortName, categoryId },
   start,
+}: {
+  isCompletedTasks: boolean;
+  queryParams: QueryParamsType;
+  start: number;
 }) =>
   api.get(`/tasks`, {
     params: {
@@ -21,7 +26,15 @@ export const getTasks = ({
     },
   });
 
-export const addTask = ({ title, categoryId, date }) =>
+export const addTask = ({
+  title,
+  categoryId,
+  date,
+}: {
+  title: string;
+  categoryId: number;
+  date: string;
+}) =>
   api
     .post(`/tasks`, {
       title,
@@ -38,7 +51,14 @@ export const addTask = ({ title, categoryId, date }) =>
       })
     );
 
-export const deleteTask = (id) => api.delete(`/tasks/${id}`);
+export const deleteTask = (id: number) => api.delete(`/tasks/${id}`);
 
-export const changeTaskField = ({ id, fieldName, field }) =>
-  api.patch(`/tasks/${id}`, { [fieldName]: field });
+export const changeTaskField = ({
+  id,
+  fieldName,
+  field,
+}: {
+  id: number;
+  fieldName: string;
+  field: string;
+}) => api.patch(`/tasks/${id}`, { [fieldName]: field });

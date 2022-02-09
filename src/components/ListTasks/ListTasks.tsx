@@ -10,15 +10,15 @@ import {
   getTasksLoading,
 } from "../../store/tasks/selectors";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { ListItemType, QueryParamsType } from "../../types/types";
 import ItemTask from "../ItemTask";
 import Loader from "../Loader";
 import Error from "../Error";
 import "./ListTasks.css";
-import { ListItemType } from "../../types/types";
 
 interface ListTasksProps {
   isCompletedTasks: boolean;
-  queryParams: { sortDate: boolean; sortName: boolean; categoryId: number };
+  queryParams: QueryParamsType;
   startTask: number;
   setStartTask: any;
 }

@@ -6,7 +6,13 @@ const api = axios.create({ baseURL });
 
 export const getCategories = () => api.get(`/categories`);
 
-export const changeDefaultCategory = ({ oldId, newId }) => {
+export const changeDefaultCategory = ({
+  oldId,
+  newId,
+}: {
+  oldId: number;
+  newId: number;
+}) => {
   const removeDefault = api.patch(`/categories/${oldId}`, {
     isDefault: false,
   });
@@ -14,7 +20,15 @@ export const changeDefaultCategory = ({ oldId, newId }) => {
   return Promise.all([removeDefault, addDefault]).then((values) => values[1]);
 };
 
-export const addCategory = ({ title, colorId, iconId }) =>
+export const addCategory = ({
+  title,
+  colorId,
+  iconId,
+}: {
+  title: string;
+  colorId: number;
+  iconId: number;
+}) =>
   api.post(`/categories`, {
     title,
     colorId,
@@ -22,7 +36,12 @@ export const addCategory = ({ title, colorId, iconId }) =>
     isDefault: false,
   });
 
-export const deleteCategory = (id) => api.delete(`/categories/${id}`);
+export const deleteCategory = (id: number) => api.delete(`/categories/${id}`);
 
-export const changeCategoryTitle = ({ id, title }) =>
-  api.patch(`/categories/${id}`, { title });
+export const changeCategoryTitle = ({
+  id,
+  title,
+}: {
+  id: number;
+  title: string;
+}) => api.patch(`/categories/${id}`, { title });

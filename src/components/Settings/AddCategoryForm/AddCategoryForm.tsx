@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import MenuItem from "@mui/material/MenuItem";
 import { getCategories } from "../../../store/categories/selectors";
 import { addCategoryThunk } from "../../../store/categories/reducer";
+import { CategoryItemType } from "../../../types/types";
 import { getSvgIcon } from "../../../helpers/getSvgIcon";
 import { colors } from "../../../helpers/colors";
 import { icons } from "../../../helpers/icons";
@@ -10,7 +11,6 @@ import StyledTextField from "../../ui-kit/StyledTextField";
 import StyledButton from "../../ui-kit/StyledButton";
 import StyledSelect from "../../ui-kit/StyledSelect";
 import "./AddCategoryForm.css";
-import { CategoryItemType } from "../../../types/types";
 
 const AddCategoryForm: FC = () => {
   const dispatch = useDispatch();

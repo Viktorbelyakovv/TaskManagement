@@ -6,6 +6,7 @@ import {
   getCategoriesLoading,
 } from "../../store/categories/selectors";
 import { MenuItem } from "@mui/material";
+import { CategoryItemType, QueryParamsType } from "../../types/types";
 import { getSvgIcon } from "../../helpers/getSvgIcon";
 import Error from "../Error";
 import Loader from "../Loader";
@@ -13,13 +14,12 @@ import { updateCategoryIdAC } from "../../hooks/useQueryParams";
 import StyledButton from "../ui-kit/StyledButton";
 import StyledSelect from "../ui-kit/StyledSelect";
 import "./Filtering.css";
-import { CategoryItemType } from "../../types/types";
 
 interface FilteringProps {
-  queryParams: { categoryId: number };
+  queryParams: QueryParamsType;
   updateQueryParams: any;
-  onApplyFiltering: any;
-  onResetFiltering: any;
+  onApplyFiltering: () => void;
+  onResetFiltering: () => void;
 }
 
 const Filtering: FC<FilteringProps> = ({

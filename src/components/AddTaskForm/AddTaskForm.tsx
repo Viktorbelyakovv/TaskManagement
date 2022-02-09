@@ -10,6 +10,7 @@ import { getPaginationLimit } from "../../store/tasks/selectors";
 import { addTaskThunk } from "../../store/tasks/reducer";
 import { MenuItem } from "@mui/material";
 import { format } from "date-fns";
+import { CategoryItemType, QueryParamsType } from "../../types/types";
 import Error from "../Error";
 import Loader from "../Loader";
 import StyledTextField from "../ui-kit/StyledTextField";
@@ -17,12 +18,11 @@ import StyledSelect from "../ui-kit/StyledSelect";
 import StyledButton from "../ui-kit/StyledButton";
 import { getSvgIcon } from "../../helpers/getSvgIcon";
 import "./AddTaskForm.css";
-import { CategoryItemType, QueryParamsType } from "../../types/types";
 
 interface AddTaskFormProps {
   isCompletedTasks: boolean;
   queryParams: QueryParamsType;
-  setStartTask: any;
+  setStartTask: (paginationLimit: number) => void;
 }
 
 const AddTaskForm: FC<AddTaskFormProps> = ({

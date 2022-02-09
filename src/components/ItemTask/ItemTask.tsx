@@ -8,12 +8,12 @@ import {
   changeFavoriteThunk,
 } from "../../store/tasks/reducer";
 import { getPaginationLimit } from "../../store/tasks/selectors";
+import { QueryParamsType } from "../../types/types";
 import StyledCheckbox from "../ui-kit/StyledCheckbox";
 import StyledListItem from "../ui-kit/StyledListItem";
 import StyledIconButton from "../ui-kit/StyledIconButton";
 import { getSvgIcon } from "../../helpers/getSvgIcon";
 import "./ItemTask.css";
-import { QueryParamsType } from "../../types/types";
 
 interface ItemTaskProps {
   item: {
@@ -29,7 +29,7 @@ interface ItemTaskProps {
     queryParams: QueryParamsType;
     start: number;
   };
-  setStartTask: any;
+  setStartTask: (paginationLimit: number) => void;
 }
 
 export type ChangeTitleType = {

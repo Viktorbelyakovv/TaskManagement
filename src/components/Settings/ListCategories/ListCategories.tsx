@@ -5,10 +5,10 @@ import {
   getCategoriesLoading,
   getCategoriesError,
 } from "../../../store/categories/selectors";
+import { CategoryItemType } from "../../../types/types";
 import ItemCategory from "../ItemCategory";
 import Loader from "../../Loader";
 import Error from "../../Error";
-import { CategoryItemType } from "../../../types/types";
 
 const ListCategories: FC = () => {
   const categories = useSelector(getCategories);

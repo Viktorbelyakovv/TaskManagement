@@ -1,13 +1,14 @@
 import React, { FC } from "react";
 import { FormControlLabel, Switch } from "@mui/material";
+import { QueryParamsType } from "../../types/types";
 import { updateSortDateAC, updateSortNameAC } from "../../hooks/useQueryParams";
 import StyledButton from "../ui-kit/StyledButton";
 
 interface SortingProps {
-  queryParams: { sortDate: boolean; sortName: boolean };
+  queryParams: QueryParamsType;
   updateQueryParams: any;
-  onApplySorting: any;
-  onResetSorting: any;
+  onApplySorting: () => void;
+  onResetSorting: () => void;
 }
 
 const Sorting: FC<SortingProps> = ({
