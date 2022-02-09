@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../hooks/useTypedStore";
 import {
   getCategories,
   getCategoriesError,
@@ -28,9 +28,9 @@ const Filtering: FC<FilteringProps> = ({
   onApplyFiltering,
   onResetFiltering,
 }) => {
-  const categories = useSelector(getCategories);
-  const loading = useSelector(getCategoriesLoading);
-  const error = useSelector(getCategoriesError);
+  const categories = useAppSelector(getCategories);
+  const loading = useAppSelector(getCategoriesLoading);
+  const error = useAppSelector(getCategoriesError);
 
   if (error) return <Error message={"Error downloading"} />;
 

@@ -9,7 +9,7 @@ const SettingsPage: FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCategoriesThunk());
+    dispatch(getCategoriesThunk(""));
   }, [dispatch]);
 
   return (

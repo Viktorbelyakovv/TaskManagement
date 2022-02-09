@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../../hooks/useTypedStore";
 import {
   getCategories,
   getCategoriesError,
@@ -33,13 +33,13 @@ const AddTaskForm: FC<AddTaskFormProps> = ({
   const [title, setTitle] = useState("");
   const [isEmpty, setEmpty] = useState(false);
   const [isTooLong, setTooLong] = useState(false);
-  const dispatch = useDispatch();
-  const categories = useSelector(getCategories);
-  const defaultCategory = useSelector(getDefaultCategory);
+  const dispatch = useAppDispatch();
+  const categories = useAppSelector(getCategories);
+  const defaultCategory = useAppSelector(getDefaultCategory);
   const [categoryId, setCategoryId] = useState(defaultCategory?.id || "");
-  const paginationLimit = useSelector(getPaginationLimit);
-  const loading = useSelector(getCategoriesLoading);
-  const error = useSelector(getCategoriesError);
+  const paginationLimit = useAppSelector(getPaginationLimit);
+  const loading = useAppSelector(getCategoriesLoading);
+  const error = useAppSelector(getCategoriesError);
   const isError = isTooLong || isEmpty;
 
   const helperText = isTooLong
@@ -50,11 +50,11 @@ const AddTaskForm: FC<AddTaskFormProps> = ({
 
   const onAddTask = () => {
     if (title.trim()) {
-      /* dispatch(
+      dispatch(
         addTaskThunk({
           addPayload: {
             title,
-            categoryId,
+            categoryId: +categoryId,
             date: format(new Date(), "yyyy-MM-dd"),
           },
           sortFilterPayload: {
@@ -63,7 +63,7 @@ const AddTaskForm: FC<AddTaskFormProps> = ({
             start: 0,
           },
         })
-      ); */
+      );
       setStartTask(paginationLimit);
       setTitle("");
     } else {
@@ -78,9 +78,10 @@ const AddTaskForm: FC<AddTaskFormProps> = ({
   };
 
   const renderIcon = (selectedId: number) => {
-    const { iconId, colorId } = selectedId
+    /* const { iconId, colorId } = selectedId
       ? categories.find(({ id }: { id: number }) => id === selectedId)
-      : defaultCategory;
+      : defaultCategory; */
+    const { iconId, colorId } = { iconId: 1, colorId: 2 };
 
     return (
       <>
@@ -118,7 +119,7 @@ const AddTaskForm: FC<AddTaskFormProps> = ({
           width="10%"
           value={categoryId}
           label="Category"
-          onChange={(e) => setCategoryId(e.target.value)}
+          onChange={(e) => setCategoryId(e.target.value as number)}
           displayEmpty
           renderValue={(selectedId) => renderIcon(selectedId as number)}
         >

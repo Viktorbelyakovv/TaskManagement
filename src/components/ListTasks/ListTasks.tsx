@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../../hooks/useTypedStore";
 import { getTasksThunk } from "../../store/tasks/reducer";
 import {
   getPaginationLimit,
@@ -29,32 +29,32 @@ const ListTasks: FC<ListTasksProps> = ({
   startTask,
   setStartTask,
 }) => {
-  const dispatch = useDispatch();
-  const loading = useSelector(getTasksLoading);
-  const error = useSelector(getTasksError);
-  const hasMore = useSelector(getTasksHasMore);
-  const listTasks = useSelector(getTasks);
-  const paginationLimit = useSelector(getPaginationLimit);
+  const dispatch = useAppDispatch();
+  const loading = useAppSelector(getTasksLoading);
+  const error = useAppSelector(getTasksError);
+  const hasMore = useAppSelector(getTasksHasMore);
+  const listTasks = useAppSelector(getTasks);
+  const paginationLimit = useAppSelector(getPaginationLimit);
 
   const getMoreTasks = () => {
-    /* dispatch(
+    dispatch(
       getTasksThunk({
         isCompletedTasks,
         queryParams,
         start: startTask,
       })
-    ); */
+    );
     setStartTask((prevStart: number) => prevStart + paginationLimit);
   };
 
   useEffect(() => {
-    /* dispatch(
+    dispatch(
       getTasksThunk({
         isCompletedTasks,
         queryParams,
         start: 0,
       })
-    ); */
+    );
   }, []);
 
   if (error) return <Error message={"Error downloading tasks"} />;

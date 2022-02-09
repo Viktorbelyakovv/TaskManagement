@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../../hooks/useTypedStore";
 import {
   deleteTaskThunk,
   changeTitleThunk,
@@ -54,19 +54,19 @@ const ItemTask: FC<ItemTaskProps> = ({
   payload,
   setStartTask,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [starSign, setStarSign] = useState(isFavorite ? "star" : "star_border");
   const [taskTitle, setTaskTitle] = useState(title);
   const isError = taskTitle.trim().length < 1 || taskTitle.trim().length > 50;
-  const paginationLimit = useSelector(getPaginationLimit);
+  const paginationLimit = useAppSelector(getPaginationLimit);
 
   const onChangeTitle = (payload: ChangeTitleType) => {
-    /* dispatch(changeTitleThunk(payload)); */
+    dispatch(changeTitleThunk(payload));
     setStartTask(paginationLimit);
   };
 
   const onChangeCompleted = () => {
-    /* dispatch(changeCompletedThunk({ id, isCompleted: !isCompleted }));
+    dispatch(changeCompletedThunk({ id, isCompleted: !isCompleted }));
 
     if (isFavorite) {
       dispatch(
@@ -76,17 +76,17 @@ const ItemTask: FC<ItemTaskProps> = ({
           payload,
         })
       );
-    } */
+    }
   };
 
   const onChangeStar = () => {
-    /* dispatch(
+    dispatch(
       changeFavoriteThunk({
         id,
         isFavorite: !isFavorite,
         payload,
       })
-    ); */
+    );
     setStartTask(paginationLimit);
   };
 
@@ -125,7 +125,7 @@ const ItemTask: FC<ItemTaskProps> = ({
           {starSign}
         </span>
       )}
-      <StyledIconButton onClick={() => dispatch(deleteTaskThunk(/* id */))}>
+      <StyledIconButton onClick={() => dispatch(deleteTaskThunk(id))}>
         <ClearIcon />
       </StyledIconButton>
     </div>

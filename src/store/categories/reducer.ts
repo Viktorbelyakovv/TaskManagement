@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { CategoryItemType } from "../../types/types";
 import {
   getCategories,
   changeDefaultCategory,
@@ -9,71 +10,89 @@ import {
 
 export const getCategoriesThunk = createAsyncThunk(
   "categories/getCategories",
-  async (rejectWithValue) => {
+  async ({ rejectWithValue }: any) => {
     try {
       return await getCategories().then(({ data }) => data);
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   }
 );
 
 export const changeDefaultCategoryThunk = createAsyncThunk(
   "categories/changeDefaultCategory",
-  async ({ oldId, newId }, { rejectWithValue }) => {
+  async (
+    { oldId, newId }: { oldId: number; newId: number },
+    { rejectWithValue }
+  ) => {
     try {
       return await changeDefaultCategory({ oldId, newId }).then(
         ({ data }) => data
       );
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   }
 );
 
 export const addCategoryThunk = createAsyncThunk(
   "categories/addCategory",
-  async ({ title, colorId, iconId }, { rejectWithValue }) => {
+  async (
+    {
+      title,
+      colorId,
+      iconId,
+    }: { title: string; colorId: number; iconId: number },
+    { rejectWithValue }
+  ) => {
     try {
       return await addCategory({ title, colorId, iconId }).then(
         ({ data }) => data
       );
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   }
 );
 
 export const deleteCategoryThunk = createAsyncThunk(
   "categories/deleteCategory",
-  async (id, { rejectWithValue }) => {
+  async (id: number, { rejectWithValue }) => {
     try {
       return await deleteCategory(id).then(() => id);
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   }
 );
 
 export const changeCategoryTitleThunk = createAsyncThunk(
   "categories/changeCategoryTitle",
-  async ({ id, title }, { rejectWithValue }) => {
+  async ({ id, title }: { id: number; title: string }, { rejectWithValue }) => {
     try {
       return await changeCategoryTitle({ id, title }).then(({ data }) => data);
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   }
 );
 
+interface CategoriesState {
+  categories: Array<CategoryItemType>;
+  loading: string;
+  error: boolean | null;
+}
+
+const initialState: CategoriesState = {
+  categories: [],
+  loading: "idle",
+  error: null,
+};
+
 export const categoriesReducer = createSlice({
   name: "categories",
 
-  initialState: {
-    categories: [],
-    loading: "idle",
-    error: null,
-  },
+  initialState,
 
   reducers: {},
 
@@ -91,7 +110,7 @@ export const categoriesReducer = createSlice({
           state.loading = "idle";
         }
       })
-      .addCase(getCategoriesThunk.rejected, (state, action) => {
+      .addCase(getCategoriesThunk.rejected, (state, action: any) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
@@ -102,10 +121,16 @@ export const categoriesReducer = createSlice({
     builder
       .addCase(changeDefaultCategoryThunk.fulfilled, (state, { payload }) => {
         state.error = null;
-        state.categories.find(({ isDefault }) => isDefault).isDefault = false;
-        state.categories.find(({ id }) => id === payload.id).isDefault = true;
+        const oldDefaultCategory = state.categories.find(
+          ({ isDefault }) => isDefault
+        );
+        if (oldDefaultCategory) oldDefaultCategory.isDefault = false;
+        const newDefaultCategory = state.categories.find(
+          ({ id }) => id === payload.id
+        );
+        if (newDefaultCategory) newDefaultCategory.isDefault = true;
       })
-      .addCase(changeDefaultCategoryThunk.rejected, (state, action) => {
+      .addCase(changeDefaultCategoryThunk.rejected, (state, action: any) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
@@ -118,7 +143,7 @@ export const categoriesReducer = createSlice({
         state.error = null;
         state.categories.push(payload);
       })
-      .addCase(addCategoryThunk.rejected, (state, action) => {
+      .addCase(addCategoryThunk.rejected, (state, action: any) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
@@ -131,7 +156,7 @@ export const categoriesReducer = createSlice({
         state.error = null;
         state.categories = state.categories.filter(({ id }) => id !== payload);
       })
-      .addCase(deleteCategoryThunk.rejected, (state, action) => {
+      .addCase(deleteCategoryThunk.rejected, (state, action: any) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
@@ -144,10 +169,11 @@ export const categoriesReducer = createSlice({
         changeCategoryTitleThunk.fulfilled,
         (state, { payload: { title, id } }) => {
           state.error = null;
-          state.categories.find((item) => item.id === id).title = title;
+          const category = state.categories.find((item) => item.id === id);
+          if (category) category.title = title;
         }
       )
-      .addCase(changeCategoryTitleThunk.rejected, (state, action) => {
+      .addCase(changeCategoryTitleThunk.rejected, (state, action: any) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {

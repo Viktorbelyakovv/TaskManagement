@@ -1,5 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
+  AddTaskParamsType,
+  GetTasksParamsType,
+  ListItemType,
+} from "../../types/types";
+import {
   addTask,
   changeTaskField,
   deleteTask,
@@ -8,42 +13,55 @@ import {
 
 export const getTasksThunk = createAsyncThunk(
   "categories/getTasks",
-  async (payload, { rejectWithValue }) => {
+  async (payload: GetTasksParamsType, { rejectWithValue }) => {
     try {
       return await getTasks(payload).then(({ data }) => data);
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   }
 );
 
 export const addTaskThunk = createAsyncThunk(
   "categories/addTask",
-  async ({ addPayload, sortFilterPayload }, { rejectWithValue }) => {
+  async (
+    {
+      addPayload,
+      sortFilterPayload,
+    }: { addPayload: AddTaskParamsType; sortFilterPayload: GetTasksParamsType },
+    { rejectWithValue }
+  ) => {
     try {
       return await addTask(addPayload).then(() =>
         getTasks(sortFilterPayload).then(({ data }) => data)
       );
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   }
 );
 
 export const deleteTaskThunk = createAsyncThunk(
   "categories/deleteTask",
-  async (id, { rejectWithValue }) => {
+  async (id: number, { rejectWithValue }) => {
     try {
       return await deleteTask(id).then(() => id);
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   }
 );
 
 export const changeTitleThunk = createAsyncThunk(
   "categories/changeTitle",
-  async ({ id, title, payload }, { rejectWithValue }) => {
+  async (
+    {
+      id,
+      title,
+      payload,
+    }: { id: number; title: string; payload: GetTasksParamsType },
+    { rejectWithValue }
+  ) => {
     try {
       return await changeTaskField({
         id,
@@ -51,50 +69,70 @@ export const changeTitleThunk = createAsyncThunk(
         field: title,
       }).then(() => getTasks(payload).then(({ data }) => data));
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   }
 );
 
 export const changeCompletedThunk = createAsyncThunk(
   "categories/changeCompleted",
-  async ({ id, isCompleted }, { rejectWithValue }) => {
+  async (
+    { id, isCompleted }: { id: number; isCompleted: boolean },
+    { rejectWithValue }
+  ) => {
     try {
       return await changeTaskField({
         id,
         fieldName: "isCompleted",
-        field: isCompleted,
+        field: isCompleted + "",
       }).then(({ data }) => data);
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   }
 );
 
 export const changeFavoriteThunk = createAsyncThunk(
   "categories/changeFavorite",
-  async ({ id, isFavorite, payload }, { rejectWithValue }) => {
+  async (
+    {
+      id,
+      isFavorite,
+      payload,
+    }: { id: number; isFavorite: boolean; payload: GetTasksParamsType },
+    { rejectWithValue }
+  ) => {
     try {
       return await changeTaskField({
         id,
         fieldName: "isFavorite",
-        field: isFavorite,
+        field: isFavorite + "",
       }).then(() => getTasks(payload).then(({ data }) => data));
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   }
 );
 
+interface TasksState {
+  tasks: Array<ListItemType>;
+  loading: string;
+  error: boolean | null;
+  hasMore: boolean;
+  paginationLimit: number;
+}
+
+const initialState: TasksState = {
+  tasks: [],
+  loading: "idle",
+  error: null,
+  hasMore: true,
+  paginationLimit: Number(process.env.REACT_APP_PAGINATION_LIMIT),
+};
+
 export const tasksReducer = createSlice({
   name: "tasks",
-  initialState: {
-    tasks: [],
-    loading: "idle",
-    error: null,
-    hasMore: true,
-    paginationLimit: Number(process.env.REACT_APP_PAGINATION_LIMIT),
-  },
+  initialState,
   reducers: {},
   extraReducers(builder) {
     builder
@@ -130,7 +168,7 @@ export const tasksReducer = createSlice({
           state.loading = "idle";
         }
       })
-      .addCase(getTasksThunk.rejected, (state, action) => {
+      .addCase(getTasksThunk.rejected, (state, action: any) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
@@ -144,7 +182,7 @@ export const tasksReducer = createSlice({
         state.error = null;
         state.tasks = payload;
       })
-      .addCase(addTaskThunk.rejected, (state, action) => {
+      .addCase(addTaskThunk.rejected, (state, action: any) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
@@ -157,7 +195,7 @@ export const tasksReducer = createSlice({
         state.error = null;
         state.tasks = state.tasks.filter(({ id }) => id !== payload);
       })
-      .addCase(deleteTaskThunk.rejected, (state, action) => {
+      .addCase(deleteTaskThunk.rejected, (state, action: any) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
@@ -171,7 +209,7 @@ export const tasksReducer = createSlice({
         state.error = null;
         state.tasks = payload;
       })
-      .addCase(changeTitleThunk.rejected, (state, action) => {
+      .addCase(changeTitleThunk.rejected, (state, action: any) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
@@ -184,7 +222,7 @@ export const tasksReducer = createSlice({
         state.error = null;
         state.tasks = state.tasks.filter(({ id }) => id !== payload.id);
       })
-      .addCase(changeCompletedThunk.rejected, (state, action) => {
+      .addCase(changeCompletedThunk.rejected, (state, action: any) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
@@ -198,7 +236,7 @@ export const tasksReducer = createSlice({
         state.error = null;
         state.tasks = payload;
       })
-      .addCase(changeFavoriteThunk.rejected, (state, action) => {
+      .addCase(changeFavoriteThunk.rejected, (state, action: any) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {

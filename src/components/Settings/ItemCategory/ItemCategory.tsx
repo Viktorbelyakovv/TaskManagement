@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../../hooks/useTypedStore";
 import {
   changeCategoryTitleThunk,
   deleteCategoryThunk,
@@ -23,18 +23,18 @@ type TitlePayloadType = {
 const ItemCategory: FC<ItemCategoryProps> = ({
   item: { id, title, colorId, iconId, isDefault },
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [categoryTitle, setCategoryTitle] = useState(title);
   const isError =
     categoryTitle.trim().length < 1 || categoryTitle.trim().length > 15;
 
   const onChangeTitle = (payload: TitlePayloadType) => {
-    /* dispatch(changeCategoryTitleThunk(payload)); */
+    dispatch(changeCategoryTitleThunk(payload));
   };
 
   const onDeleteCategory = () => {
-    /* !isDefault && dispatch(deleteCategoryThunk(id)); */
+    !isDefault && dispatch(deleteCategoryThunk(id));
   };
 
   return (

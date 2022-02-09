@@ -24,42 +24,42 @@ const MainPage: FC = () => {
 
   const onApply = () => {
     updateURLParams("");
-    /* dispatch(
+    dispatch(
       getTasksThunk({
         isCompletedTasks,
         queryParams,
         start: 0,
       })
-    ); */
+    );
     setStartTask(paginationLimit);
   };
 
   const onResetSorting = () => {
     updateURLParams("resetSorting");
-    /* dispatch(
+    dispatch(
       getTasksThunk({
         isCompletedTasks,
         queryParams: { sortDate: false, sortName: false, categoryId },
         start: 0,
       })
-    ); */
+    );
     setStartTask(paginationLimit);
   };
 
   const onResetFiltering = () => {
     updateURLParams("resetFiltering");
-    /* dispatch(
+    dispatch(
       getTasksThunk({
         isCompletedTasks,
         queryParams: { sortDate, sortName, categoryId: 0 },
         start: 0,
       })
-    ); */
+    );
     setStartTask(paginationLimit);
   };
 
   useEffect(() => {
-    dispatch(getCategoriesThunk());
+    dispatch(getCategoriesThunk(""));
   }, [dispatch]);
 
   return (

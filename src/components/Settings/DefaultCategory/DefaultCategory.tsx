@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../../../hooks/useTypedStore";
 import MenuItem from "@mui/material/MenuItem";
 import { changeDefaultCategoryThunk } from "../../../store/categories/reducer";
 import {
@@ -13,25 +13,25 @@ import Loader from "../../Loader";
 import StyledSelect from "../../ui-kit/StyledSelect";
 
 const DefaultCategory: FC = () => {
-  const dispatch = useDispatch();
-  const categories = useSelector(getCategories);
-  const defaultCategory = useSelector(getDefaultCategory);
-  const loading = useSelector(getCategoriesLoading);
-  const error = useSelector(getCategoriesError);
+  const dispatch = useAppDispatch();
+  const categories = useAppSelector(getCategories);
+  const defaultCategory = useAppSelector(getDefaultCategory);
+  const loading = useAppSelector(getCategoriesLoading);
+  const error = useAppSelector(getCategoriesError);
 
   const [categoryId, setCategoryId] = useState(defaultCategory?.id || "");
 
   const onChangeCategory = (value: string) => {
-    /* dispatch(
+    dispatch(
       changeDefaultCategoryThunk({
-        oldId: defaultCategory.id,
-        newId: value,
+        oldId: defaultCategory ? defaultCategory.id : 1,
+        newId: +value,
       })
-    ); */
+    );
   };
 
   useEffect(() => {
-    setCategoryId(defaultCategory?.id);
+    setCategoryId(defaultCategory ? defaultCategory.id : 1);
   }, [defaultCategory]);
 
   if (error) return <Error message={"Error downloading"} />;
@@ -45,7 +45,7 @@ const DefaultCategory: FC = () => {
         width="80%"
         value={categoryId}
         label="Category"
-        onChange={(e) => setCategoryId(e.target.value)}
+        onChange={(e) => setCategoryId(e.target.value as number)}
         onBlur={(e) => onChangeCategory(e.target.value)}
       >
         {categories.map(({ id, title }: { id: number; title: string }) => (

@@ -26,3 +26,15 @@ export type QueryParamsActionType = {
   type: string;
   payload: boolean | number;
 };
+
+export type GetTasksParamsType = {
+  isCompletedTasks: boolean;
+  queryParams: QueryParamsType;
+  start: number;
+};
+
+export type AddTaskParamsType = {
+  title: string;
+  categoryId: number;
+  date: string;
+};

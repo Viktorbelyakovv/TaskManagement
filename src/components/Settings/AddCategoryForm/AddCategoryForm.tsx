@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../../../hooks/useTypedStore";
 import MenuItem from "@mui/material/MenuItem";
 import { getCategories } from "../../../store/categories/selectors";
 import { addCategoryThunk } from "../../../store/categories/reducer";
@@ -13,8 +13,8 @@ import StyledSelect from "../../ui-kit/StyledSelect";
 import "./AddCategoryForm.css";
 
 const AddCategoryForm: FC = () => {
-  const dispatch = useDispatch();
-  const categories = useSelector(getCategories);
+  const dispatch = useAppDispatch();
+  const categories = useAppSelector(getCategories);
 
   const [colorId, setСolorId] = useState(1);
   const [iconId, setIconId] = useState(1);
@@ -41,13 +41,13 @@ const AddCategoryForm: FC = () => {
 
   const onAddCategory = () => {
     if (title.trim()) {
-      /* dispatch(
+      dispatch(
         addCategoryThunk({
           title,
           colorId,
           iconId,
         })
-      ); */
+      );
       setTitle("");
     } else {
       setEmpty(true);

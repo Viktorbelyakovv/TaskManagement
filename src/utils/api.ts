@@ -1,5 +1,5 @@
 import axios from "axios";
-import { QueryParamsType } from "../types/types";
+import { AddTaskParamsType, GetTasksParamsType } from "../types/types";
 
 const baseURL = process.env.REACT_APP_API_LINK;
 
@@ -9,11 +9,7 @@ export const getTasks = ({
   isCompletedTasks,
   queryParams: { sortDate, sortName, categoryId },
   start,
-}: {
-  isCompletedTasks: boolean;
-  queryParams: QueryParamsType;
-  start: number;
-}) =>
+}: GetTasksParamsType) =>
   api.get(`/tasks`, {
     params: {
       isCompleted: isCompletedTasks,
@@ -26,15 +22,7 @@ export const getTasks = ({
     },
   });
 
-export const addTask = ({
-  title,
-  categoryId,
-  date,
-}: {
-  title: string;
-  categoryId: number;
-  date: string;
-}) =>
+export const addTask = ({ title, categoryId, date }: AddTaskParamsType) =>
   api
     .post(`/tasks`, {
       title,

@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+/* import { useDispatch, useSelector } from "react-redux"; */
+import { useAppSelector, useAppDispatch } from "../hooks/useTypedStore";
 import { getCategoriesThunk } from "../store/categories/reducer";
 import { getTasksThunk } from "../store/tasks/reducer";
 import { getPaginationLimit } from "../store/tasks/selectors";
@@ -10,8 +11,8 @@ import useQueryParams from "../hooks/useQueryParams";
 
 const CompletedTasksPage: FC = () => {
   const isCompletedTasks = true;
-  const dispatch = useDispatch();
-  const paginationLimit = useSelector(getPaginationLimit);
+  const dispatch = useAppDispatch();
+  const paginationLimit = useAppSelector(getPaginationLimit);
   const [startTask, setStartTask] = useState(paginationLimit);
 
   const {
@@ -23,42 +24,42 @@ const CompletedTasksPage: FC = () => {
 
   const onApply = () => {
     updateURLParams("");
-    /* dispatch(
+    dispatch(
       getTasksThunk({
         isCompletedTasks,
         queryParams,
         start: 0,
       })
-    ); */
+    );
     setStartTask(paginationLimit);
   };
 
   const onResetSorting = () => {
     updateURLParams("resetSorting");
-    /* dispatch(
+    dispatch(
       getTasksThunk({
         isCompletedTasks,
         queryParams: { sortDate: false, sortName: false, categoryId },
         start: 0,
       })
-    ); */
+    );
     setStartTask(paginationLimit);
   };
 
   const onResetFiltering = () => {
     updateURLParams("resetFiltering");
-    /* dispatch(
+    dispatch(
       getTasksThunk({
         isCompletedTasks,
         queryParams: { sortDate, sortName, categoryId: 0 },
         start: 0,
       })
-    ); */
+    );
     setStartTask(paginationLimit);
   };
 
   useEffect(() => {
-    dispatch(getCategoriesThunk());
+    dispatch(getCategoriesThunk(""));
   }, [dispatch]);
 
   return (

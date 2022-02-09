@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../hooks/useTypedStore";
 import { getTasksError } from "../../store/tasks/selectors";
 import { getCategoriesError } from "../../store/categories/selectors";
 import "./Error.css";
@@ -9,8 +9,8 @@ interface ErrorProps {
 }
 
 const Error: FC<ErrorProps> = ({ message }) => {
-  const errorTasks = useSelector(getTasksError);
-  const errorCategories = useSelector(getCategoriesError);
+  const errorTasks = useAppSelector(getTasksError);
+  const errorCategories = useAppSelector(getCategoriesError);
 
   return (
     <div className="Error">
