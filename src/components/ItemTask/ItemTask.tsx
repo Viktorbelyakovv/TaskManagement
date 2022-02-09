@@ -61,8 +61,8 @@ const ItemTask: FC<ItemTaskProps> = ({
   const paginationLimit = useSelector(getPaginationLimit);
 
   const onChangeTitle = (payload: ChangeTitleType) => {
-    /* dispatch(changeTitleThunk(payload));
-    setStartTask(paginationLimit); */
+    /* dispatch(changeTitleThunk(payload)); */
+    setStartTask(paginationLimit);
   };
 
   const onChangeCompleted = () => {

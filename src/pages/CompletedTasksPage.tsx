@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoriesThunk } from "../store/categories/reducer";
 import { getTasksThunk } from "../store/tasks/reducer";
@@ -8,7 +8,7 @@ import ListTasks from "../components/ListTasks";
 import Filtering from "../components/Filtering/Filtering";
 import useQueryParams from "../hooks/useQueryParams";
 
-const CompletedTasksPage = () => {
+const CompletedTasksPage: FC = () => {
   const isCompletedTasks = true;
   const dispatch = useDispatch();
   const paginationLimit = useSelector(getPaginationLimit);

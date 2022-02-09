@@ -1,8 +1,9 @@
 import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
+
 interface StyledTextFieldProps {
   width: string;
-  error: string;
+  error: boolean;
 }
 
 const StyledTextField = styled(TextField)<StyledTextFieldProps>(

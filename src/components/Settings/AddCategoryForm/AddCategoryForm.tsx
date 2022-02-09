@@ -64,7 +64,7 @@ const AddCategoryForm: FC = () => {
     <>
       <h2>Add new category</h2>
       <div className="AddCategoryForm">
-        {/* <StyledTextField
+        <StyledTextField
           width="40%"
           value={title}
           onChange={(e) => handleTitleChange(e.target.value)}
@@ -73,7 +73,7 @@ const AddCategoryForm: FC = () => {
           error={isError}
           helperText={helperText}
           required
-        /> */}
+        />
         <StyledSelect
           width="12%"
           value={colorId}

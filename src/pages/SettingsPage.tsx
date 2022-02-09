@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCategoriesThunk } from "../store/categories/reducer";
 import DefaultCategory from "../components/Settings/DefaultCategory";
 import AddCategoryForm from "../components/Settings/AddCategoryForm";
 import ListCategories from "../components/Settings/ListCategories";
 
-const SettingsPage = () => {
+const SettingsPage: FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {

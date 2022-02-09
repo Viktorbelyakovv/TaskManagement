@@ -49,8 +49,8 @@ const AddTaskForm: FC<AddTaskFormProps> = ({
     : "";
 
   const onAddTask = () => {
-    /* if (title.trim()) {
-      dispatch(
+    if (title.trim()) {
+      /* dispatch(
         addTaskThunk({
           addPayload: {
             title,
@@ -63,12 +63,12 @@ const AddTaskForm: FC<AddTaskFormProps> = ({
             start: 0,
           },
         })
-      );
+      ); */
       setStartTask(paginationLimit);
       setTitle("");
     } else {
       setEmpty(true);
-    } */
+    }
   };
 
   const handleTitleChange = (value: string) => {
@@ -78,8 +78,8 @@ const AddTaskForm: FC<AddTaskFormProps> = ({
   };
 
   const renderIcon = (selectedId: number) => {
-    /* const { iconId, colorId } = selectedId
-      ? categories.find(({ id }) => id === selectedId)
+    const { iconId, colorId } = selectedId
+      ? categories.find(({ id }: { id: number }) => id === selectedId)
       : defaultCategory;
 
     return (
@@ -90,7 +90,7 @@ const AddTaskForm: FC<AddTaskFormProps> = ({
           size: "30px",
         })}
       </>
-    ); */
+    );
   };
 
   useEffect(() => {
@@ -105,7 +105,7 @@ const AddTaskForm: FC<AddTaskFormProps> = ({
     <>
       <h2>Add new task</h2>
       <div className="AddTaskForm">
-        {/* <StyledTextField
+        <StyledTextField
           width="60%"
           value={title}
           onChange={(e) => handleTitleChange(e.target.value)}
@@ -113,14 +113,14 @@ const AddTaskForm: FC<AddTaskFormProps> = ({
           error={isError}
           helperText={helperText}
           required
-        /> */}
+        />
         <StyledSelect
           width="10%"
           value={categoryId}
           label="Category"
           onChange={(e) => setCategoryId(e.target.value)}
           displayEmpty
-          /* renderValue={(selectedId) => renderIcon(selectedId)} */
+          renderValue={(selectedId) => renderIcon(selectedId as number)}
         >
           {categories.map(
             ({ id, title, colorId, iconId }: CategoryItemType) => (
