@@ -19,7 +19,9 @@ const DefaultCategory: FC = () => {
   const loading = useAppSelector(getCategoriesLoading);
   const error = useAppSelector(getCategoriesError);
 
-  const [categoryId, setCategoryId] = useState(defaultCategory?.id || "");
+  const [categoryId, setCategoryId] = useState<number | string>(
+    defaultCategory?.id || ""
+  );
 
   const onChangeCategory = (value: string) => {
     dispatch(

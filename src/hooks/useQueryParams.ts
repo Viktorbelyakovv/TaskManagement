@@ -96,17 +96,17 @@ const useQueryParams = () => {
   return { queryParams, updateQueryParams, updateURLParams };
 };
 
-export const updateSortNameAC = (payload: boolean) => ({
+export const updateSortNameAC = (payload: boolean): QueryParamsActionType => ({
   type: "CHANGE_SORT_NAME",
   payload,
 });
 
-export const updateSortDateAC = (payload: boolean) => ({
+export const updateSortDateAC = (payload: boolean): QueryParamsActionType => ({
   type: "CHANGE_SORT_DATE",
   payload,
 });
 
-export const updateCategoryIdAC = (payload: number) => ({
+export const updateCategoryIdAC = (payload: number): QueryParamsActionType => ({
   type: "CHANGE_CATEGORY_ID",
   payload,
 });

@@ -25,7 +25,7 @@ const ItemCategory: FC<ItemCategoryProps> = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  const [categoryTitle, setCategoryTitle] = useState(title);
+  const [categoryTitle, setCategoryTitle] = useState<string>(title);
   const isError =
     categoryTitle.trim().length < 1 || categoryTitle.trim().length > 15;
 

@@ -11,17 +11,18 @@ import StyledTextField from "../../ui-kit/StyledTextField";
 import StyledButton from "../../ui-kit/StyledButton";
 import StyledSelect from "../../ui-kit/StyledSelect";
 import "./AddCategoryForm.css";
+import { SelectChangeEvent } from "@mui/material";
 
 const AddCategoryForm: FC = () => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(getCategories);
 
-  const [colorId, setСolorId] = useState(1);
-  const [iconId, setIconId] = useState(1);
-  const [title, setTitle] = useState("");
+  const [colorId, setСolorId] = useState<number>(1);
+  const [iconId, setIconId] = useState<number>(1);
+  const [title, setTitle] = useState<string>("");
 
-  const [isEmpty, setEmpty] = useState(false);
-  const [isTooLong, setTooLong] = useState(false);
+  const [isEmpty, setEmpty] = useState<boolean>(false);
+  const [isTooLong, setTooLong] = useState<boolean>(false);
   const isSameCategory = !!categories.find(
     (category: CategoryItemType) =>
       category.colorId === colorId && category.iconId === iconId
@@ -78,7 +79,9 @@ const AddCategoryForm: FC = () => {
           width="12%"
           value={colorId}
           variant="outlined"
-          onChange={(e) => setСolorId(e.target.value as number)}
+          onChange={(e: SelectChangeEvent<unknown>) =>
+            setСolorId(e.target.value as number)
+          }
         >
           {colors.map(({ id, colorName }) => (
             <MenuItem value={id} key={id}>
@@ -90,7 +93,9 @@ const AddCategoryForm: FC = () => {
         <StyledSelect
           width="15%"
           value={iconId}
-          onChange={(e) => setIconId(e.target.value as number)}
+          onChange={(e: SelectChangeEvent<unknown>) =>
+            setIconId(e.target.value as number)
+          }
         >
           {icons.map(({ id }) => (
             <MenuItem value={id} key={id}>

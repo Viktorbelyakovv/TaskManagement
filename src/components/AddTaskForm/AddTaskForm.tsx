@@ -30,13 +30,15 @@ const AddTaskForm: FC<AddTaskFormProps> = ({
   queryParams,
   setStartTask,
 }) => {
-  const [title, setTitle] = useState("");
-  const [isEmpty, setEmpty] = useState(false);
-  const [isTooLong, setTooLong] = useState(false);
+  const [title, setTitle] = useState<string>("");
+  const [isEmpty, setEmpty] = useState<boolean>(false);
+  const [isTooLong, setTooLong] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const categories = useAppSelector(getCategories);
   const defaultCategory = useAppSelector(getDefaultCategory);
-  const [categoryId, setCategoryId] = useState(defaultCategory?.id || "");
+  const [categoryId, setCategoryId] = useState<number | string>(
+    defaultCategory?.id || ""
+  );
   const paginationLimit = useAppSelector(getPaginationLimit);
   const loading = useAppSelector(getCategoriesLoading);
   const error = useAppSelector(getCategoriesError);
@@ -78,10 +80,11 @@ const AddTaskForm: FC<AddTaskFormProps> = ({
   };
 
   const renderIcon = (selectedId: number) => {
-    /* const { iconId, colorId } = selectedId
-      ? categories.find(({ id }: { id: number }) => id === selectedId)
-      : defaultCategory; */
-    const { iconId, colorId } = { iconId: 1, colorId: 2 };
+    const { iconId, colorId } = selectedId
+      ? (categories.find(
+          ({ id }: { id: number }) => id === selectedId
+        ) as CategoryItemType)
+      : (defaultCategory as CategoryItemType);
 
     return (
       <>

@@ -13,7 +13,7 @@ const MainPage: FC = () => {
   const isCompletedTasks = false;
   const dispatch = useDispatch();
   const paginationLimit = useSelector(getPaginationLimit);
-  const [startTask, setStartTask] = useState(paginationLimit);
+  const [startTask, setStartTask] = useState<number>(paginationLimit);
 
   const {
     queryParams,

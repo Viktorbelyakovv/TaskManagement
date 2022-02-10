@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from "react";
-/* import { useDispatch, useSelector } from "react-redux"; */
 import { useAppSelector, useAppDispatch } from "../hooks/useTypedStore";
 import { getCategoriesThunk } from "../store/categories/reducer";
 import { getTasksThunk } from "../store/tasks/reducer";
@@ -13,7 +12,7 @@ const CompletedTasksPage: FC = () => {
   const isCompletedTasks = true;
   const dispatch = useAppDispatch();
   const paginationLimit = useAppSelector(getPaginationLimit);
-  const [startTask, setStartTask] = useState(paginationLimit);
+  const [startTask, setStartTask] = useState<number>(paginationLimit);
 
   const {
     queryParams,
