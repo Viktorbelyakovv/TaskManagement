@@ -1,10 +1,11 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 const baseURL = process.env.REACT_APP_API_LINK;
 
 const api = axios.create({ baseURL });
 
-export const getCategories = () => api.get(`/categories`);
+export const getCategories = (): Promise<AxiosResponse> =>
+  api.get(`/categories`);
 
 export const changeDefaultCategory = ({
   oldId,
@@ -12,7 +13,7 @@ export const changeDefaultCategory = ({
 }: {
   oldId: number;
   newId: number;
-}) => {
+}): Promise<AxiosResponse> => {
   const removeDefault = api.patch(`/categories/${oldId}`, {
     isDefault: false,
   });
@@ -28,7 +29,7 @@ export const addCategory = ({
   title: string;
   colorId: number;
   iconId: number;
-}) =>
+}): Promise<AxiosResponse> =>
   api.post(`/categories`, {
     title,
     colorId,
@@ -36,7 +37,8 @@ export const addCategory = ({
     isDefault: false,
   });
 
-export const deleteCategory = (id: number) => api.delete(`/categories/${id}`);
+export const deleteCategory = (id: number): Promise<AxiosResponse> =>
+  api.delete(`/categories/${id}`);
 
 export const changeCategoryTitle = ({
   id,
@@ -44,4 +46,4 @@ export const changeCategoryTitle = ({
 }: {
   id: number;
   title: string;
-}) => api.patch(`/categories/${id}`, { title });
+}): Promise<AxiosResponse> => api.patch(`/categories/${id}`, { title });

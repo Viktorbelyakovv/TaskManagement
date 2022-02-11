@@ -117,7 +117,7 @@ export const changeFavoriteThunk = createAsyncThunk(
 interface TasksState {
   tasks: Array<ListItemType>;
   loading: string;
-  error: boolean | null;
+  error: string | null;
   hasMore: boolean;
   paginationLimit: number;
 }

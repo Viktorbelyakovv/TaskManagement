@@ -80,7 +80,7 @@ export const changeCategoryTitleThunk = createAsyncThunk(
 interface CategoriesState {
   categories: Array<CategoryItemType>;
   loading: string;
-  error: boolean | null;
+  error: string | null;
 }
 
 const initialState: CategoriesState = {

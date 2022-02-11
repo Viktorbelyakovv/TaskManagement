@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { AddTaskParamsType, GetTasksParamsType } from "../types/types";
 
 const baseURL = process.env.REACT_APP_API_LINK;
@@ -9,7 +9,7 @@ export const getTasks = ({
   isCompletedTasks,
   queryParams: { sortDate, sortName, categoryId },
   start,
-}: GetTasksParamsType) =>
+}: GetTasksParamsType): Promise<AxiosResponse> =>
   api.get(`/tasks`, {
     params: {
       isCompleted: isCompletedTasks,
@@ -22,7 +22,11 @@ export const getTasks = ({
     },
   });
 
-export const addTask = ({ title, categoryId, date }: AddTaskParamsType) =>
+export const addTask = ({
+  title,
+  categoryId,
+  date,
+}: AddTaskParamsType): Promise<AxiosResponse> =>
   api
     .post(`/tasks`, {
       title,
@@ -39,7 +43,8 @@ export const addTask = ({ title, categoryId, date }: AddTaskParamsType) =>
       })
     );
 
-export const deleteTask = (id: number) => api.delete(`/tasks/${id}`);
+export const deleteTask = (id: number): Promise<AxiosResponse> =>
+  api.delete(`/tasks/${id}`);
 
 export const changeTaskField = ({
   id,
@@ -49,4 +54,4 @@ export const changeTaskField = ({
   id: number;
   fieldName: string;
   field: string;
-}) => api.patch(`/tasks/${id}`, { [fieldName]: field });
+}): Promise<AxiosResponse> => api.patch(`/tasks/${id}`, { [fieldName]: field });
