@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { FC, useEffect } from "react";
+import React, { Dispatch, FC, SetStateAction, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../../hooks/useTypedStore";
 import { getTasksThunk } from "../../store/tasks/reducer";
 import {
@@ -15,12 +15,11 @@ import ItemTask from "../ItemTask";
 import Loader from "../Loader";
 import Error from "../Error";
 import "./ListTasks.css";
-
 interface ListTasksProps {
   isCompletedTasks: boolean;
   queryParams: QueryParamsType;
   startTask: number;
-  setStartTask: any;
+  setStartTask: Dispatch<SetStateAction<number>>;
 }
 
 const ListTasks: FC<ListTasksProps> = ({
@@ -44,7 +43,7 @@ const ListTasks: FC<ListTasksProps> = ({
         start: startTask,
       })
     );
-    setStartTask((prevStart: number) => prevStart + paginationLimit);
+    setStartTask((prevStart) => prevStart + paginationLimit);
   };
 
   useEffect(() => {

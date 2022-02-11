@@ -1,4 +1,9 @@
-export const colors = [
+type Color = {
+  id: number;
+  colorName: string;
+};
+
+export const colors: Color[] = [
   {
     id: 1,
     colorName: "red",

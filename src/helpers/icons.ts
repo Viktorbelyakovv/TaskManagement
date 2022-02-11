@@ -4,7 +4,12 @@ import { ReactComponent as Shopping } from "../assets/img/Shopping.svg";
 import { ReactComponent as Sport } from "../assets/img/Sport.svg";
 import { ReactComponent as Work } from "../assets/img/Work.svg";
 
-export const icons = [
+type Icon = {
+  id: number;
+  component: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+};
+
+export const icons: Icon[] = [
   {
     id: 1,
     component: Family,
