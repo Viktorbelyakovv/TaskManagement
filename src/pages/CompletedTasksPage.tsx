@@ -58,7 +58,7 @@ const CompletedTasksPage: FC = () => {
   };
 
   useEffect(() => {
-    dispatch(getCategoriesThunk(""));
+    dispatch(getCategoriesThunk());
   }, [dispatch]);
 
   return (

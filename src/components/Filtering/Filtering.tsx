@@ -6,7 +6,11 @@ import {
   getCategoriesLoading,
 } from "../../store/categories/selectors";
 import { MenuItem } from "@mui/material";
-import { CategoryItemType, QueryParamsType } from "../../types/types";
+import {
+  CategoryItemType,
+  QueryParamsActionType,
+  QueryParamsType,
+} from "../../types/types";
 import { getSvgIcon } from "../../helpers/getSvgIcon";
 import Error from "../Error";
 import Loader from "../Loader";
@@ -17,7 +21,7 @@ import "./Filtering.css";
 
 interface FilteringProps {
   queryParams: QueryParamsType;
-  updateQueryParams: any;
+  updateQueryParams: (action: QueryParamsActionType) => void;
   onApplyFiltering: () => void;
   onResetFiltering: () => void;
 }

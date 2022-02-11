@@ -8,71 +8,105 @@ import {
   changeCategoryTitle,
 } from "../../utils/apiCategories";
 
-export const getCategoriesThunk = createAsyncThunk(
-  "categories/getCategories",
-  async ({ rejectWithValue }: any) => {
-    try {
-      return await getCategories().then(({ data }) => data);
-    } catch (error) {
-      return rejectWithValue(error);
-    }
-  }
-);
+interface MyError {
+  errorMessage: string;
+}
 
-export const changeDefaultCategoryThunk = createAsyncThunk(
+interface ChangeDefaultCategoryParams {
+  oldId: number;
+  newId: number;
+}
+
+interface AddCategoryParams {
+  title: string;
+  colorId: number;
+  iconId: number;
+}
+
+interface ChangeCategoryTitleParams {
+  id: number;
+  title: string;
+}
+
+export const getCategoriesThunk = createAsyncThunk<
+  CategoryItemType[],
+  undefined,
+  {
+    rejectValue: MyError;
+  }
+>("categories/getCategories", async (_, { rejectWithValue }) => {
+  try {
+    return await getCategories().then(({ data }) => data);
+  } catch (error) {
+    return rejectWithValue(error as MyError);
+  }
+});
+
+export const changeDefaultCategoryThunk = createAsyncThunk<
+  CategoryItemType,
+  ChangeDefaultCategoryParams,
+  {
+    rejectValue: MyError;
+  }
+>(
   "categories/changeDefaultCategory",
-  async (
-    { oldId, newId }: { oldId: number; newId: number },
-    { rejectWithValue }
-  ) => {
+  async ({ oldId, newId }, { rejectWithValue }) => {
     try {
       return await changeDefaultCategory({ oldId, newId }).then(
         ({ data }) => data
       );
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error as MyError);
     }
   }
 );
 
-export const addCategoryThunk = createAsyncThunk(
+export const addCategoryThunk = createAsyncThunk<
+  CategoryItemType,
+  AddCategoryParams,
+  {
+    rejectValue: MyError;
+  }
+>(
   "categories/addCategory",
-  async (
-    {
-      title,
-      colorId,
-      iconId,
-    }: { title: string; colorId: number; iconId: number },
-    { rejectWithValue }
-  ) => {
+  async ({ title, colorId, iconId }, { rejectWithValue }) => {
     try {
       return await addCategory({ title, colorId, iconId }).then(
         ({ data }) => data
       );
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error as MyError);
     }
   }
 );
 
-export const deleteCategoryThunk = createAsyncThunk(
-  "categories/deleteCategory",
-  async (id: number, { rejectWithValue }) => {
-    try {
-      return await deleteCategory(id).then(() => id);
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+export const deleteCategoryThunk = createAsyncThunk<
+  number,
+  number,
+  {
+    rejectValue: MyError;
   }
-);
+>("categories/deleteCategory", async (id, { rejectWithValue }) => {
+  try {
+    return await deleteCategory(id).then(() => id);
+  } catch (error) {
+    return rejectWithValue(error as MyError);
+  }
+});
 
-export const changeCategoryTitleThunk = createAsyncThunk(
+export const changeCategoryTitleThunk = createAsyncThunk<
+  CategoryItemType,
+  ChangeCategoryTitleParams,
+  {
+    rejectValue: MyError;
+  }
+>(
   "categories/changeCategoryTitle",
-  async ({ id, title }: { id: number; title: string }, { rejectWithValue }) => {
+  async ({ id, title }, { rejectWithValue }) => {
     try {
       return await changeCategoryTitle({ id, title }).then(({ data }) => data);
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error as MyError);
     }
   }
 );
@@ -110,11 +144,11 @@ export const categoriesReducer = createSlice({
           state.loading = "idle";
         }
       })
-      .addCase(getCategoriesThunk.rejected, (state, action: any) => {
+      .addCase(getCategoriesThunk.rejected, (state, action) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
-          state.error = action.error.message;
+          state.error = action.error.message as string;
         }
       });
 
@@ -130,11 +164,11 @@ export const categoriesReducer = createSlice({
         );
         if (newDefaultCategory) newDefaultCategory.isDefault = true;
       })
-      .addCase(changeDefaultCategoryThunk.rejected, (state, action: any) => {
+      .addCase(changeDefaultCategoryThunk.rejected, (state, action) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
-          state.error = action.error.message;
+          state.error = action.error.message as string;
         }
       });
 
@@ -143,11 +177,11 @@ export const categoriesReducer = createSlice({
         state.error = null;
         state.categories.push(payload);
       })
-      .addCase(addCategoryThunk.rejected, (state, action: any) => {
+      .addCase(addCategoryThunk.rejected, (state, action) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
-          state.error = action.error.message;
+          state.error = action.error.message as string;
         }
       });
 
@@ -156,11 +190,11 @@ export const categoriesReducer = createSlice({
         state.error = null;
         state.categories = state.categories.filter(({ id }) => id !== payload);
       })
-      .addCase(deleteCategoryThunk.rejected, (state, action: any) => {
+      .addCase(deleteCategoryThunk.rejected, (state, action) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
-          state.error = action.error.message;
+          state.error = action.error.message as string;
         }
       });
 
@@ -173,11 +207,11 @@ export const categoriesReducer = createSlice({
           if (category) category.title = title;
         }
       )
-      .addCase(changeCategoryTitleThunk.rejected, (state, action: any) => {
+      .addCase(changeCategoryTitleThunk.rejected, (state, action) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
-          state.error = action.error.message;
+          state.error = action.error.message as string;
         }
       });
   },

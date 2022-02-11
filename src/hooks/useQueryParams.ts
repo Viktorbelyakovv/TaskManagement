@@ -1,8 +1,12 @@
 import { useReducer } from "react";
 import { useSearchParams } from "react-router-dom";
-import { QueryParamsActionType } from "../types/types";
+import { QueryParamsActionType, QueryParamsType } from "../types/types";
 
-const useQueryParams = () => {
+const useQueryParams = (): {
+  queryParams: QueryParamsType;
+  updateQueryParams: (action: QueryParamsActionType) => void;
+  updateURLParams: (resetStr: string) => void;
+} => {
   const [searchParams, setSearchParams] = useSearchParams({});
 
   const parseSortString = (sortString: string) => {
@@ -41,7 +45,7 @@ const useQueryParams = () => {
     decodeURIComponent(searchParams.toString().slice(0, -1))
   );
 
-  const initialState = {
+  const initialState: QueryParamsType = {
     sortDate: date,
     sortName: name,
     categoryId: category,
@@ -111,17 +115,22 @@ export const updateCategoryIdAC = (payload: number): QueryParamsActionType => ({
   payload,
 });
 
-function reducer(state: any, action: QueryParamsActionType) {
+function reducer(
+  state: QueryParamsType,
+  action: QueryParamsActionType
+): QueryParamsType {
   switch (action.type) {
     case "CHANGE_SORT_NAME": {
-      return { ...state, sortName: action.payload };
+      return { ...state, sortName: action.payload as boolean };
     }
     case "CHANGE_SORT_DATE": {
-      return { ...state, sortDate: action.payload };
+      return { ...state, sortDate: action.payload as boolean };
     }
     case "CHANGE_CATEGORY_ID": {
-      return { ...state, categoryId: action.payload };
+      return { ...state, categoryId: action.payload as number };
     }
+    default:
+      return state;
   }
 }
 

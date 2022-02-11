@@ -59,7 +59,7 @@ const MainPage: FC = () => {
   };
 
   useEffect(() => {
-    dispatch(getCategoriesThunk(""));
+    dispatch(getCategoriesThunk());
   }, [dispatch]);
 
   return (

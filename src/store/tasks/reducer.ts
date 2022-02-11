@@ -10,58 +10,87 @@ import {
   deleteTask,
   getTasks,
 } from "../../utils/api";
+interface MyError {
+  errorMessage: string;
+}
 
-export const getTasksThunk = createAsyncThunk(
-  "categories/getTasks",
-  async (payload: GetTasksParamsType, { rejectWithValue }) => {
-    try {
-      return await getTasks(payload).then(({ data }) => data);
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+interface AddTaskParams {
+  addPayload: AddTaskParamsType;
+  sortFilterPayload: GetTasksParamsType;
+}
+
+interface ChangeTitleParams {
+  id: number;
+  title: string;
+  payload: GetTasksParamsType;
+}
+
+interface ChangeCompletedParams {
+  id: number;
+  isCompleted: boolean;
+}
+interface ChangeFavoriteParams {
+  id: number;
+  isFavorite: boolean;
+  payload: GetTasksParamsType;
+}
+
+export const getTasksThunk = createAsyncThunk<
+  ListItemType[],
+  GetTasksParamsType,
+  {
+    rejectValue: MyError;
   }
-);
+>("categories/getTasks", async (payload, { rejectWithValue }) => {
+  try {
+    return await getTasks(payload).then(({ data }) => data);
+  } catch (error) {
+    return rejectWithValue(error as MyError);
+  }
+});
 
-export const addTaskThunk = createAsyncThunk(
+export const addTaskThunk = createAsyncThunk<
+  ListItemType[],
+  AddTaskParams,
+  {
+    rejectValue: MyError;
+  }
+>(
   "categories/addTask",
-  async (
-    {
-      addPayload,
-      sortFilterPayload,
-    }: { addPayload: AddTaskParamsType; sortFilterPayload: GetTasksParamsType },
-    { rejectWithValue }
-  ) => {
+  async ({ addPayload, sortFilterPayload }, { rejectWithValue }) => {
     try {
       return await addTask(addPayload).then(() =>
         getTasks(sortFilterPayload).then(({ data }) => data)
       );
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error as MyError);
     }
   }
 );
 
-export const deleteTaskThunk = createAsyncThunk(
-  "categories/deleteTask",
-  async (id: number, { rejectWithValue }) => {
-    try {
-      return await deleteTask(id).then(() => id);
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+export const deleteTaskThunk = createAsyncThunk<
+  number,
+  number,
+  {
+    rejectValue: MyError;
   }
-);
+>("categories/deleteTask", async (id, { rejectWithValue }) => {
+  try {
+    return await deleteTask(id).then(() => id);
+  } catch (error) {
+    return rejectWithValue(error as MyError);
+  }
+});
 
-export const changeTitleThunk = createAsyncThunk(
+export const changeTitleThunk = createAsyncThunk<
+  ListItemType[],
+  ChangeTitleParams,
+  {
+    rejectValue: MyError;
+  }
+>(
   "categories/changeTitle",
-  async (
-    {
-      id,
-      title,
-      payload,
-    }: { id: number; title: string; payload: GetTasksParamsType },
-    { rejectWithValue }
-  ) => {
+  async ({ id, title, payload }, { rejectWithValue }) => {
     try {
       return await changeTaskField({
         id,
@@ -69,17 +98,20 @@ export const changeTitleThunk = createAsyncThunk(
         field: title,
       }).then(() => getTasks(payload).then(({ data }) => data));
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error as MyError);
     }
   }
 );
 
-export const changeCompletedThunk = createAsyncThunk(
+export const changeCompletedThunk = createAsyncThunk<
+  ListItemType,
+  ChangeCompletedParams,
+  {
+    rejectValue: MyError;
+  }
+>(
   "categories/changeCompleted",
-  async (
-    { id, isCompleted }: { id: number; isCompleted: boolean },
-    { rejectWithValue }
-  ) => {
+  async ({ id, isCompleted }, { rejectWithValue }) => {
     try {
       return await changeTaskField({
         id,
@@ -87,21 +119,20 @@ export const changeCompletedThunk = createAsyncThunk(
         field: isCompleted + "",
       }).then(({ data }) => data);
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error as MyError);
     }
   }
 );
 
-export const changeFavoriteThunk = createAsyncThunk(
+export const changeFavoriteThunk = createAsyncThunk<
+  ListItemType[],
+  ChangeFavoriteParams,
+  {
+    rejectValue: MyError;
+  }
+>(
   "categories/changeFavorite",
-  async (
-    {
-      id,
-      isFavorite,
-      payload,
-    }: { id: number; isFavorite: boolean; payload: GetTasksParamsType },
-    { rejectWithValue }
-  ) => {
+  async ({ id, isFavorite, payload }, { rejectWithValue }) => {
     try {
       return await changeTaskField({
         id,
@@ -109,7 +140,7 @@ export const changeFavoriteThunk = createAsyncThunk(
         field: isFavorite + "",
       }).then(() => getTasks(payload).then(({ data }) => data));
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error as MyError);
     }
   }
 );
@@ -168,11 +199,11 @@ export const tasksReducer = createSlice({
           state.loading = "idle";
         }
       })
-      .addCase(getTasksThunk.rejected, (state, action: any) => {
+      .addCase(getTasksThunk.rejected, (state, action) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
-          state.error = action.error.message;
+          state.error = action.error.message as string;
         }
       });
 
@@ -182,11 +213,11 @@ export const tasksReducer = createSlice({
         state.error = null;
         state.tasks = payload;
       })
-      .addCase(addTaskThunk.rejected, (state, action: any) => {
+      .addCase(addTaskThunk.rejected, (state, action) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
-          state.error = action.error.message;
+          state.error = action.error.message as string;
         }
       });
 
@@ -195,11 +226,11 @@ export const tasksReducer = createSlice({
         state.error = null;
         state.tasks = state.tasks.filter(({ id }) => id !== payload);
       })
-      .addCase(deleteTaskThunk.rejected, (state, action: any) => {
+      .addCase(deleteTaskThunk.rejected, (state, action) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
-          state.error = action.error.message;
+          state.error = action.error.message as string;
         }
       });
 
@@ -209,11 +240,11 @@ export const tasksReducer = createSlice({
         state.error = null;
         state.tasks = payload;
       })
-      .addCase(changeTitleThunk.rejected, (state, action: any) => {
+      .addCase(changeTitleThunk.rejected, (state, action) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
-          state.error = action.error.message;
+          state.error = action.error.message as string;
         }
       });
 
@@ -222,11 +253,11 @@ export const tasksReducer = createSlice({
         state.error = null;
         state.tasks = state.tasks.filter(({ id }) => id !== payload.id);
       })
-      .addCase(changeCompletedThunk.rejected, (state, action: any) => {
+      .addCase(changeCompletedThunk.rejected, (state, action) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
-          state.error = action.error.message;
+          state.error = action.error.message as string;
         }
       });
 
@@ -236,11 +267,11 @@ export const tasksReducer = createSlice({
         state.error = null;
         state.tasks = payload;
       })
-      .addCase(changeFavoriteThunk.rejected, (state, action: any) => {
+      .addCase(changeFavoriteThunk.rejected, (state, action) => {
         if (action.payload) {
           state.error = action.payload.errorMessage;
         } else {
-          state.error = action.error.message;
+          state.error = action.error.message as string;
         }
       });
   },
