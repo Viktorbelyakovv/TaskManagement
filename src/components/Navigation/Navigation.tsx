@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { FC, SyntheticEvent, useState } from "react";
 import { useLocation, NavLink } from "react-router-dom";
 import StyledAppBar from "./components/StyledAppBar";
 import StyledTabs from "./components/StyledTabs";
 import StyledTab from "./components/StyledTab";
 import { pages } from "./components/pages";
 
-const Navigation = () => {
+const Navigation: FC = () => {
   const location = useLocation();
   const locationIntercepted = pages.find(
     ({ value }) => value === location.pathname
@@ -14,7 +14,7 @@ const Navigation = () => {
     : false;
   const [locationPathName, setPathName] = useState(locationIntercepted);
 
-  const handleChange = (_, newValue) => {
+  const handleChange = (_: SyntheticEvent, newValue: string) => {
     setPathName(newValue);
   };
 
