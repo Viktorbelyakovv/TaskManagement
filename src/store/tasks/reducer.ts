@@ -116,7 +116,7 @@ export const changeCompletedThunk = createAsyncThunk<
       return await changeTaskField({
         id,
         fieldName: "isCompleted",
-        field: isCompleted + "",
+        field: String(isCompleted),
       }).then(({ data }) => data);
     } catch (error) {
       return rejectWithValue(error as MyError);
@@ -137,7 +137,7 @@ export const changeFavoriteThunk = createAsyncThunk<
       return await changeTaskField({
         id,
         fieldName: "isFavorite",
-        field: isFavorite + "",
+        field: String(isFavorite),
       }).then(() => getTasks(payload).then(({ data }) => data));
     } catch (error) {
       return rejectWithValue(error as MyError);

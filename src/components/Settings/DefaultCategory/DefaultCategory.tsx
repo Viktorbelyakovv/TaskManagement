@@ -27,7 +27,7 @@ const DefaultCategory: FC = () => {
     dispatch(
       changeDefaultCategoryThunk({
         oldId: defaultCategory ? defaultCategory.id : 1,
-        newId: +value,
+        newId: Number(value),
       })
     );
   };

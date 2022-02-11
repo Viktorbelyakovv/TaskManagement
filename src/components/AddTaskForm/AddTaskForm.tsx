@@ -56,7 +56,7 @@ const AddTaskForm: FC<AddTaskFormProps> = ({
         addTaskThunk({
           addPayload: {
             title,
-            categoryId: +categoryId,
+            categoryId: Number(categoryId),
             date: format(new Date(), "yyyy-MM-dd"),
           },
           sortFilterPayload: {
