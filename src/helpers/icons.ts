@@ -6,28 +6,28 @@ import { ReactComponent as Work } from "../assets/img/Work.svg";
 
 type Icon = {
   id: number;
-  component: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  Component: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
 };
 
 export const icons: Icon[] = [
   {
     id: 1,
-    component: Family,
+    Component: Family,
   },
   {
     id: 2,
-    component: Food,
+    Component: Food,
   },
   {
     id: 3,
-    component: Shopping,
+    Component: Shopping,
   },
   {
     id: 4,
-    component: Sport,
+    Component: Sport,
   },
   {
     id: 5,
-    component: Work,
+    Component: Work,
   },
 ];

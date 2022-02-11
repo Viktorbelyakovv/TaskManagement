@@ -99,7 +99,7 @@ const AddCategoryForm: FC = () => {
         >
           {icons.map(({ id }) => (
             <MenuItem value={id} key={id}>
-              {getSvgIcon({ iconId: id, colorId: "black", size: "30px" })}
+              {getSvgIcon({ iconId: id, colorId: 0, size: "30px" })}
             </MenuItem>
           ))}
         </StyledSelect>
