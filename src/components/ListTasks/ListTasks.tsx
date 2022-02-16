@@ -15,12 +15,12 @@ import ItemTask from "../ItemTask";
 import Loader from "../Loader";
 import Error from "../Error";
 import "./ListTasks.css";
-interface ListTasksProps {
+type ListTasksProps = {
   isCompletedTasks: boolean;
   queryParams: QueryParamsType;
   startTask: number;
   setStartTask: Dispatch<SetStateAction<number>>;
-}
+};
 
 const ListTasks: FC<ListTasksProps> = ({
   isCompletedTasks,

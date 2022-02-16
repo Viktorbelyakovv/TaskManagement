@@ -3,11 +3,11 @@ import { styled } from "@mui/material/styles";
 import { ForwardRefExoticComponent, RefAttributes } from "react";
 import { NavLinkProps } from "react-router-dom";
 
-interface StyledTabProps {
+type StyledTabProps = {
   component: ForwardRefExoticComponent<
     NavLinkProps & RefAttributes<HTMLAnchorElement>
   >;
-}
+};
 
 const StyledTab = styled(Tab)<StyledTabProps>(() => ({
   color: "rgb(250, 235, 96)",

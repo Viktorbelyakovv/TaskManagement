@@ -1,10 +1,10 @@
 import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
 
-interface StyledTextFieldProps {
+type StyledTextFieldProps = {
   width: string;
   error: boolean;
-}
+};
 
 const StyledTextField = styled(TextField)<StyledTextFieldProps>(
   ({ width, error }) => ({

@@ -3,11 +3,11 @@ import { icons } from "./icons";
 import { colors } from "./colors";
 import { ReactComponent as Family } from "../assets/img/Work.svg";
 
-interface getSvgIconProps {
+type getSvgIconProps = {
   iconId: number;
   colorId: number;
   size: string;
-}
+};
 
 export const getSvgIcon: FC<getSvgIconProps> = ({
   iconId,

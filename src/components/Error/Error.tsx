@@ -4,9 +4,9 @@ import { getTasksError } from "../../store/tasks/selectors";
 import { getCategoriesError } from "../../store/categories/selectors";
 import "./Error.css";
 
-interface ErrorProps {
+type ErrorProps = {
   message: string;
-}
+};
 
 const Error: FC<ErrorProps> = ({ message }) => {
   const errorTasks = useAppSelector(getTasksError);

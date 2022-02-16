@@ -10,30 +10,30 @@ import {
   deleteTask,
   getTasks,
 } from "../../utils/api";
-interface MyError {
+type MyError = {
   errorMessage: string;
-}
+};
 
-interface AddTaskParams {
+type AddTaskParams = {
   addPayload: AddTaskParamsType;
   sortFilterPayload: GetTasksParamsType;
-}
+};
 
-interface ChangeTitleParams {
+type ChangeTitleParams = {
   id: number;
   title: string;
   payload: GetTasksParamsType;
-}
+};
 
-interface ChangeCompletedParams {
+type ChangeCompletedParams = {
   id: number;
   isCompleted: boolean;
-}
-interface ChangeFavoriteParams {
+};
+type ChangeFavoriteParams = {
   id: number;
   isFavorite: boolean;
   payload: GetTasksParamsType;
-}
+};
 
 export const getTasksThunk = createAsyncThunk<
   ListItemType[],
@@ -145,13 +145,13 @@ export const changeFavoriteThunk = createAsyncThunk<
   }
 );
 
-interface TasksState {
+type TasksState = {
   tasks: Array<ListItemType>;
   loading: string;
   error: string | null;
   hasMore: boolean;
   paginationLimit: number;
-}
+};
 
 const initialState: TasksState = {
   tasks: [],

@@ -19,11 +19,11 @@ import StyledButton from "../ui-kit/StyledButton";
 import { getSvgIcon } from "../../helpers/getSvgIcon";
 import "./AddTaskForm.css";
 
-interface AddTaskFormProps {
+type AddTaskFormProps = {
   isCompletedTasks: boolean;
   queryParams: QueryParamsType;
   setStartTask: (paginationLimit: number) => void;
-}
+};
 
 const AddTaskForm: FC<AddTaskFormProps> = ({
   isCompletedTasks,

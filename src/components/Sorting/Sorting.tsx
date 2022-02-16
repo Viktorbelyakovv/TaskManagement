@@ -4,12 +4,12 @@ import { QueryParamsActionType, QueryParamsType } from "../../types/types";
 import { updateSortDateAC, updateSortNameAC } from "../../hooks/useQueryParams";
 import StyledButton from "../ui-kit/StyledButton";
 
-interface SortingProps {
+type SortingProps = {
   queryParams: QueryParamsType;
   updateQueryParams: (action: QueryParamsActionType) => void;
   onApplySorting: () => void;
   onResetSorting: () => void;
-}
+};
 
 const Sorting: FC<SortingProps> = ({
   queryParams: { sortDate, sortName },

@@ -11,9 +11,9 @@ import StyledIconButton from "../../ui-kit/StyledIconButton";
 import { getSvgIcon } from "../../../helpers/getSvgIcon";
 import "./ItemCategory.css";
 
-interface ItemCategoryProps {
+type ItemCategoryProps = {
   item: CategoryItemType;
-}
+};
 
 type TitlePayloadType = {
   id: number;

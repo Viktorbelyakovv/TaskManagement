@@ -1,9 +1,9 @@
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 
-interface StyledButtonProps {
+type StyledButtonProps = {
   width: string;
-}
+};
 
 const StyledButton = styled(Button)<StyledButtonProps>(({ width }) => ({
   height: "55px",

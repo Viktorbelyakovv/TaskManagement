@@ -8,25 +8,25 @@ import {
   changeCategoryTitle,
 } from "../../utils/apiCategories";
 
-interface MyError {
+type MyError = {
   errorMessage: string;
-}
+};
 
-interface ChangeDefaultCategoryParams {
+type ChangeDefaultCategoryParams = {
   oldId: number;
   newId: number;
-}
+};
 
-interface AddCategoryParams {
+type AddCategoryParams = {
   title: string;
   colorId: number;
   iconId: number;
-}
+};
 
-interface ChangeCategoryTitleParams {
+type ChangeCategoryTitleParams = {
   id: number;
   title: string;
-}
+};
 
 export const getCategoriesThunk = createAsyncThunk<
   CategoryItemType[],
@@ -111,11 +111,11 @@ export const changeCategoryTitleThunk = createAsyncThunk<
   }
 );
 
-interface CategoriesState {
+type CategoriesState = {
   categories: Array<CategoryItemType>;
   loading: string;
   error: string | null;
-}
+};
 
 const initialState: CategoriesState = {
   categories: [],

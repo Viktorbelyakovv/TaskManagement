@@ -15,7 +15,7 @@ import StyledIconButton from "../ui-kit/StyledIconButton";
 import { getSvgIcon } from "../../helpers/getSvgIcon";
 import "./ItemTask.css";
 
-interface ItemTaskProps {
+type ItemTaskProps = {
   item: {
     id: number;
     title: string;
@@ -30,7 +30,7 @@ interface ItemTaskProps {
     start: number;
   };
   setStartTask: (paginationLimit: number) => void;
-}
+};
 
 export type ChangeTitleType = {
   id: number;

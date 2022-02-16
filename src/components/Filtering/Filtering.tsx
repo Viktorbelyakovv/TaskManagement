@@ -19,12 +19,12 @@ import StyledButton from "../ui-kit/StyledButton";
 import StyledSelect from "../ui-kit/StyledSelect";
 import "./Filtering.css";
 
-interface FilteringProps {
+type FilteringProps = {
   queryParams: QueryParamsType;
   updateQueryParams: (action: QueryParamsActionType) => void;
   onApplyFiltering: () => void;
   onResetFiltering: () => void;
-}
+};
 
 const Filtering: FC<FilteringProps> = ({
   queryParams: { categoryId },
