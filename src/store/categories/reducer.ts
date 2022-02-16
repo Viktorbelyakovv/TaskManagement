@@ -30,7 +30,7 @@ type ChangeCategoryTitleParams = {
 
 export const getCategoriesThunk = createAsyncThunk<
   CategoryItemType[],
-  null,
+  undefined,
   {
     rejectValue: MyError;
   }
@@ -146,9 +146,9 @@ export const categoriesReducer = createSlice({
       })
       .addCase(getCategoriesThunk.rejected, (state, action) => {
         if (action.payload) {
-          state.error = action.payload.errorMessage;
+          state.error = String(action.payload.errorMessage);
         } else {
-          state.error = action.error.message as string;
+          state.error = String(action.error.message);
         }
       });
 
@@ -166,9 +166,9 @@ export const categoriesReducer = createSlice({
       })
       .addCase(changeDefaultCategoryThunk.rejected, (state, action) => {
         if (action.payload) {
-          state.error = action.payload.errorMessage;
+          state.error = String(action.payload.errorMessage);
         } else {
-          state.error = action.error.message as string;
+          state.error = String(action.error.message);
         }
       });
 
@@ -179,9 +179,9 @@ export const categoriesReducer = createSlice({
       })
       .addCase(addCategoryThunk.rejected, (state, action) => {
         if (action.payload) {
-          state.error = action.payload.errorMessage;
+          state.error = String(action.payload.errorMessage);
         } else {
-          state.error = action.error.message as string;
+          state.error = String(action.error.message);
         }
       });
 
@@ -192,9 +192,9 @@ export const categoriesReducer = createSlice({
       })
       .addCase(deleteCategoryThunk.rejected, (state, action) => {
         if (action.payload) {
-          state.error = action.payload.errorMessage;
+          state.error = String(action.payload.errorMessage);
         } else {
-          state.error = action.error.message as string;
+          state.error = String(action.error.message);
         }
       });
 
@@ -209,9 +209,9 @@ export const categoriesReducer = createSlice({
       )
       .addCase(changeCategoryTitleThunk.rejected, (state, action) => {
         if (action.payload) {
-          state.error = action.payload.errorMessage;
+          state.error = String(action.payload.errorMessage);
         } else {
-          state.error = action.error.message as string;
+          state.error = String(action.error.message);
         }
       });
   },

@@ -201,9 +201,9 @@ export const tasksReducer = createSlice({
       })
       .addCase(getTasksThunk.rejected, (state, action) => {
         if (action.payload) {
-          state.error = action.payload.errorMessage;
+          state.error = String(action.payload.errorMessage);
         } else {
-          state.error = action.error.message as string;
+          state.error = String(action.error.message);
         }
       });
 
@@ -215,9 +215,9 @@ export const tasksReducer = createSlice({
       })
       .addCase(addTaskThunk.rejected, (state, action) => {
         if (action.payload) {
-          state.error = action.payload.errorMessage;
+          state.error = String(action.payload.errorMessage);
         } else {
-          state.error = action.error.message as string;
+          state.error = String(action.error.message);
         }
       });
 
@@ -228,9 +228,9 @@ export const tasksReducer = createSlice({
       })
       .addCase(deleteTaskThunk.rejected, (state, action) => {
         if (action.payload) {
-          state.error = action.payload.errorMessage;
+          state.error = String(action.payload.errorMessage);
         } else {
-          state.error = action.error.message as string;
+          state.error = String(action.error.message);
         }
       });
 
@@ -242,9 +242,9 @@ export const tasksReducer = createSlice({
       })
       .addCase(changeTitleThunk.rejected, (state, action) => {
         if (action.payload) {
-          state.error = action.payload.errorMessage;
+          state.error = String(action.payload.errorMessage);
         } else {
-          state.error = action.error.message as string;
+          state.error = String(action.error.message);
         }
       });
 
@@ -255,9 +255,9 @@ export const tasksReducer = createSlice({
       })
       .addCase(changeCompletedThunk.rejected, (state, action) => {
         if (action.payload) {
-          state.error = action.payload.errorMessage;
+          state.error = String(action.payload.errorMessage);
         } else {
-          state.error = action.error.message as string;
+          state.error = String(action.error.message);
         }
       });
 
@@ -269,9 +269,9 @@ export const tasksReducer = createSlice({
       })
       .addCase(changeFavoriteThunk.rejected, (state, action) => {
         if (action.payload) {
-          state.error = action.payload.errorMessage;
+          state.error = String(action.payload.errorMessage);
         } else {
-          state.error = action.error.message as string;
+          state.error = String(action.error.message);
         }
       });
   },
