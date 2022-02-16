@@ -30,7 +30,7 @@ type ChangeCategoryTitleParams = {
 
 export const getCategoriesThunk = createAsyncThunk<
   CategoryItemType[],
-  undefined,
+  null,
   {
     rejectValue: MyError;
   }

@@ -76,7 +76,7 @@ const ListTasks: FC<ListTasksProps> = ({
               <ItemTask
                 item={item}
                 key={item.id}
-                payload={{
+                paramsGetTasks={{
                   isCompletedTasks,
                   queryParams,
                   start: 0,

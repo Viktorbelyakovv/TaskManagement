@@ -122,9 +122,9 @@ const AddTaskForm: FC<AddTaskFormProps> = ({
           width="10%"
           value={categoryId}
           label="Category"
-          onChange={(e) => setCategoryId(e.target.value as number)}
+          onChange={(e) => setCategoryId(Number(e.target.value))}
           displayEmpty
-          renderValue={(selectedId) => renderIcon(selectedId as number)}
+          renderValue={(selectedId) => renderIcon(Number(selectedId))}
         >
           {categories.map(
             ({ id, title, colorId, iconId }: CategoryItemType) => (

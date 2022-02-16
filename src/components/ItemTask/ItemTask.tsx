@@ -8,7 +8,7 @@ import {
   changeFavoriteThunk,
 } from "../../store/tasks/reducer";
 import { getPaginationLimit } from "../../store/tasks/selectors";
-import { QueryParamsType } from "../../types/types";
+import { GetTasksParamsType } from "../../types/types";
 import StyledCheckbox from "../ui-kit/StyledCheckbox";
 import StyledListItem from "../ui-kit/StyledListItem";
 import StyledIconButton from "../ui-kit/StyledIconButton";
@@ -24,22 +24,14 @@ type ItemTaskProps = {
     date: string;
     category: { colorId: number; iconId: number };
   };
-  payload: {
-    isCompletedTasks: boolean;
-    queryParams: QueryParamsType;
-    start: number;
-  };
+  paramsGetTasks: GetTasksParamsType;
   setStartTask: (paginationLimit: number) => void;
 };
 
 export type ChangeTitleType = {
   id: number;
   title: string;
-  payload: {
-    isCompletedTasks: boolean;
-    queryParams: QueryParamsType;
-    start: number;
-  };
+  paramsGetTasks: GetTasksParamsType;
 };
 
 const ItemTask: FC<ItemTaskProps> = ({
@@ -51,7 +43,7 @@ const ItemTask: FC<ItemTaskProps> = ({
     date,
     category: { colorId, iconId },
   },
-  payload,
+  paramsGetTasks,
   setStartTask,
 }) => {
   const dispatch = useAppDispatch();
@@ -60,8 +52,8 @@ const ItemTask: FC<ItemTaskProps> = ({
   const isError = taskTitle.trim().length < 1 || taskTitle.trim().length > 50;
   const paginationLimit = useAppSelector(getPaginationLimit);
 
-  const onChangeTitle = (payload: ChangeTitleType) => {
-    dispatch(changeTitleThunk(payload));
+  const onChangeTitle = (paramsChangeTitle: ChangeTitleType) => {
+    dispatch(changeTitleThunk(paramsChangeTitle));
     setStartTask(paginationLimit);
   };
 
@@ -73,7 +65,7 @@ const ItemTask: FC<ItemTaskProps> = ({
         changeFavoriteThunk({
           id,
           isFavorite: !isFavorite,
-          payload,
+          paramsGetTasks,
         })
       );
     }
@@ -84,7 +76,7 @@ const ItemTask: FC<ItemTaskProps> = ({
       changeFavoriteThunk({
         id,
         isFavorite: !isFavorite,
-        payload,
+        paramsGetTasks,
       })
     );
     setStartTask(paginationLimit);
@@ -105,7 +97,8 @@ const ItemTask: FC<ItemTaskProps> = ({
         value={taskTitle}
         onChange={(e) => setTaskTitle(e.target.value)}
         onBlur={(e) =>
-          !isError && onChangeTitle({ id, title: e.target.value, payload })
+          !isError &&
+          onChangeTitle({ id, title: e.target.value, paramsGetTasks })
         }
         error={isError}
         helperText={

@@ -8,7 +8,7 @@ import {
 import { MenuItem } from "@mui/material";
 import {
   CategoryItemType,
-  QueryParamsActionType,
+  FilterParamsActionType,
   QueryParamsType,
 } from "../../types/types";
 import { getSvgIcon } from "../../helpers/getSvgIcon";
@@ -21,7 +21,7 @@ import "./Filtering.css";
 
 type FilteringProps = {
   queryParams: QueryParamsType;
-  updateQueryParams: (action: QueryParamsActionType) => void;
+  updateQueryParams: (action: FilterParamsActionType) => void;
   onApplyFiltering: () => void;
   onResetFiltering: () => void;
 };
@@ -49,7 +49,7 @@ const Filtering: FC<FilteringProps> = ({
           value={categoryId}
           label="Category"
           onChange={(e) =>
-            updateQueryParams(updateCategoryIdAC(e.target.value as number))
+            updateQueryParams(updateCategoryIdAC(Number(e.target.value)))
           }
           displayEmpty
         >

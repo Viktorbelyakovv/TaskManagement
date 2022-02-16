@@ -47,7 +47,7 @@ const DefaultCategory: FC = () => {
         width="80%"
         value={categoryId}
         label="Category"
-        onChange={(e) => setCategoryId(e.target.value as number)}
+        onChange={(e) => setCategoryId(Number(e.target.value))}
         onBlur={(e) => onChangeCategory(e.target.value)}
       >
         {categories.map(({ id, title }: { id: number; title: string }) => (

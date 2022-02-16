@@ -5,7 +5,7 @@ export type ListItemType = {
   isCompleted: boolean;
   isFavorite: boolean;
   date: string;
-  category: { iconId: number; colorId: number };
+  category: CategoryItemType;
 };
 
 export type CategoryItemType = {
@@ -13,7 +13,7 @@ export type CategoryItemType = {
   title: string;
   colorId: number;
   iconId: number;
-  isDefault?: boolean;
+  isDefault: boolean;
 };
 
 export type QueryParamsType = {
@@ -22,9 +22,14 @@ export type QueryParamsType = {
   categoryId: number;
 };
 
-export type QueryParamsActionType = {
+export type SortParamsActionType = {
   type: string;
-  payload: boolean | number;
+  payload: boolean;
+};
+
+export type FilterParamsActionType = {
+  type: string;
+  payload: number;
 };
 
 export type GetTasksParamsType = {

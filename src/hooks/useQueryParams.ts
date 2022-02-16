@@ -1,10 +1,16 @@
 import { useReducer } from "react";
 import { useSearchParams } from "react-router-dom";
-import { QueryParamsActionType, QueryParamsType } from "../types/types";
+import {
+  SortParamsActionType,
+  FilterParamsActionType,
+  QueryParamsType,
+} from "../types/types";
 
 const useQueryParams = (): {
   queryParams: QueryParamsType;
-  updateQueryParams: (action: QueryParamsActionType) => void;
+  updateQueryParams: (
+    action: SortParamsActionType | FilterParamsActionType
+  ) => void;
   updateURLParams: (resetStr: string) => void;
 } => {
   const [searchParams, setSearchParams] = useSearchParams({});
@@ -54,7 +60,9 @@ const useQueryParams = (): {
   const [queryParams, dispatch] = useReducer(reducer, initialState);
   const { sortDate, sortName, categoryId } = queryParams;
 
-  const updateQueryParams = (action: QueryParamsActionType) => {
+  const updateQueryParams = (
+    action: SortParamsActionType | FilterParamsActionType
+  ) => {
     dispatch(action);
   };
 
@@ -100,34 +108,36 @@ const useQueryParams = (): {
   return { queryParams, updateQueryParams, updateURLParams };
 };
 
-export const updateSortNameAC = (payload: boolean): QueryParamsActionType => ({
+export const updateSortNameAC = (payload: boolean): SortParamsActionType => ({
   type: "CHANGE_SORT_NAME",
   payload,
 });
 
-export const updateSortDateAC = (payload: boolean): QueryParamsActionType => ({
+export const updateSortDateAC = (payload: boolean): SortParamsActionType => ({
   type: "CHANGE_SORT_DATE",
   payload,
 });
 
-export const updateCategoryIdAC = (payload: number): QueryParamsActionType => ({
+export const updateCategoryIdAC = (
+  payload: number
+): FilterParamsActionType => ({
   type: "CHANGE_CATEGORY_ID",
   payload,
 });
 
 function reducer(
   state: QueryParamsType,
-  action: QueryParamsActionType
+  action: SortParamsActionType | FilterParamsActionType
 ): QueryParamsType {
   switch (action.type) {
     case "CHANGE_SORT_NAME": {
-      return { ...state, sortName: action.payload as boolean };
+      return { ...state, sortName: Boolean(action.payload) };
     }
     case "CHANGE_SORT_DATE": {
-      return { ...state, sortDate: action.payload as boolean };
+      return { ...state, sortDate: Boolean(action.payload) };
     }
     case "CHANGE_CATEGORY_ID": {
-      return { ...state, categoryId: action.payload as number };
+      return { ...state, categoryId: Number(action.payload) };
     }
     default:
       return state;

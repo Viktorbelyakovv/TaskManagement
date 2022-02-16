@@ -22,7 +22,7 @@ type AddTaskParams = {
 type ChangeTitleParams = {
   id: number;
   title: string;
-  payload: GetTasksParamsType;
+  paramsGetTasks: GetTasksParamsType;
 };
 
 type ChangeCompletedParams = {
@@ -32,7 +32,7 @@ type ChangeCompletedParams = {
 type ChangeFavoriteParams = {
   id: number;
   isFavorite: boolean;
-  payload: GetTasksParamsType;
+  paramsGetTasks: GetTasksParamsType;
 };
 
 export const getTasksThunk = createAsyncThunk<
@@ -90,13 +90,13 @@ export const changeTitleThunk = createAsyncThunk<
   }
 >(
   "categories/changeTitle",
-  async ({ id, title, payload }, { rejectWithValue }) => {
+  async ({ id, title, paramsGetTasks }, { rejectWithValue }) => {
     try {
       return await changeTaskField({
         id,
         fieldName: "title",
         field: title,
-      }).then(() => getTasks(payload).then(({ data }) => data));
+      }).then(() => getTasks(paramsGetTasks).then(({ data }) => data));
     } catch (error) {
       return rejectWithValue(error as MyError);
     }
@@ -132,13 +132,13 @@ export const changeFavoriteThunk = createAsyncThunk<
   }
 >(
   "categories/changeFavorite",
-  async ({ id, isFavorite, payload }, { rejectWithValue }) => {
+  async ({ id, isFavorite, paramsGetTasks }, { rejectWithValue }) => {
     try {
       return await changeTaskField({
         id,
         fieldName: "isFavorite",
         field: String(isFavorite),
-      }).then(() => getTasks(payload).then(({ data }) => data));
+      }).then(() => getTasks(paramsGetTasks).then(({ data }) => data));
     } catch (error) {
       return rejectWithValue(error as MyError);
     }
