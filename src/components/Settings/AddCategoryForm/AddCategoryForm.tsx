@@ -11,6 +11,7 @@ import StyledTextField from "../../ui-kit/StyledTextField";
 import StyledButton from "../../ui-kit/StyledButton";
 import StyledSelect from "../../ui-kit/StyledSelect";
 import "./AddCategoryForm.css";
+import { SelectChangeEvent } from "@mui/material";
 
 const AddCategoryForm: FC = () => {
   const dispatch = useAppDispatch();
@@ -78,7 +79,9 @@ const AddCategoryForm: FC = () => {
           width="12%"
           value={colorId}
           variant="outlined"
-          onChange={(e) => setСolorId(Number(e.target.value))}
+          onChange={(e: SelectChangeEvent<string | unknown>) =>
+            setСolorId(Number(e.target.value))
+          }
         >
           {colors.map(({ id, colorName }) => (
             <MenuItem value={id} key={id}>
@@ -90,7 +93,9 @@ const AddCategoryForm: FC = () => {
         <StyledSelect
           width="15%"
           value={iconId}
-          onChange={(e) => setIconId(Number(e.target.value))}
+          onChange={(e: SelectChangeEvent<string | unknown>) =>
+            setIconId(Number(e.target.value))
+          }
         >
           {icons.map(({ id }) => (
             <MenuItem value={id} key={id}>
